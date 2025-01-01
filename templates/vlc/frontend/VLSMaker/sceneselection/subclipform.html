@@ -1,0 +1,312 @@
+<div class="popup-form popup-modal" id="add-subclip-popup">
+    <div class="close-btnx close-btn" onclick="closeModal()">
+        <button class="close-popup">
+            X
+        </button>
+    </div>
+    <div class="popup-container">
+        <form class="popup-content" method="POST" enctype="multipart/form-data" id="add-subclip-form"
+            style="grid-template-columns: 0.7fr 1fr;width:100%;">
+
+            <br>
+            {% csrf_token %}
+
+            <div id="submit-cont">
+            </div>
+            <div style="align-items: end;" class="form-group">
+                <button type="submit" id="submit-clip" class="submit-btn">Submit</button>
+            </div>
+        </form>
+        <button style="display: none;" class="close-btn" onclick="closeModal()" id="close-popup-btn">Close</button>
+    </div>
+</div>
+
+<style>
+    /* Modal Background */
+    .popup-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        /* Semi-transparent background */
+        /* display: flex; */
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    /* Show the modal */
+    .popup-modal:not(.hidden) {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .close-btn {
+        position: relative;
+        display: inline-block;
+        margin-left: 775px;
+    }
+
+    .close-popup {
+        position: absolute;
+        background-color: red;
+        color: white;
+        border: none;
+        font-family: Arial, sans-serif;
+        font-size: 15px;
+        font-weight: bold;
+        width: 34px;
+        height: 34px;
+        left: 17%;
+        top: 21%;
+        cursor: pointer;
+        padding: 0;
+        line-height: 30px;
+        text-align: center;
+    }
+
+
+    .popup-content {
+        margin-top: -37px;
+    }
+
+    /* Modal Header */
+    .popup-content .title {
+        border-left: 1px solid #00000080;
+        background: #864AF9;
+        color: white;
+        border-top: none;
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 29.26px;
+        text-align: center;
+    }
+
+    /* Modal Form Elements */
+    .popup-content select,
+    .popup-content input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        /* margin-bottom: 15px; */
+        border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        text-transform: capitalize;
+    }
+
+    .submit-btn {
+        margin-top: 19px;
+        margin-bottom: -15px;
+        margin-left: 89%;
+        font-family: "Montserrat", sans-serif;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 24px;
+        color: white;
+        background: #864AF9;
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 24px;
+        letter-spacing: 0.02em;
+        text-align: left;
+        cursor: pointer;
+        border: none;
+        transition: background 0.2s ease-in-out;
+    }
+
+    .submit-btn:hover {
+        background-color: #6a3cb8;
+    }
+
+    /* Ensure the container allows alignment */
+    .submit-btn-container {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+
+    .popup-container {
+        background: white;
+        border-radius: 8px;
+        padding: 30px 30px;
+        width: 100%;
+        max-width: 750px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        animation: slide-down 0.3s ease-in-out;
+    }
+
+
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    .submit-btn {
+        background-color: #864AF9;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    .submit-btn:hover {
+        background-color: #864AF9;
+        opacity: 0.8;
+    }
+
+    .close-btn {
+        background-color: transparent;
+        color: white;
+        padding: 10px;
+        font-size: 19px;
+        cursor: pointer;
+        border: none;
+        margin-top: -342px;
+        margin-left: 13px;
+        border-radius: 4px;
+        left: 1140px;
+        position: absolute;
+    }
+</style>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('add-subclip-form');
+        if (form) {
+            form.reset();
+        }
+    });
+
+    function fetchVideoClips(selected) {
+        id = selected.value;
+        let video_id = `videoSelect_${clip_id}_${num}`
+        saveInput(selected)
+        if (id) {
+            populateVideoCategories(video_id, `/video/get_clip/${id}`)
+
+        }
+    }
+
+    async function restoreForm() {
+        const inputs = document.querySelectorAll('select');
+
+        for (const input of inputs) {
+            const storedValue = sessionStorage.getItem(input.id);
+            if (storedValue && input.id.startsWith('selected_topic_')) {
+                input.value = storedValue;
+
+                const idParts = input.id.split('_');
+                const currentNumber = idParts[idParts.length - 2];
+
+                const url = `/video/get_clip/${storedValue}`;
+                const targetId = `videoSelect_${clip_id}_${num}`;
+                await populateVideoCategories(targetId, url);
+
+            }
+        }
+        inputs.forEach(input => {
+            const storedValue = sessionStorage.getItem(input.id);
+            if (storedValue && input.id.startsWith('videoSelect_')) {
+                input.value = storedValue;
+            }
+        });
+
+    };
+
+    function populateVideoCategories(selectElementId, apiUrl) {
+        const selectElement = document.getElementById(selectElementId);
+
+        if (!selectElement) {
+            console.error(`Select element with ID "${selectElementId}" not found.`);
+            return;
+        }
+
+
+        // Fetch categories from the API
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(categories => {
+                categories.forEach(cat => {
+                    const option = document.createElement("option");
+                    option.value = cat.id;
+                    option.textContent = cat.title;
+                    selectElement.appendChild(option);
+                });
+                restoreVideoSelectInputs();
+
+            })
+            .catch(error => {
+                console.error("Failed to fetch video categories:", error);
+            });
+    }
+
+    document.getElementById('close-popup-btn').addEventListener('click', function () {
+
+
+    });
+
+    function closeModal() {
+        document.getElementById('add-subclip-popup').style.display = 'none';
+        const form = document.getElementById('add-subclip-form');
+        form.reset();
+        const formClipID = document.getElementById('clipId').value;
+        const ulElement = document.getElementById(`list-of-tags_${formClipID}`);
+        const spanElement = document.getElementById(`slide_span_${formClipID}`);
+        if (ulElement && ulElement.children.length > 1) {
+            const secondToLastLi = ulElement.children[ulElement.children.length - 2];
+            const secondToLastLiText = secondToLastLi.textContent;
+
+            const spanText = spanElement.textContent.trim();
+            spanElement.textContent = `${secondToLastLiText} ${spanText}`
+            console.log("Last <li> text:", secondToLastLiText);
+
+            ulElement.removeChild(secondToLastLi);
+        } else {
+            console.log("No <li> items found to remove.");
+        }
+    }
+    function attachValidation(formId, clipId) {
+        const form = document.getElementById(formId);
+        if (form) {
+            const formClipID = document.getElementById('clipId').value;
+
+            const fileInput = document.getElementById('slide_file');
+            const videoSelect = document.getElementById(`videoSelect_${formClipID}_${num}`);
+
+            if ((!fileInput.value || fileInput.value.trim() === "") &&
+                (!videoSelect || !videoSelect.value || videoSelect.value.trim() === "")) {
+                // alert("Please either upload a video file or select a video clip.");
+                document.getElementById('error-slide').textContent = 'Select A Clip';
+                videoSelect.focus();
+            } else {
+                document.getElementById('submit-clip').disabled = true
+                document.getElementById('submit-clip').style.cursor = 'wait'
+
+                form.submit();
+            }
+
+        }
+    }
+
+</script>
