@@ -736,27 +736,43 @@
           <input id="clipId" type="number" hidden name="clipId" value="${clipId}">
           <input type="hidden" name="textfile_id" value="{{textfile.id}}">
       
+    
+          <div style="display: grid;grid-template-columns: 0.7fr 1fr;border-radius: 8px;border: 1px solid #00000080;overflow: hidden;"  class="form-grid-cont">
+              <div class="grid-item title  form-grid-item begin column-1"><span style="height:50px;align-items: center;">Upload Scene</span></div>
+              <div class="grid-item title form-grid-item end column-2"><span style="height:50px;align-items: center;margin-left: -18px;">Upload Scene From Assets Folder</span></div>
+              <div class="form-grid-item main-item">
+                  <div  class="form-group" style="height:100%;">
+                      <div class="upload-container">
+                      <label for="slide_file" class="upload-label">
+                          <i class="ri-upload-line"></i>
+                          <span id="upload-text">Choose File</span>
+                      </label>
+                      <input type="file" onchange="saveInput(this)" id="slide_file" name="slide_file" class="upload-input" accept="video/*">
+                  </div>
       
-          <div class="form-group">
-              <input type="file" onchange="saveInput(this)" id="slide_file" name="slide_file" class="form-input" accept="video/*">
-          <p id="currentFile"></p>
-          </div>
+                  <p id="currentFile"></p>
+              
+              </div>
+              </div>
+              <div style="border-left:0.8px solid #864AF9" class="form-grid-item ">
       
-          <div class="form-group">
-              <select id="selected_topic_${clipId}_${num}"  onchange="fetchVideoClips(this)" name="selected_topic" class="form-select">
-                  <option value="">Select Topic</option>
-                  {%for cat in video_categories%}
-                      <option value="{{cat.id}}">{{cat.name}}</option>
-                  {% endfor %}
-              </select>
-          </div>
-          
-          <div class="form-group">
-              <select id="videoSelect_${clipId}_${num}" onclick="saveInput(this)" name="selected_video" class="form-select">
-                  <option value="" disabled selected>Select a video clip</option>
+              <div  class="form-group">
+                  <select id="selected_topic_${clipId}_${num}" onchange="fetchVideoClips(this)" name="selected_topic" class="form-select">
+                      <option value="">Select Topic</option>
+                      {%for cat in video_categories%}
+                          <option value="{{cat.id}}">{{cat.name}}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+              
+              <div class="form-group">
+                  <select id="videoSelect_${clipId}_${num}" onclick="saveInput(this)" name="selected_video" class="form-select">
+                      <option value="" disabled selected>Select a video clip</option>
       
-              </select>
-              <p style="color:red; font-size:13px;" id="error-slide"></p>
+                  </select>
+                  <p style="color:red; font-size:13px;" id="error-slide"></p>
+              </div>
+              </div>
           </div>
       `;
             if (currentFile) {
