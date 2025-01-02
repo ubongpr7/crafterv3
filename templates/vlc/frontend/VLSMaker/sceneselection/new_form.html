@@ -477,6 +477,7 @@
             const url = `/text/reset_subclip/${clipID}/`;
 
             if (confirm("Are you sure you want to reset this clip?")) {
+                sessionStorage.clear();
                 fetch(url, {
                     method: 'POST',
                     headers: {
