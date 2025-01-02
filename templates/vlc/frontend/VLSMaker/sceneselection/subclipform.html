@@ -57,43 +57,28 @@
     /* The popup content */
     .popup-container {
         position: relative;
-        /* Ensure positioning for the close button */
         background: #fff;
-        /* Modal background */
         padding: 20px;
-        /* Add some padding */
         border-radius: 10px;
-        /* Rounded corners */
         max-width: 500px;
-        /* Responsive width */
         width: 90%;
-        /* Take up most of the screen on smaller devices */
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        /* Subtle shadow */
     }
 
-    /* The close button */
     .close-btnx {
         position: absolute;
-        /* Relative to the .popup-container */
         top: 10px;
-        /* Distance from the top edge */
         right: 10px;
-        /* Distance from the right edge */
         display: flex;
         justify-content: center;
         align-items: center;
         width: 30px;
         height: 30px;
         background-color: #864AF9;
-        /* Button background */
         border-radius: 50%;
-        /* Circular button */
         cursor: pointer;
-        /* Pointer cursor on hover */
         transition: background-color 0.3s ease, transform 0.2s ease;
         z-index: 1100;
-        /* Ensure it stays above the modal */
     }
 
     .close-btnx i,
@@ -101,6 +86,7 @@
         color: #fff;
         font-size: 20px;
         background-color: red;
+        cursor: pointer;
         border: none;
         /* background: none; */
         outline: none;
@@ -226,9 +212,15 @@
         cursor: pointer;
         border: none;
         border-radius: 4px;
-        left: 74.2%;
+        left: 79.7%;
         position: absolute;
-        top: 24.5%;
+        top: 25.6%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* border-radius: 50%; */
+        cursor: pointer;
+        z-index: 1100;
     }
 </style>
 
