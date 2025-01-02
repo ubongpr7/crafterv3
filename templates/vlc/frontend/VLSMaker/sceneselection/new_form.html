@@ -114,7 +114,6 @@
     .scene-container {
         width: 100%;
         max-width: 1600px;
-        background: white;
         border-radius: 8px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         overflow: hidden;
@@ -192,16 +191,19 @@
         letter-spacing: 0.02em;
         text-align: center;
         gap: 14px;
-        cursor: pointer; /* Make the container clickable */
+        cursor: pointer;
+        /* Make the container clickable */
     }
+
     .upload-label {
-    display: block;
-    width: 100%;
-    cursor: pointer; /* Ensure the label is clickable */
-    text-align: center;
-    font-size: 16px;
-    color: #191919;
-}
+        display: block;
+        width: 100%;
+        cursor: pointer;
+        /* Ensure the label is clickable */
+        text-align: center;
+        font-size: 16px;
+        color: #191919;
+    }
 
     /* .upload-label {
         display: flex;
@@ -359,7 +361,7 @@
     }
 
     .grid-container {
-        margin-top: 3.5rem;
+        margin-top: 2.5rem;
         margin-bottom: 62px;
         /* display: flex;
         display: flex;
@@ -388,11 +390,22 @@
         font-size: 20px;
         margin-left: 10px;
     }
+
+    .Scene {
+        margin: 0 auto;
+        max-width: 95%;
+        margin-bottom: 30px;
+        border: 1px solid #0000004D;
+        box-sizing: border-box;
+        border-radius: 8px;
+        padding: 40px 40px;
+        background: white;
+        position: relative;
+    }
 </style>
 <div id="grid-containerid" class="grid-container">
-    <div class="scene-container" >
-        <div class="Scene"
-            style="margin: 0 auto; max-width: 1300px; margin-bottom: 30px; border: 1px solid #0000004D; box-sizing: border-box; border-radius: 8px; padding: 40px 24px; background: white; position: relative;">
+    <div class="scene-container">
+        <div class="Scene">
             <div class="select-scene-text" style="display: flex; justify-content: center; margin-bottom: 30px;">
                 <span style="font-size: 24px; font-weight: 700; line-height: 29.26px; text-align: center;">
                     Select Your Scenes
@@ -417,8 +430,8 @@
                                     onclick="editSubclip(this,'{{subclip.get_video_file_name}}','{{subclip.video_clip.id}}','{{subclip.video_clip.category.id}}' )">
                                     {{subclip.subtittle}}</li>
                                 {% endfor %}
-                                <span id="slide_span_{{clip.id}}" 
-                                    data-num="{{clip.get_number_of_subclip}}" data-id="{{clip.id}}">{{ clip.remaining }}</span>
+                                <span id="slide_span_{{clip.id}}" data-num="{{clip.get_number_of_subclip}}"
+                                    data-id="{{clip.id}}">{{ clip.remaining }}</span>
                             </ul>
                             <input id="remaining_{{clip.id}}" name="remaining_{{clip.id}}" hidden type="text">
                         </div>
