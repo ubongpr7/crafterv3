@@ -670,7 +670,8 @@
 
 
         function handleSelection(span, ul, remainingInput, errorMessage, clipId) {
-            document.getElementById(`grid_${clipId}`).addEventListener("mouseup", function () {
+            span.addEventListener("mouseup", function () {
+            // document.getElementById(`grid_${clipId}`).addEventListener("mouseup", function () {
                 const selection = window.getSelection();
                 if (selection && selection.toString().trim()) {
                     const selectedText = selection.toString().trim();
