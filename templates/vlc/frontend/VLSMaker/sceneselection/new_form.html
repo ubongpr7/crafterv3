@@ -419,7 +419,7 @@
                                     onclick="editSubclip(this,'{{subclip.get_video_file_name}}','{{subclip.video_clip.id}}','{{subclip.video_clip.category.id}}' )">
                                     {{subclip.subtittle}}</li>
                                 {% endfor %}
-                                <span id="slide_span_{{clip.id}}" style="width:100%"
+                                <span id="slide_span_{{clip.id}}" 
                                     data-num="{{clip.get_number_of_subclip}}" data-id="{{clip.id}}">{{ clip.remaining }}</span>
                             </ul>
                             <input id="remaining_{{clip.id}}" name="remaining_{{clip.id}}" hidden type="text">
