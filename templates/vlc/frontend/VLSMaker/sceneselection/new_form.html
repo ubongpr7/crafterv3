@@ -193,21 +193,18 @@
         letter-spacing: 0.02em;
         text-align: center;
         gap: 14px;
-
-        lement.style {
-            display: block;
-            width: 100%;
-            cursor: pointer;
-            max-width: 200px;
-        }
+        cursor: pointer; /* Make the container clickable */
     }
-
-    /* .upload-container:hover {
-        border-color: #6a3cb8;
-        background-color: #eae8f8;
-    } */
-
     .upload-label {
+    display: block;
+    width: 100%;
+    cursor: pointer; /* Ensure the label is clickable */
+    text-align: center;
+    font-size: 16px;
+    color: #191919;
+}
+
+    /* .upload-label {
         display: flex;
         align-items: center;
         gap: 10px;
@@ -215,7 +212,7 @@
         font-weight: 500;
         color: #000;
         cursor: pointer;
-    }
+    } */
 
     .upload-label i {
         font-size: 20px;
