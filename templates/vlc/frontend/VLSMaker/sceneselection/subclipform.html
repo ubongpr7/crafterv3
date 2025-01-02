@@ -22,74 +22,101 @@
 </div>
 
 <style>
-   .popup-modal {
-    display: none; 
-    position: fixed; /* Stays in the viewport */
-    top: 0;
-    left: 0;
-    width: 100%; /* Full screen width */
-    height: 100%; /* Full screen height */
-    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent overlay */
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    opacity: 0;
-    pointer-events: none; /* Prevent interactions when hidden */
-    transition: opacity 0.3s ease-in-out; /* Smooth fade-in/out transition */
-}
+    .popup-modal {
+        display: none;
+        position: fixed;
+        /* Stays in the viewport */
+        top: 0;
+        left: 0;
+        width: 100%;
+        /* Full screen width */
+        height: 100%;
+        /* Full screen height */
+        background-color: rgba(0, 0, 0, 0.7);
+        /* Semi-transparent overlay */
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        pointer-events: none;
+        /* Prevent interactions when hidden */
+        transition: opacity 0.3s ease-in-out;
+        /* Smooth fade-in/out transition */
+    }
 
-/* Show the modal when not hidden */
-.popup-modal:not(.hidden) {
-    display: flex; /* Center the modal */
-    opacity: 1; /* Fully visible */
-    pointer-events: all; /* Enable interactions */
-}
+    /* Show the modal when not hidden */
+    .popup-modal:not(.hidden) {
+        display: flex;
+        /* Center the modal */
+        opacity: 1;
+        /* Fully visible */
+        pointer-events: all;
+        /* Enable interactions */
+    }
 
-/* The popup content */
-.popup-container {
-    position: relative; /* Ensure positioning for the close button */
-    background: #fff; /* Modal background */
-    padding: 20px; /* Add some padding */
-    border-radius: 10px; /* Rounded corners */
-    max-width: 500px; /* Responsive width */
-    width: 90%; /* Take up most of the screen on smaller devices */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
+    /* The popup content */
+    .popup-container {
+        position: relative;
+        /* Ensure positioning for the close button */
+        background: #fff;
+        /* Modal background */
+        padding: 20px;
+        /* Add some padding */
+        border-radius: 10px;
+        /* Rounded corners */
+        max-width: 500px;
+        /* Responsive width */
+        width: 90%;
+        /* Take up most of the screen on smaller devices */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        /* Subtle shadow */
+    }
 
-/* The close button */
-.close-btnx {
-    position: absolute; /* Relative to the .popup-container */
-    top: 10px; /* Distance from the top edge */
-    right: 10px; /* Distance from the right edge */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 30px;
-    height: 30px;
-    background-color: #864AF9; /* Button background */
-    border-radius: 50%; /* Circular button */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    z-index: 1100; /* Ensure it stays above the modal */
-}
+    /* The close button */
+    .close-btnx {
+        position: absolute;
+        /* Relative to the .popup-container */
+        top: 10px;
+        /* Distance from the top edge */
+        right: 10px;
+        /* Distance from the right edge */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        height: 30px;
+        background-color: #864AF9;
+        /* Button background */
+        border-radius: 50%;
+        /* Circular button */
+        cursor: pointer;
+        /* Pointer cursor on hover */
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        z-index: 1100;
+        /* Ensure it stays above the modal */
+    }
 
-    .close-btnx i, .close-btnx button {
-    color: #fff;
-    font-size: 20px;
-    background-color: red;
-    border: none;
-    /* background: none; */
-    outline: none;
-}
+    .close-btnx i,
+    .close-btnx button {
+        color: #fff;
+        font-size: 20px;
+        background-color: red;
+        border: none;
+        /* background: none; */
+        outline: none;
+    }
 
-.close-btnx:hover {
-    background-color: #6a3cb8; /* Darker shade on hover */
-    transform: scale(1.1); /* Slight zoom on hover */
-}
+    .close-btnx:hover {
+        background-color: #6a3cb8;
+        /* Darker shade on hover */
+        transform: scale(1.1);
+        /* Slight zoom on hover */
+    }
 
-.close-btnx:active {
-    transform: scale(0.95); /* Shrink slightly on click */
-}
+    .close-btnx:active {
+        transform: scale(0.95);
+        /* Shrink slightly on click */
+    }
 
     .popup-content {
         margin-top: -37px;
@@ -199,18 +226,17 @@
     }
 
     .close-btn {
-    background-color: red;
-    background-color: transparent;
-    color: white;
-    padding: 10px;
-    font-size: 19px;
-    cursor: pointer;
-    border: none;
-    border-radius: 4px;
-    left: 73%;
-    top: 25.5%;
-    position: absolute;
-}
+        background-color: red;
+        color: white;
+        padding: 10px;
+        font-size: 19px;
+        cursor: pointer;
+        border: none;
+        border-radius: 4px;
+        left: 73%;
+        position: absolute;
+        top: 25.5%;
+    }
 </style>
 
 
@@ -297,10 +323,10 @@
 
     function closeModal() {
         const errorElements = document.querySelectorAll('[id^="error"]');
-    
-            errorElements.forEach(element => {
-                element.textContent = "";
-            });
+
+        errorElements.forEach(element => {
+            element.textContent = "";
+        });
         document.getElementById('add-subclip-popup').style.display = 'none';
         const form = document.getElementById('add-subclip-form');
         form.reset();
