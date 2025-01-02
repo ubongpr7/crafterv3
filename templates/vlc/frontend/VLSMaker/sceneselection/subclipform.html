@@ -22,9 +22,8 @@
 </div>
 
 <style>
-    
-    .popup-modal {
-    display: none; /* Hidden by default */
+   .popup-modal {
+    display: none; 
     position: fixed; /* Stays in the viewport */
     top: 0;
     left: 0;
@@ -38,9 +37,8 @@
     pointer-events: none; /* Prevent interactions when hidden */
     transition: opacity 0.3s ease-in-out; /* Smooth fade-in/out transition */
 }
-.hidden{
-    display: none;
-}
+
+/* Show the modal when not hidden */
 .popup-modal:not(.hidden) {
     display: flex; /* Center the modal */
     opacity: 1; /* Fully visible */
@@ -92,32 +90,6 @@
 .close-btnx:active {
     transform: scale(0.95); /* Shrink slightly on click */
 }
-
-
-    .close-btn {
-        position: relative;
-        display: inline-block;
-        margin-left: 775px;
-    }
-
-    .close-popup {
-        position: absolute;
-        background-color: red;
-        color: white;
-        border: none;
-        font-family: Arial, sans-serif;
-        font-size: 15px;
-        font-weight: bold;
-        width: 34px;
-        height: 34px;
-        left: 17%;
-        top: 21%;
-        cursor: pointer;
-        padding: 0;
-        line-height: 30px;
-        text-align: center;
-    }
-
 
     .popup-content {
         margin-top: -37px;

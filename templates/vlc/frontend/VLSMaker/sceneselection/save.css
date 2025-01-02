@@ -1,0 +1,49 @@
+ /* Modal Background */
+ .popup-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Semi-transparent background */
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Show the modal */
+.popup-modal:not(.hidden) {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.close-btn {
+    position: relative;
+    display: inline-block;
+    margin-left: 775px;
+}
+
+.close-popup {
+    position: absolute;
+    background-color: red;
+    color: white;
+    border: none;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    width: 34px;
+    height: 34px;
+    left: 17%;
+    top: 21%;
+    cursor: pointer;
+    padding: 0;
+    line-height: 30px;
+    text-align: center;
+}
+
