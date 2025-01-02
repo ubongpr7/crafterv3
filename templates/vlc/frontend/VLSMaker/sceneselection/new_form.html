@@ -104,12 +104,12 @@
         background-color: #f9f9f9;
     }
 
-    #grid-containerid {
+    /* #grid-containerid {
         padding: 30px;
         display: flex;
         justify-content: center;
         align-items: center;
-    }
+    } */
 
     .scene-container {
         width: 100%;
@@ -133,16 +133,15 @@
     }
 
     /* Grid Styling */
-    .grid-container {
+    /* .grid-container {
         display: grid;
         grid-template-columns: 0.2fr 1fr 0.15fr;
         gap: 0;
         width: 100%;
         border: 1px solid #e0e0e0;
         background-color: #fff;
-        /* padding: 10px; */
         border-radius: 8px;
-    }
+    } */
 
     .grid-item {
         padding: 10px;
@@ -360,13 +359,15 @@
     }
 
     .grid-container {
-        display: flex;
+        margin-top: 3.5rem;
+        margin-bottom: 62px;
+        /* display: flex;
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: left;
         width: 100%;
-        margin-bottom: 48px;
+        margin-bottom: 48px; */
     }
 
     .title {
@@ -389,7 +390,7 @@
     }
 </style>
 <div id="grid-containerid" class="grid-container">
-    <div class="scene-container" style="margin: 0 auto; justify-content: center; align-items: center;">
+    <div class="scene-container" >
         <div class="Scene"
             style="margin: 0 auto; max-width: 1300px; margin-bottom: 30px; border: 1px solid #0000004D; box-sizing: border-box; border-radius: 8px; padding: 40px 24px; background: white; position: relative;">
             <div class="select-scene-text" style="display: flex; justify-content: center; margin-bottom: 30px;">
@@ -398,7 +399,7 @@
                 </span>
             </div>
             <div class="grid-container"
-                style="display: grid; grid-template-columns: 0.2fr 1fr 0.1fr; width: 100%; border: 1px solid #0000004D;">
+                style="display: grid; grid-template-columns: 0.2fr 1fr 0.1fr; border: 1px solid #0000004D;">
                 <div class="grid-item title column-1"><span>Subtitle</span></div>
                 <div class="grid-item title column-2"><span>Subtitle Text</span></div>
                 <div class="grid-item title column-3" style="text-align: center; width: 140px;"><span>Reset Clips</span>
