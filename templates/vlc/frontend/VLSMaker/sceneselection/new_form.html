@@ -646,11 +646,14 @@
                     uploadElement.textContent=fileName.slice(0,15)
                     document.getElementById('currentFile').textContent = ''
 
-                    for (const selectItem of document.querySelectorAll('select')) {
-                        selectItem.value = '';
-                        saveInput(selectItem)
+                    // for (const selectItem of document.querySelectorAll('select')) {
+                    //     selectItem.value = '';
+                    //     saveInput(selectItem)
 
-                    }
+                    // }
+                    document.getElementById(`videoSelect_${clip_id}_${num}`).value=""
+                    document.getElementById(`selected_topic_${clip_id}_${num}`).value=""
+                    saveInput(document.getElementById(`videoSelect_${clip_id}_${num}`))
                 }
 
             } else {
