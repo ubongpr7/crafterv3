@@ -635,44 +635,92 @@
                 })
                 .catch(error => console.error('Error fetching clip IDs:', error));
         }
+        // function saveInput(inputElement) {
+        //     if (inputElement.type === 'file') {
+        //         if (inputElement.value) {
+        //             document.getElementById('error-slide').textContent = '';
+                    
+        //             const fileName = inputElement.files.length > 0 ? inputElement.files[0].name : "Choode File";
+        //             const uploadElements = document.querySelectorAll('[id^="upload-text"]');
+    
+        //             uploadElements.forEach(element => {
+        //                 element.textContent = fileName.slice(0, 15);
+        //             });
+        //             document.getElementById('currentFile').textContent = ''
+
+        //             for (const selectItem of document.querySelectorAll('select')) {
+        //                 selectItem.value = '';
+        //                 saveInput(selectItem)
+
+        //             }
+        //         }
+
+        //     } else {
+
+        //         sessionStorage.setItem(inputElement.id, inputElement.value);
+        //         console.log(inputElement.value);
+        //         if (inputElement.id.startsWith('videoSelect_') && inputElement.value !== '') {
+        //             document.getElementById("slide_file").value = '';
+                    
+        //             document.getElementById('currentFile').textContent = '';
+        //             const uploadElements = document.querySelectorAll('[id^="upload-text"]');
+    
+        //             uploadElements.forEach(element => {
+        //                 element.textContent = "Choose File";
+        //             });
+        //         };
+
+        //     }
+
+        // };
+        
         function saveInput(inputElement) {
             if (inputElement.type === 'file') {
-                if (inputElement.value) {
-                    document.getElementById('error-slide').textContent = '';
+                if (inputElement.files && inputElement.files.length > 0) {
+                    const fileName = inputElement.files[0].name || "Choose File";
                     
-                    const fileName = inputElement.files.length > 0 ? inputElement.files[0].name : "Choode File";
+                    const errorSlide = document.getElementById('error-slide');
+                    if (errorSlide) errorSlide.textContent = '';
+
                     const uploadElements = document.querySelectorAll('[id^="upload-text"]');
-    
-                    uploadElements.forEach(element => {
-                        element.textContent = fileName.slice(0, 15);
-                    });
-                    document.getElementById('currentFile').textContent = ''
-
-                    for (const selectItem of document.querySelectorAll('select')) {
-                        selectItem.value = '';
-                        saveInput(selectItem)
-
+                    if (uploadElements.length > 0) {
+                        uploadElements.forEach(element => {
+                            element.textContent = fileName.slice(0, 15);
+                        });
                     }
+
+                    const currentFile = document.getElementById('currentFile');
+                    if (currentFile) currentFile.textContent = '';
+
+                    document.querySelectorAll('select').forEach(selectItem => {
+                        selectItem.value = '';
+                    });
+
+                }
+            } else {
+                if (typeof sessionStorage !== 'undefined') {
+                    sessionStorage.setItem(inputElement.id, inputElement.value);
+                } else {
+                    console.warn("Session storage is not available.");
                 }
 
-            } else {
-
-                sessionStorage.setItem(inputElement.id, inputElement.value);
-                console.log(inputElement.value);
                 if (inputElement.id.startsWith('videoSelect_') && inputElement.value !== '') {
-                    document.getElementById("slide_file").value = '';
-                    
-                    document.getElementById('currentFile').textContent = '';
+                    const slideFile = document.getElementById("slide_file");
+                    if (slideFile) slideFile.value = '';
+
+                    const currentFile = document.getElementById('currentFile');
+                    if (currentFile) currentFile.textContent = '';
+
                     const uploadElements = document.querySelectorAll('[id^="upload-text"]');
-    
-                    uploadElements.forEach(element => {
-                        element.textContent = "Choose File";
-                    });
-                };
-
+                    if (uploadElements.length > 0) {
+                        uploadElements.forEach(element => {
+                            element.textContent = "Choose File";
+                        });
+                    }
+                }
             }
+        }
 
-        };
         function handleClips(clipIds) {
             clipIds.forEach(clipId => {
                 const wrapper = document.querySelector(`#wrapper_${clipId}`);
