@@ -658,7 +658,10 @@
 
                 sessionStorage.setItem(inputElement.id, inputElement.value);
                 console.log(inputElement.value);
-                if (inputElement.id === 'videoSelect_' + clip_id + '_' + num && inputElement.value.replace(/^\s+|\s+$/g, '') !== '') {
+                if (
+                    inputElement.id === 'videoSelect_' + clip_id.toString() + '_' + num.toString() &&
+                    (inputElement.value.replace(/^\s+|\s+$/g, '') !== '')
+                ) {
 
                     // if (inputElement.id === `videoSelect_${clip_id}_${num}` && inputElement.value.trim() !== '') {
                         console.log('first line is true')
