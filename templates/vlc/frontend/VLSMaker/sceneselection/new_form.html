@@ -639,6 +639,8 @@
             const uploadElement = document.getElementById('upload-text');
 
             if (inputElement.type === 'file') {
+                console.log(inputElement.value);
+
                 if (inputElement.value) {
                     document.getElementById('error-slide').textContent = '';
                     
@@ -656,7 +658,11 @@
 
                 sessionStorage.setItem(inputElement.id, inputElement.value);
                 console.log(inputElement.value);
-                if (inputElement.id == `videoSelect_${clip_id}_${num}` && inputElement.value !== '') {
+                document.getElementById('currentFile').textContent = '';
+                    document.getElementById("slide_file").value = '';
+                    uploadElement.textContent='Choose File'
+                    saveInput(document.getElementById("slide_file"))
+                if (inputElement.id === `videoSelect_${clip_id}_${num}` && inputElement.value !== '') {
                     document.getElementById('currentFile').textContent = '';
                     document.getElementById("slide_file").value = '';
                     uploadElement.textContent='Choose File'
