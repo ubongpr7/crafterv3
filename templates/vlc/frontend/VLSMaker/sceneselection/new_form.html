@@ -661,9 +661,13 @@
                 console.log(inputElement.value);
                 if (inputElement.id.startsWith('videoSelect_') && inputElement.value !== '') {
                     document.getElementById("slide_file").value = '';
-                    saveInput(document.getElementById("slide_file"))
-                    // document.getElementById('currentFile').textContent = '';
-
+                    
+                    document.getElementById('currentFile').textContent = '';
+                    const uploadElements = document.querySelectorAll('[id^="upload-text"]');
+    
+                    uploadElements.forEach(element => {
+                        element.textContent = "Choose File";
+                    });
                 };
 
             }
