@@ -593,7 +593,7 @@
                       <div class="upload-container">
                       <label for="slide_file" class="upload-label">
                           <i class="ri-upload-line"></i>
-                          <span id="upload-text">Choose File</span>
+                          <span id="upload-text-n">Choose File</span>
                       </label>
                       <input type="file" onchange="saveInput(this)" id="slide_file" name="slide_file" class="upload-input" accept="video/*">
                   </div>
@@ -639,8 +639,13 @@
             if (inputElement.type === 'file') {
                 if (inputElement.value) {
                     document.getElementById('error-slide').textContent = '';
+                    
                     const fileName = inputElement.files.length > 0 ? inputElement.files[0].name : "Choode File";
-                    document.getElementById("upload-text").textContent = fileName.slice(0, 15);
+                    const uploadElements = document.querySelectorAll('[id^="upload-text"]');
+    
+                    uploadElements.forEach(element => {
+                        element.textContent = fileName.slice(0, 15);
+                    });
                     for (const selectItem of document.querySelectorAll('select')) {
                         selectItem.value = '';
                         saveInput(selectItem)
@@ -652,12 +657,11 @@
             } else {
 
                 sessionStorage.setItem(inputElement.id, inputElement.value);
-                console.log(inputElement.value)
-                document.getElementById("upload-text").textContent ="Choode File";
+                console.log(inputElement.value);
                 if (inputElement.id.startsWith('videoSelect_') && inputElement.value !== '') {
                     document.getElementById("slide_file").value = '';
-
-                    document.getElementById('currentFile').textContent = '';
+                    saveInput(document.getElementById("slide_file"))
+                    // document.getElementById('currentFile').textContent = '';
 
                 };
 
@@ -762,7 +766,7 @@
                       <div class="upload-container">
                       <label for="slide_file" class="upload-label">
                           <i class="ri-upload-line"></i>
-                          <span id="upload-text">Choose File</span>
+                          <span id="upload-text-o">Choose File</span>
                       </label>
                       <input type="file" onchange="saveInput(this)" id="slide_file" name="slide_file" class="upload-input" accept="video/*">
                   </div>
