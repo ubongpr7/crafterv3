@@ -660,9 +660,12 @@
                 console.log(inputElement.value);
                 if (inputElement.id === 'videoSelect_' + clip_id + '_' + num && inputElement.value.replace(/^\s+|\s+$/g, '') !== '') {
 
-                // if (inputElement.id === `videoSelect_${clip_id}_${num}` && inputElement.value.trim() !== '') {
+                    // if (inputElement.id === `videoSelect_${clip_id}_${num}` && inputElement.value.trim() !== '') {
+                        console.log('first line is true')
                     document.getElementById('currentFile').textContent = '';
+                    console.log('currentfile')
                     document.getElementById("slide_file").value = '';
+                    console.log('slide_file')
                     uploadElement.textContent='Choose File'
                     saveInput(document.getElementById("slide_file"))
                     
