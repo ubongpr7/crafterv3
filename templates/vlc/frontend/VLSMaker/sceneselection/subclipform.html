@@ -238,9 +238,11 @@
         id = selected.value;
         let video_id = `videoSelect_${clip_id}_${num}`
         saveInput(selected)
-        if (id) {
+        if (id ) {
             populateVideoCategories(video_id, `/video/get_clip/${id}`)
 
+        }else {
+            document.getElementById(video_id).innerHTML=`<option selected disabled value="">Select A Video Clip</option>`
         }
     }
 

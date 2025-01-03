@@ -121,6 +121,8 @@ class TextFile(models.Model):
     generated_final_bgmw_video = models.FileField(
         upload_to="generated_bgmw_video/", blank=True, null=True
     )
+    class Meta:
+        ordering=['created_at']
     def get_file_text(self):
         if self.video_clips.all():
             return f'Id: {self.id} -> {self.video_clips.all()[0].slide}'
