@@ -639,7 +639,7 @@
             if (inputElement.type === 'file') {
                 if (inputElement.value) {
                     document.getElementById('error-slide').textContent = '';
-                    const fileName = inputElement.files.length > 0 ? inputElement.files[0].name : "No file chosen";
+                    const fileName = inputElement.files.length > 0 ? inputElement.files[0].name : "Choode File";
                     document.getElementById("upload-text").textContent = fileName.slice(0, 15);
                     for (const selectItem of document.querySelectorAll('select')) {
                         selectItem.value = '';
@@ -655,6 +655,7 @@
                 console.log(inputElement.value)
                 if (inputElement.id.startsWith('videoSelect_') && inputElement.value !== '') {
                     document.getElementById("slide_file").value = ''
+                    document.getElementById("upload-text").textContent ="Choode File";
 
                     document.getElementById('currentFile').textContent = ''
 
