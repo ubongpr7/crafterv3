@@ -653,11 +653,11 @@
 
                 sessionStorage.setItem(inputElement.id, inputElement.value);
                 console.log(inputElement.value)
+                document.getElementById("upload-text").textContent ="Choode File";
                 if (inputElement.id.startsWith('videoSelect_') && inputElement.value !== '') {
-                    document.getElementById("slide_file").value = ''
-                    document.getElementById("upload-text").textContent ="Choode File";
+                    document.getElementById("slide_file").value = '';
 
-                    document.getElementById('currentFile').textContent = ''
+                    document.getElementById('currentFile').textContent = '';
 
                 };
 

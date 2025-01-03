@@ -27,6 +27,7 @@ THIRD_PARTY_APPS = [
     "bootstrap5",
     "django_htmx",
     "storages",
+    # "django_crontab"
 ]
 
 MAIN_APPS = [
@@ -41,6 +42,10 @@ INSTALLED_APPS = []
 INSTALLED_APPS.extend(DEFAULT_APPS)
 INSTALLED_APPS.extend(THIRD_PARTY_APPS)
 INSTALLED_APPS.extend(MAIN_APPS)
+
+CRONJOBS = [
+    ('*/5 * * * *', 'mainapps.vidoe_text.tasks.delete_old_textfiles_job.delete_od_files'),
+]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
