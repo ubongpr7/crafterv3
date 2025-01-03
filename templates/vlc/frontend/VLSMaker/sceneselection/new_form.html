@@ -646,10 +646,11 @@
                     uploadElements.forEach(element => {
                         element.textContent = fileName.slice(0, 15);
                     });
+                    document.getElementById('currentFile').textContent = ''
+
                     for (const selectItem of document.querySelectorAll('select')) {
                         selectItem.value = '';
                         saveInput(selectItem)
-                        document.getElementById('currentFile').textContent = ''
 
                     }
                 }
