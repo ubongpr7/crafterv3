@@ -829,43 +829,14 @@
             if (currentFile) {
                 document.getElementById('currentFile').textContent = `Current File: ${currentFile}`
             }
-            // if (videoId){
-            //     console.log('videoId: ',videoId )
-            //     document.getElementById(`selected_topic_${clipId}`).value = catId
-            //     fetchVideoClips(document.getElementById(`selected_topic_${clipId}`),videoId);
-            //     document.getElementById(`videoSelect_${clipId}`).value = `${videoId}`;
-            // }else{
-            if (videoId) {
-                    console.log('videoId: ', videoId, 'Type:', typeof videoId);
-                    // Ensure selected_topic exists and set its value
-                    const topicElement = document.getElementById(`selected_topic_${clipId}`);
-                    if (topicElement) {
-                        topicElement.value = catId;
-                    } else {
-                        console.error(`Element with ID selected_topic_${clipId} not found.`);
-                    }
+            if (videoId){
+                console.log('videoId: ',videoId )
+                document.getElementById(`selected_topic_${clipId}`).value = catId
+                fetchVideoClips(document.getElementById(`selected_topic_${clipId}`),videoId);
+                document.getElementById(`videoSelect_${clipId}`).value = `${videoId}`;
+            }else{
 
-                    // Fetch video clips
-                    fetchVideoClips(topicElement, videoId);
-
-                    // Ensure videoSelect exists and set its value
-                    const videoSelectElement = document.getElementById(`videoSelect_${clipId}`);
-                    if (videoSelectElement) {
-                        const optionExists = Array.from(videoSelectElement.options).some(
-                            (option) => option.value === `${videoId}`
-                        );
-
-                        if (optionExists) {
-                            videoSelectElement.value = `${videoId}`;
-                        } else {
-                            console.error(`Option with value "${videoId}" does not exist in videoSelect_${clipId}.`);
-                        }
-                    } else {
-                        console.error(`Element with ID videoSelect_${clipId} not found.`);
-                    }
-                }
-
-
+            }
             editForm.addEventListener('submit', (e) => {
                 e.preventDefault();
 
