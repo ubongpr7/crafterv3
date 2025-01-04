@@ -358,6 +358,10 @@
     //     }
     // }
     function attachValidation(formId, clipId) {
+        const li= document.getElementById(`current_${clip_id}_${num}`)
+        if (li){
+            li.disabled=true   
+        }
     const form = document.getElementById(formId);
     if (form) {
         const formClipID = document.getElementById('clipId').value;
