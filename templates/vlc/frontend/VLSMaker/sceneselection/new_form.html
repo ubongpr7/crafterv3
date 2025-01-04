@@ -416,8 +416,10 @@
                     <div class="wrapper" id="wrapper_{{clip.id}}">
                         <div style="width: 100%;" class="tag-box">
                             <ul style="margin: 0;" id="list-of-tags_{{clip.id}}" class="list-of-tags">
+
                                 {% for subclip in clip.subclips.all %}
                                 <li data-id="{{subclip.id}}"
+                                id="current_li_{{subclip.id}}"
                                     onclick="editSubclip(this,'{{subclip.get_video_file_name}}','{{subclip.video_clip.id}}','{{subclip.video_clip.category.id}}' )">
                                     {{subclip.subtittle}}</li>
                                 {% endfor %}
