@@ -809,7 +809,7 @@
               <div style="border-left:0.8px solid #864AF9" class="form-grid-item ">
       
               <div  class="form-group">
-                  <select id="selected_topic_${clipId}" onchange="fetchVideoClips(this)" name="selected_topic" class="form-select">
+                  <select id="selected_topic_${clipId}" onchange="fetchVideoClips(this)" value="" name="selected_topic" class="form-select">
                       <option value="">Select Topic</option>
                       {%for cat in video_categories%}
                           <option value="{{cat.id}}">{{cat.name}}</option>
