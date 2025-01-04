@@ -343,6 +343,7 @@
 function attachValidation(formId, clipId) {
     const li = document.getElementById(`current_li_${clipId}`);
     if (li) {
+        li.disabled=true
         console.log(li, ' has been disabled');
     }
 
@@ -369,8 +370,10 @@ function attachValidation(formId, clipId) {
             // Submit the form via AJAX
             form.disabled=true;
             form.style.display='wait'
+            
             if (submitCheck){
                 submitCheck=false
+                document.getElementById('add-subclip-popup').style.display = 'none';
                 fetch(form.action, {
                     method: 'POST',
                     body: formData,
@@ -383,7 +386,6 @@ function attachValidation(formId, clipId) {
                     if (data.success) {
                         console.log("Subclip created with ID:", data.subclip_id);
                         
-                        // Update the dataset of the `li` element
                         if (li) {
                             console.log('data: ', data);
                             li.dataset.video_clip_id = data.video_clip_id;
@@ -405,7 +407,6 @@ function attachValidation(formId, clipId) {
                         form.reset(); // Clear all inputs in the form
                         console.log('Clip Submitted Successfully');
                         
-                        document.getElementById('add-subclip-popup').style.display = 'none';
                         form.disabled=false;
                         form.style.display='default'
     
