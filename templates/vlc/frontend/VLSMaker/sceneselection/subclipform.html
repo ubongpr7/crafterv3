@@ -340,106 +340,16 @@
     }
     
 
-// function attachValidation(formId, clipId) {
-//     const li = document.getElementById(`current_li_${clipId}`);
-//     if (li) {
-//         li.disabled=true
-//         li.style.cursor='wait'
-//         console.log(li, ' has been disabled');
-//     }
-
-//     const form = document.getElementById(formId);
-    
-//     if (form) {
-//         const formClipID = document.getElementById('clipId').value;
-//         const fileInput = document.getElementById('slide_file');
-//         const videoSelect = document.getElementById(`videoSelect_${formClipID}`);
-
-//         // Validation to ensure file input or video select is filled
-//         if ((!fileInput.value || fileInput.value.trim() === "") &&
-//             (!videoSelect || !videoSelect.value || videoSelect.value.trim() === "")) {
-//             document.getElementById('error-slide').textContent = 'Select A Clip';
-//             videoSelect.focus();
-//         } else {
-//             // Disable the submit button and set cursor to 'wait'
-//             // document.getElementById('submit-clip').disabled = true;
-//             // document.getElementById('submit-clip').style.cursor = 'wait';
-
-//             // Prepare form data for submission
-//             const formData = new FormData(form);
-
-//             if (submitCheck){
-//                 submitCheck=false
-//                 document.getElementById('add-subclip-popup').style.display = 'none';
-//                 fetch(form.action, {
-//                     method: 'POST',
-//                     body: formData,
-//                     headers: {
-//                         'X-Requested-With': 'XMLHttpRequest', // For Django to identify AJAX request
-//                     }
-//                 })
-//                 .then(response => response.json())
-//                 .then(data => {
-//                     if (data.success) {
-//                         console.log("Subclip created with ID:", data.subclip_id);
-                        
-//                         if (li) {
-//                             console.log('data: ', data);
-//                             li.dataset.video_clip_id = data.video_clip_id;
-//                             li.dataset.current_file = data.current_file;
-//                             li.dataset.cat_id = data.cat_id;
-//                             li.dataset.id = data.subclip_id;
-//                             li.dataset.subclip_id = data.subclip_id;
-//                             li.dataset.main_id = data.main_id;
-//                             li.disabled = false;
-//                             clipId = data.subclip_id;
-//                             li.style.cursor = 'pointer';
-                            
-//                         }
-    
-//                         // Reset the form
-//                         sessionStorage.clear();
-//                         form.reset(); // Clear all inputs in the form
-//                         console.log('Clip Submitted Successfully');
-                        
-//                         form.disabled=false;
-//                         form.style.display='default'
-    
-//                     } else {
-//                         document.getElementById('error-slide').textContent = data.error || "An error occurred.";
-//                     }
-//                 })
-//                 .catch(error => {
-//                     submitCheck =true
-
-//                     console.error("Error submitting form:", error);
-//                     document.getElementById('error-slide').textContent = "An error occurred.";
-//                 })
-//                 .finally(() => {
-//                     // Re-enable the submit button
-//                     document.getElementById('submit-clip').disabled = false;
-//                     document.getElementById('submit-clip').style.cursor = 'pointer';
-    
-//                     // Reset the file input field
-//                     if (fileInput) {
-//                         fileInput.value = ""; // This ensures the file input is cleared
-//                     }
-//                 });
-           
-
-//             }
-//         }
-//     }
-// }
 function attachValidation(formId, clipId) {
     const li = document.getElementById(`current_li_${clipId}`);
     if (li) {
-        li.disabled = true;
-        li.style.cursor = 'wait';
+        li.disabled=true
+        li.style.cursor='wait'
         console.log(li, ' has been disabled');
     }
 
     const form = document.getElementById(formId);
+    
     if (form) {
         const formClipID = document.getElementById('clipId').value;
         const fileInput = document.getElementById('slide_file');
@@ -451,64 +361,155 @@ function attachValidation(formId, clipId) {
             document.getElementById('error-slide').textContent = 'Select A Clip';
             videoSelect.focus();
         } else {
-            // Disable the form to prevent duplicate submissions
-            form.disabled = true;
+            // Disable the submit button and set cursor to 'wait'
+            // document.getElementById('submit-clip').disabled = true;
+            // document.getElementById('submit-clip').style.cursor = 'wait';
 
             // Prepare form data for submission
             const formData = new FormData(form);
 
-            // Submit the form via AJAX
-            document.getElementById('add-subclip-popup').style.display = 'none';
-            fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest', // For Django to identify AJAX request
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    console.log("Subclip created with ID:", data.subclip_id);
-
-                    // Update the corresponding <li> element
-                    if (li) {
-                        console.log('data: ', data);
-                        li.dataset.video_clip_id = data.video_clip_id;
-                        li.dataset.current_file = data.current_file;
-                        li.dataset.cat_id = data.cat_id;
-                        li.dataset.id = data.subclip_id;
-                        li.dataset.subclip_id = data.subclip_id;
-                        li.dataset.main_id = data.main_id;
-                        li.disabled = false;
-                        li.style.cursor = 'pointer';
+            if (submitCheck){
+                submitCheck=false
+                document.getElementById('add-subclip-popup').style.display = 'none';
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest', // For Django to identify AJAX request
                     }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log("Subclip created with ID:", data.subclip_id);
+                        
+                        if (li) {
+                            console.log('data: ', data);
+                            li.dataset.video_clip_id = data.video_clip_id;
+                            li.dataset.current_file = data.current_file;
+                            li.dataset.cat_id = data.cat_id;
+                            li.dataset.id = data.subclip_id;
+                            li.dataset.subclip_id = data.subclip_id;
+                            li.dataset.main_id = data.main_id;
+                            li.disabled = false;
+                            clipId = data.subclip_id;
+                            li.style.cursor = 'pointer';
+                            
+                        }
+    
+                        // Reset the form
+                        sessionStorage.clear();
+                        form.reset(); // Clear all inputs in the form
+                        console.log('Clip Submitted Successfully');
+                        
+                        form.disabled=false;
+                        form.style.display='default'
+    
+                    } else {
+                        document.getElementById('error-slide').textContent = data.error || "An error occurred.";
+                    }
+                })
+                .catch(error => {
+                    submitCheck =true
 
-                    // Reset the form
-                    sessionStorage.clear();
-                    form.reset();
-                    console.log('Clip Submitted Successfully');
-                } else {
-                    document.getElementById('error-slide').textContent = data.error || "An error occurred.";
-                }
-            })
-            .catch(error => {
-                console.error("Error submitting form:", error);
-                document.getElementById('error-slide').textContent = "An error occurred.";
-            })
-            .finally(() => {
-                // Re-enable the form and reset the file input
-                form.disabled = false;
-                if (fileInput) {
-                    fileInput.value = ""; // Clear file input
-                }
-                if (li) {
-                    li.disabled = false;
-                    li.style.cursor = 'pointer';
-                }
-            });
+                    console.error("Error submitting form:", error);
+                    document.getElementById('error-slide').textContent = "An error occurred.";
+                })
+                .finally(() => {
+                    // Re-enable the submit button
+                    document.getElementById('submit-clip').disabled = false;
+                    document.getElementById('submit-clip').style.cursor = 'pointer';
+    
+                    // Reset the file input field
+                    if (fileInput) {
+                        fileInput.value = ""; // This ensures the file input is cleared
+                    }
+                });
+           
+
+            }
         }
     }
 }
+
+// function attachValidation(formId, clipId) {
+//     const li = document.getElementById(`current_li_${clipId}`);
+//     if (li) {
+//         li.disabled = true;
+//         li.style.cursor = 'wait';
+//         console.log(li, ' has been disabled');
+//     }
+
+//     const form = document.getElementById(formId);
+//     if (form) {
+//         const formClipID = document.getElementById('clipId').value;
+//         const fileInput = document.getElementById('slide_file');
+//         const videoSelect = document.getElementById(`videoSelect_${formClipID}`);
+
+//         // Validation to ensure file input or video select is filled
+//         if ((!fileInput.value || fileInput.value.trim() === "") &&
+//             (!videoSelect || !videoSelect.value || videoSelect.value.trim() === "")) {
+//             document.getElementById('error-slide').textContent = 'Select A Clip';
+//             videoSelect.focus();
+//         } else {
+//             // Disable the form to prevent duplicate submissions
+//             form.disabled = true;
+
+//             // Prepare form data for submission
+//             const formData = new FormData(form);
+
+//             // Submit the form via AJAX
+//             document.getElementById('add-subclip-popup').style.display = 'none';
+//             fetch(form.action, {
+//                 method: 'POST',
+//                 body: formData,
+//                 headers: {
+//                     'X-Requested-With': 'XMLHttpRequest', // For Django to identify AJAX request
+//                 }
+//             })
+//             .then(response => response.json())
+//             .then(data => {
+//                 if (data.success) {
+//                     console.log("Subclip created with ID:", data.subclip_id);
+
+//                     // Update the corresponding <li> element
+//                     if (li) {
+//                         console.log('data: ', data);
+//                         li.dataset.video_clip_id = data.video_clip_id;
+//                         li.dataset.current_file = data.current_file;
+//                         li.dataset.cat_id = data.cat_id;
+//                         li.dataset.id = data.subclip_id;
+//                         li.dataset.subclip_id = data.subclip_id;
+//                         li.dataset.main_id = data.main_id;
+//                         li.disabled = false;
+//                         li.style.cursor = 'pointer';
+//                     }
+
+//                     // Reset the form
+//                     sessionStorage.clear();
+//                     form.reset();
+//                     console.log('Clip Submitted Successfully');
+//                 } else {
+//                     document.getElementById('error-slide').textContent = data.error || "An error occurred.";
+//                 }
+//             })
+//             .catch(error => {
+//                 console.error("Error submitting form:", error);
+//                 document.getElementById('error-slide').textContent = "An error occurred.";
+//             })
+//             .finally(() => {
+//                 // Re-enable the form and reset the file input
+//                 form.disabled = false;
+//                 if (fileInput) {
+//                     fileInput.value = ""; // Clear file input
+//                 }
+//                 if (li) {
+//                     li.disabled = false;
+//                     li.style.cursor = 'pointer';
+//                 }
+//             });
+//         }
+//     }
+// }
 
 </script>
