@@ -833,8 +833,8 @@
             if (videoId){
                 console.log('videoId: ',videoId )
                 document.getElementById(`selected_topic_${clipId}`).value = catId
-                fetchVideoClips(document.getElementById(`selected_topic_${clipId}`))
-                document.getElementById(`videoSelect_${clipId}`).value = `${videoId}`
+                fetchVideoClips(document.getElementById(`selected_topic_${clipId}`),videoId)
+                // document.getElementById(`videoSelect_${clipId}`).value = `${videoId}`
 
             }else{
 
