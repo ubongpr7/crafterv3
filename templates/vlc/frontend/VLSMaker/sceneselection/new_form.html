@@ -569,7 +569,11 @@
                 console.error('Error fetching no subclip IDs:', error);
             }
         }
+        function clearFileInput(){
+            document.getElementById('slide_file').value='';
+            document.getElementById('upload-text').textContent='Choose File'
 
+        }
         function openPopup(clipId, selectedText, remainingText) {
             document.getElementById('add-subclip-popup').style.display = 'flex';
             const formElement = document.getElementById('add-subclip-form')
@@ -594,10 +598,12 @@
                       <label for="slide_file" class="upload-label">
                           <i class="ri-upload-line"></i>
                           <span id="upload-text">Choose File</span>
+                          <i onclick="clearFileInput()" class="ri-close-circle-line"></i>
                       </label>
                       <input type="file" onchange="saveInput(this)" id="slide_file" name="slide_file" class="upload-input" accept="video/*">
+
                   </div>
-      
+                  
                   <p id="currentFile"></p>
               
               </div>
@@ -658,13 +664,9 @@
 
                 sessionStorage.setItem(inputElement.id, inputElement.value);
                 console.log(inputElement.value);
-                // if (
-                //     inputElement.id === 'videoSelect_' + clip_id.toString() + '_' + num.toString() &&
-                //     (inputElement.value.replace(/^\s+|\s+$/g, '') !== '')
-                // ) {
+                
                 if (inputElement.value !== ''){
 
-                    // if (inputElement.id === `videoSelect_${clip_id}_${num}` && inputElement.value.trim() !== '') {
                         console.log('first line is true')
                     document.getElementById('currentFile').textContent = '';
                     console.log('currentfile')
@@ -780,6 +782,8 @@
                       <label for="slide_file" class="upload-label">
                           <i class="ri-upload-line"></i>
                           <span id="upload-text">Choose File</span>
+                          <i onclick="clearFileInput()" class="ri-close-circle-line"></i>
+
                       </label>
                       <input type="file" onchange="saveInput(this)" id="slide_file" name="slide_file" class="upload-input" accept="video/*">
                   </div>
