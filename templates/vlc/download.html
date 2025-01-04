@@ -389,7 +389,30 @@
         <p style="margin-top:-40px;font-size:12px;">
           *Please Note That  When You Click Download, Watermark Will Be Removed
         </p>
-
+        {% if user.subscription.plan.name|lower != 'free'%}
+        <a
+             href="/text/manage_textfile"
+             
+             style="display: flex;
+                    box-sizing: border-box;
+                    align-items: center;
+                    justify-content: center;
+                    text-decoration: none;
+                    background: white;
+                    border-radius: 8px;
+                    font-family: Montserrat;
+                    font-size: 18px;
+                    font-weight: 500;
+                    line-height: 21.94px;
+                    text-align: left;
+                    color: #864AF9;
+                    padding: 12px 24px;
+                    width: 100%;
+                    gap: 10px">
+            <i style="width: 24px; height: 24px;color: #864AF9; " class="ri-save-line"></i>
+            <span style="line-height: 24px;">Save as Draft</span>
+          </a>
+          {%endif%}
       </div>
 
     </div>
