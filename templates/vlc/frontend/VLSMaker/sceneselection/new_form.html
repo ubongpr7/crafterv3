@@ -847,9 +847,9 @@
 <!-- edit current_li_ -->
     <script>
         function editCurrentLi(liItem) {    
-            num=liItem.dataset.num;
             console.log(liItem)
             clip_id=liItem.dataset.subclip_id;
+            num=clip_id
             text= liItem.textContent
             const video_clip_id= liItem.dataset.video_clip_id
             const current_file= liItem.dataset.current_file
