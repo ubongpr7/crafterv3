@@ -836,8 +836,7 @@
             //     document.getElementById(`videoSelect_${clipId}`).value = `${videoId}`;
             // }else{
             if (videoId) {
-                    console.log('videoId: ', videoId);
-
+                    console.log('videoId: ', videoId, 'Type:', typeof videoId);
                     // Ensure selected_topic exists and set its value
                     const topicElement = document.getElementById(`selected_topic_${clipId}`);
                     if (topicElement) {
