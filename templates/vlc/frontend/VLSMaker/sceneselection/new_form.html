@@ -648,10 +648,7 @@
                     uploadElement.textContent=fileName.slice(0,15)
                     document.getElementById('currentFile').textContent = ''
                     document.getElementById('clear-file').style.display='flex'
-                    liItem=document.getElementById(`current_li_${clip_id}_${num}`)
-                    if (liElement){
-                        liElement.dataset.currentFile=fileName.slice(0,15)
-                    }
+                   
                     document.getElementById(`videoSelect_${clip_id}_${num}`).value=""
                     document.getElementById(`selected_topic_${clip_id}_${num}`).value=""
                     saveInput(document.getElementById(`videoSelect_${clip_id}_${num}`))
