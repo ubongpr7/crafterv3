@@ -73,7 +73,7 @@ def add_subclip(request, id):
             # Return the created SubClip data as JSON
             video_clip_id=None
             cat_id=None
-            if subclip.video_clip.id:
+            if subclip.video_clip:
                 video_clip_id=subclip.video_clip.id
                 cat_id=subclip.video_clip.category.id
 
@@ -124,7 +124,7 @@ def edit_subclip(request,id):
         
         video_clip_id=None
         cat_id=None
-        if subclip.video_clip.id:
+        if subclip.video_clip:
             video_clip_id=subclip.video_clip.id
             cat_id=subclip.video_clip.category.id
 
