@@ -562,6 +562,8 @@
         function clearFileInput(){
             document.getElementById('slide_file').value='';
             document.getElementById('upload-text').textContent='Choose File'
+            document.getElementById('clear-file').style.display='none'
+
 
         }
         function openPopup(clipId, selectedText, remainingText) {
@@ -589,7 +591,7 @@
                           <i class="ri-upload-line"></i>
                           <span id="upload-text">Choose File</span>
                           </label>
-                          <i onclick="clearFileInput()" class="ri-close-circle-line"></i>
+                          <iid="clear-file"  onclick="clearFileInput()" class="ri-close-circle-line"></i>
                       <input type="file" onchange="saveInput(this)" id="slide_file" name="slide_file" class="upload-input" accept="video/*">
 
                   </div>
@@ -643,6 +645,7 @@
                     const fileName = inputElement.files.length > 0 ? inputElement.files[0].name : "Choode File";
                     uploadElement.textContent=fileName.slice(0,15)
                     document.getElementById('currentFile').textContent = ''
+                    document.getElementById('clear-file').style.display='flex'
 
                     document.getElementById(`videoSelect_${clip_id}_${num}`).value=""
                     document.getElementById(`selected_topic_${clip_id}_${num}`).value=""
@@ -665,6 +668,7 @@
                     uploadElement.textContent='Choose File'
                     console.log('uploadElement:',uploadElement)
                     saveInput(document.getElementById("slide_file"))
+                    document.getElementById('clear-file').style.display='none'
                     
     
                 };
@@ -774,7 +778,8 @@
                           <span id="upload-text">Choose File</span>
                           
                           </label>
-                          <i onclick="clearFileInput()" class="ri-close-circle-line"></i>
+                          <iid="clear-file"  onclick="clearFileInput()" class="ri-close-circle-line"></i>
+
                       <input type="file" onchange="saveInput(this)" id="slide_file" name="slide_file" class="upload-input" accept="video/*">
                   </div>
       
