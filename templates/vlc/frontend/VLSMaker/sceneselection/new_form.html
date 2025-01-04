@@ -832,7 +832,7 @@
                 console.log('videoId: ',videoId )
                 document.getElementById(`selected_topic_${clipId}`).value = catId
                 await fetchVideoClips(document.getElementById(`selected_topic_${clipId}`),videoId);
-                document.getElementById(`videoSelect_${clipId}`).value =videoId
+                document.getElementById(`videoSelect_${clipId}`).value =parseInt(videoId, 10) 
             }else{
 
             }
@@ -874,7 +874,7 @@
             document.getElementById('add-subclip-popup').style.display = 'flex';
 
  
-            handleEditSelection(liItem,current_file,subclip_id,video_clip_id,cat_id)
+            handleEditSelection(liItem,current_file,subclip_id,+video_clip_id,cat_id)
             }
 
         }
