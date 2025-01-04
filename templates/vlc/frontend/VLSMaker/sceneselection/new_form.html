@@ -767,10 +767,9 @@
 
 <!-- edit -->
     <script>
-        function handleEditSelection(liElement, currentFile, clipId, videoId, catId) {
+        async function handleEditSelection(liElement, currentFile, clipId, videoId, catId) {
             submitCheck=true
             const editForm = document.getElementById('add-subclip-form')
-            editForm.action = `/text/edit_subclip/${clipId}/`
 
             const htmlContainer = document.getElementById('submit-cont');
             const selectedText = liElement.textContent
@@ -832,7 +831,7 @@
             if (videoId){
                 console.log('videoId: ',videoId )
                 document.getElementById(`selected_topic_${clipId}`).value = catId
-                fetchVideoClips(document.getElementById(`selected_topic_${clipId}`),videoId);
+                await fetchVideoClips(document.getElementById(`selected_topic_${clipId}`),videoId);
                 document.getElementById(`videoSelect_${clipId}`).value = `${videoId}`;
             }else{
 

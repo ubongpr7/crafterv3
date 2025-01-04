@@ -295,8 +295,8 @@
             .then(categories => {
                 categories.forEach(cat => {
                     const option = document.createElement("option");
-                    option.value = `${cat.id}`;
-                    option.textContent = cat.id;
+                    option.value = cat.id;
+                    option.textContent = cat.title;
                     selectElement.appendChild(option);
                 });
                 restoreVideoSelectInputs();
