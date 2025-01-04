@@ -818,7 +818,7 @@
               </div>
               
               <div class="form-group">
-                  <select id="videoSelect_${clipId}" onclick="saveInput(this)" name="selected_video" class="form-select">
+                  <select id="videoSelect_${clipId}" onclick="saveInput(this)"value="${videoId}" name="selected_video" class="form-select">
                       <option value="" disabled selected>Select A Video Clip</option>
       
                   </select>
@@ -834,7 +834,7 @@
                 console.log('videoId: ',videoId )
                 document.getElementById(`selected_topic_${clipId}`).value = catId
                 fetchVideoClips(document.getElementById(`selected_topic_${clipId}`))
-                document.getElementById(`videoSelect_${clipId}`).value = videoId
+                // document.getElementById(`videoSelect_${clipId}`).value = videoId
 
             }else{
 
