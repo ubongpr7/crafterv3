@@ -340,7 +340,7 @@
         const li= document.getElementById(`current_li_${clip_id}`)
         if (li){
             li.disabled=true
-
+            li.style.cursor='wait'
             console.log(li, ' has been disabled')   
         }
     const form = document.getElementById(formId);
@@ -372,17 +372,18 @@
             .then(data => {
                 if (data.success) {
                     console.log("Subclip created with ID:", data.subclip_id);
-                    if (document.getElementById(`current_li_${clip_id}`)){
-                        const liItem=document.getElementById(`current_li_${clip_id}`);
-                        liItem.dataset.video_clip_id=data.video_clip_id;
-                        liItem.dataset.current_file=data.current_file;
-                        liItem.dataset.cat_id=data.cat_id;
-                        liItem.dataset.id=data.subclip_id;
-                        liItem.dataset.subclip_id=data.subclip_id;
-                        liItem.dataset.main_id=data.main_id;
-                        liItem.disabled=false;
-                        liItem.style.cursor='pointer';
-                        console.log(document.getElementById(`current_li_${clip_id}`));
+                    if (li){
+                        
+                        li.dataset.video_clip_id=data.video_clip_id;
+                        li.dataset.current_file=data.current_file;
+                        li.dataset.cat_id=data.cat_id;
+                        li.dataset.id=data.subclip_id;
+                        li.dataset.subclip_id=data.subclip_id;
+                        li.dataset.main_id=data.main_id;
+                        li.disabled=false;
+                        li.style.cursor='pointer';
+                        console.log(li);
+
 
                     };
                     document.getElementById('submit-clip').disabled = false;
