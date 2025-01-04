@@ -236,7 +236,7 @@
 
     function fetchVideoClips(selected) {
         id = selected.value;
-        let video_id = `videoSelect_${clip_id}_${num}`
+        let video_id = `videoSelect_${clip_id}`
         saveInput(selected)
         if (id ) {
             populateVideoCategories(video_id, `/video/get_clip/${id}`)
@@ -258,7 +258,7 @@
                 const currentNumber = idParts[idParts.length - 2];
 
                 const url = `/video/get_clip/${storedValue}`;
-                const targetId = `videoSelect_${clip_id}_${num}`;
+                const targetId = `videoSelect_${clip_id}`;
                 await populateVideoCategories(targetId, url);
 
             }
@@ -341,7 +341,7 @@
     //         const formClipID = document.getElementById('clipId').value;
 
     //         const fileInput = document.getElementById('slide_file');
-    //         const videoSelect = document.getElementById(`videoSelect_${formClipID}_${num}`);
+    //         const videoSelect = document.getElementById(`videoSelect_${formClipID}`);
 
     //         if ((!fileInput.value || fileInput.value.trim() === "") &&
     //             (!videoSelect || !videoSelect.value || videoSelect.value.trim() === "")) {
@@ -358,16 +358,17 @@
     //     }
     // }
     function attachValidation(formId, clipId) {
-        const li= document.getElementById(`current_${clip_id}_${num}`)
+        const li= document.getElementById(`current_${clip_id}`)
         if (li){
             li.disabled=true
+
             console.log(li, ' has been disabled')   
         }
     const form = document.getElementById(formId);
     if (form) {
         const formClipID = document.getElementById('clipId').value;
         const fileInput = document.getElementById('slide_file');
-        const videoSelect = document.getElementById(`videoSelect_${formClipID}_${num}`);
+        const videoSelect = document.getElementById(`videoSelect_${formClipID}`);
 
         if ((!fileInput.value || fileInput.value.trim() === "") &&
             (!videoSelect || !videoSelect.value || videoSelect.value.trim() === "")) {
@@ -393,8 +394,8 @@
             .then(data => {
                 if (data.success) {
                     console.log("Subclip created with ID:", data.subclip_id);
-                    if (document.getElementById(`current_li_${clip_id}_${num}`)){
-                        const liItem=document.getElementById(`current_li_${clip_id}_${num}`);
+                    if (document.getElementById(`current_li_${clip_id}`)){
+                        const liItem=document.getElementById(`current_li_${clip_id}`);
                         liItem.dataset.video_clip_id=data.video_clip_id;
                         liItem.dataset.current_file=data.current_file;
                         liItem.dataset.cat_id=data.cat_id;

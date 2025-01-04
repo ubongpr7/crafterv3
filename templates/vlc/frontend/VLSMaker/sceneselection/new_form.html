@@ -605,7 +605,7 @@
               <div style="border-left:0.8px solid #864AF9" class="form-grid-item ">
       
               <div  class="form-group">
-                  <select id="selected_topic_${clipId}_${num}" onchange="fetchVideoClips(this)" name="selected_topic" class="form-select">
+                  <select id="selected_topic_${clipId}" onchange="fetchVideoClips(this)" name="selected_topic" class="form-select">
                       <option value="">Select Topic</option>
                       {%for cat in video_categories%}
                           <option value="{{cat.id}}">{{cat.name}}</option>
@@ -614,7 +614,7 @@
               </div>
               
               <div class="form-group">
-                  <select id="videoSelect_${clipId}_${num}" onclick="saveInput(this)" name="selected_video" class="form-select">
+                  <select id="videoSelect_${clipId}" onclick="saveInput(this)" name="selected_video" class="form-select">
                       <option value="" disabled selected>Select A Video Clip</option>
       
                   </select>
@@ -649,10 +649,10 @@
                     document.getElementById('currentFile').textContent = ''
                     document.getElementById('clear-file').style.display='flex'
                    
-                    document.getElementById(`videoSelect_${clip_id}_${num}`).value=""
-                    document.getElementById(`selected_topic_${clip_id}_${num}`).value=""
-                    saveInput(document.getElementById(`videoSelect_${clip_id}_${num}`))
-                    saveInput(document.getElementById(`selected_topic_${clip_id}_${num}`))
+                    document.getElementById(`videoSelect_${clip_id}`).value=""
+                    document.getElementById(`selected_topic_${clip_id}`).value=""
+                    saveInput(document.getElementById(`videoSelect_${clip_id}`))
+                    saveInput(document.getElementById(`selected_topic_${clip_id}`))
                 }
 
             } else {
@@ -730,7 +730,7 @@
                                 editCurrentLi(li);
                             };
                             num = span.dataset.num
-                            li.id=`current_li_${clipId}_${num}`
+                            li.id=`current_li_${clipId}`
 
                         ul.insertBefore(li, span);
 
@@ -802,7 +802,7 @@
               <div style="border-left:0.8px solid #864AF9" class="form-grid-item ">
       
               <div  class="form-group">
-                  <select id="selected_topic_${clipId}_${num}" onchange="fetchVideoClips(this)" name="selected_topic" class="form-select">
+                  <select id="selected_topic_${clipId}" onchange="fetchVideoClips(this)" name="selected_topic" class="form-select">
                       <option value="">Select Topic</option>
                       {%for cat in video_categories%}
                           <option value="{{cat.id}}">{{cat.name}}</option>
@@ -811,7 +811,7 @@
               </div>
               
               <div class="form-group">
-                  <select id="videoSelect_${clipId}_${num}" onclick="saveInput(this)" name="selected_video" class="form-select">
+                  <select id="videoSelect_${clipId}" onclick="saveInput(this)" name="selected_video" class="form-select">
                       <option value="" disabled selected>Select A Video Clip</option>
       
                   </select>
@@ -823,9 +823,9 @@
             if (currentFile) {
                 document.getElementById('currentFile').textContent = `Current File: ${currentFile}`
             }
-            document.getElementById(`selected_topic_${clipId}_${num}`).value = catId
-            fetchVideoClips(document.getElementById(`selected_topic_${clipId}_${num}`))
-            document.getElementById(`videoSelect_${clipId}_${num}`).value = videoId
+            document.getElementById(`selected_topic_${clipId}`).value = catId
+            fetchVideoClips(document.getElementById(`selected_topic_${clipId}`))
+            document.getElementById(`videoSelect_${clipId}`).value = videoId
             editForm.addEventListener('submit', (e) => {
                 e.preventDefault();
 
