@@ -434,7 +434,6 @@ function attachValidation(formId, clipId) {
 
             // Prepare form data for submission
             const formData = new FormData(form);
-            document.getElementById('add-subclip-popup').style.display = 'none';
 
             // Submit the form via AJAX
             fetch(form.action, {
@@ -469,6 +468,9 @@ function attachValidation(formId, clipId) {
                     // Reset the form
                     form.reset(); // Clear all inputs in the form
                     console.log('Clip Submitted Successfully');
+                    document.getElementById('submit-cont').innerHTML='<h1>Form Submitted Successfully</h1>'
+                    document.getElementById('add-subclip-popup').style.display = 'none';
+
                 } else {
                     document.getElementById('error-slide').textContent = data.error || "An error occurred.";
                 }
