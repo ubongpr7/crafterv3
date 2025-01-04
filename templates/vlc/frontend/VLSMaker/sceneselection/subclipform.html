@@ -234,12 +234,15 @@
         }
     });
 
-    function fetchVideoClips(selected) {
+    function fetchVideoClips(selected,videoId=null) {
         id = selected.value;
         let video_id = `videoSelect_${clip_id}`
         saveInput(selected)
         if (id ) {
             populateVideoCategories(video_id, `/video/get_clip/${id}`)
+            if (videoId){
+                document.getElementById(video_id).value=videoId
+            }
 
         }else {
             document.getElementById(video_id).innerHTML=`<option selected disabled value="">Select A Video Clip</option>`
