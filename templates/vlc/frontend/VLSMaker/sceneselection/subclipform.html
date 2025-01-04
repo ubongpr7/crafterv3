@@ -277,7 +277,7 @@
 
     function populateVideoCategories(selectElementId, apiUrl) {
         const selectElement = document.getElementById(selectElementId);
-
+        selectElement.innerHTML=''
         if (!selectElement) {
             console.error(`Select element with ID "${selectElementId}" not found.`);
             return;
