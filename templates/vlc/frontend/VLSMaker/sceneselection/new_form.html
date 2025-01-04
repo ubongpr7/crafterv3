@@ -826,9 +826,12 @@
             if (currentFile) {
                 document.getElementById('currentFile').textContent = `Current File: ${currentFile}`
             }
-            document.getElementById(`selected_topic_${clipId}`).value = catId
-            fetchVideoClips(document.getElementById(`selected_topic_${clipId}`))
-            document.getElementById(`videoSelect_${clipId}`).value = videoId
+            if (videoId){
+                document.getElementById(`selected_topic_${clipId}`).value = catId
+                fetchVideoClips(document.getElementById(`selected_topic_${clipId}`))
+                document.getElementById(`videoSelect_${clipId}`).value = videoId
+
+            }
             editForm.addEventListener('submit', (e) => {
                 e.preventDefault();
 
