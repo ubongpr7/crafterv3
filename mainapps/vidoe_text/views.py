@@ -71,17 +71,17 @@ def add_subclip(request, id):
             text_clip.save()
 
             # Return the created SubClip data as JSON
-            video_clip_id=None
-            cat_id=None
+            video_clip_id=''
+            cat_id=''
             if subclip.video_clip:
                 video_clip_id=subclip.video_clip.id
                 cat_id=subclip.video_clip.category.id
 
             return JsonResponse({
                 "success": True,
-                "subclip_id": subclip.id,
+                "subclip_id": str(subclip.id),
                 "current_file": subclip.get_video_file_name(),
-                "video_clip_id": video_clip_id,
+                "video_clip_id": str(video_clip_id),
                 "cat_id": cat_id,
                 "main_id": id,
             })
@@ -122,17 +122,17 @@ def edit_subclip(request,id):
         subclip.save()
 
         
-        video_clip_id=None
-        cat_id=None
+        video_clip_id=''
+        cat_id=''
         if subclip.video_clip:
             video_clip_id=subclip.video_clip.id
             cat_id=subclip.video_clip.category.id
 
         return JsonResponse({
             "success": True,
-            "subclip_id": subclip.id,
+            "subclip_id":str( subclip.id),
             "current_file": subclip.get_video_file_name(),
-            "video_clip_id": video_clip_id,
+            "video_clip_id": str(video_clip_id),
             "cat_id": cat_id,
             "main_id": subclip.main_line.id,
         })
