@@ -360,7 +360,8 @@
     function attachValidation(formId, clipId) {
         const li= document.getElementById(`current_${clip_id}_${num}`)
         if (li){
-            li.disabled=true   
+            li.disabled=true
+            console.log(li, ' has been disabled')   
         }
     const form = document.getElementById(formId);
     if (form) {
