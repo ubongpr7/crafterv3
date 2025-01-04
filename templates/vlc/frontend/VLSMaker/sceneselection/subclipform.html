@@ -368,10 +368,6 @@ function attachValidation(formId, clipId) {
             // Prepare form data for submission
             const formData = new FormData(form);
 
-            // Submit the form via AJAX
-            form.disabled=true;
-            form.style.display='wait'
-            
             if (submitCheck){
                 submitCheck=false
                 document.getElementById('add-subclip-popup').style.display = 'none';

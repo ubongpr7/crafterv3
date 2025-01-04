@@ -661,7 +661,6 @@
 
             } else {
 
-                // sessionStorage.setItem(inputElement.id, inputElement.value);
                 console.log(inputElement.value);
                 
                 if (inputElement.value !== ''){
@@ -834,7 +833,10 @@
                 console.log('videoId: ',videoId )
                 document.getElementById(`selected_topic_${clipId}`).value = catId
                 fetchVideoClips(document.getElementById(`selected_topic_${clipId}`),videoId)
-                // document.getElementById(`videoSelect_${clipId}`).value = `${videoId}`
+                setTimeout(
+                    document.getElementById(`videoSelect_${clipId}`).value = `${videoId}`,
+                    1000
+                )
 
             }else{
 
