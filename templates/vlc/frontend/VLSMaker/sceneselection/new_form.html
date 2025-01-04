@@ -856,6 +856,7 @@
             const cat_id= liItem.dataset.cat_id
             const subclip_id= liItem.dataset.subclip_id
             const main_id= liItem.dataset.main_id
+            const editForm =document.getElementById('add-subclip-form')
             editForm.action = `/text/edit_subclip/${video_clip_id}/`
             document.getElementById('add-subclip-popup').style.display = 'flex';
 
