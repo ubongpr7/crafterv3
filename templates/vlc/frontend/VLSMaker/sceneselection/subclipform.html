@@ -344,6 +344,7 @@ function attachValidation(formId, clipId) {
     const li = document.getElementById(`current_li_${clipId}`);
     if (li) {
         li.disabled=true
+        li.style.cursor='wait'
         console.log(li, ' has been disabled');
     }
 
