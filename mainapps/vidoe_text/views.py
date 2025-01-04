@@ -80,7 +80,7 @@ def add_subclip(request, id):
             return JsonResponse({
                 "success": True,
                 "subclip_id": subclip.id,
-                "current_file": subclip.get_video_file_name,
+                "current_file": subclip.get_video_file_name(),
                 "video_clip_id": video_clip_id,
                 "cat_id": cat_id,
                 "main_id": id,
