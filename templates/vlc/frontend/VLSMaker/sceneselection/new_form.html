@@ -848,6 +848,7 @@
     <script>
         function editCurrentLi(liItem) {    
             num=liItem.dataset.num;
+            console.log(liItem)
             clip_id=liItem.dataset.clipId;
             text= liItem.textContent
             const video_clip_id= liItem.dataset.video_clip_id
@@ -855,7 +856,10 @@
             const cat_id= liItem.dataset.cat_id
             const subclip_id= liItem.dataset.subclip_id
             const main_id= liItem.dataset.main_id
+            editForm.action = `/text/edit_subclip/${video_clip_id}/`
+            document.getElementById('add-subclip-popup').style.display = 'flex';
 
+ 
             handleEditSelection(liItem,current_file,video_clip_id,cat_id)
 
         }
