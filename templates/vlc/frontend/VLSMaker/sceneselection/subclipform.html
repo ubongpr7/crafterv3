@@ -363,6 +363,8 @@ function attachValidation(formId, clipId) {
             const formData = new FormData(form);
 
             // Submit the form via AJAX
+            form.disabled=true;
+            form.style.display='wait'
             fetch(form.action, {
                 method: 'POST',
                 body: formData,
@@ -393,12 +395,15 @@ function attachValidation(formId, clipId) {
                     }
 
                     // Reset the form
+                    sessionStorage.clear();
                     form.reset(); // Clear all inputs in the form
                     console.log('Clip Submitted Successfully');
                     setTimeout(() => {
                         document.getElementById('submit-cont').innerHTML='<h1>Form Submitted Successfully</h1>'
-                        }, 500);
-                    document.getElementById('add-subclip-popup').style.display = 'none';
+                        }, 1000);
+                    // document.getElementById('add-subclip-popup').style.display = 'none';
+                    form.disabled=false;
+                    form.style.display='default'
 
                 } else {
                     document.getElementById('error-slide').textContent = data.error || "An error occurred.";
