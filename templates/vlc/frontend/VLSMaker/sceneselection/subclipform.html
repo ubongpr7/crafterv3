@@ -395,6 +395,9 @@ function attachValidation(formId, clipId) {
                             li.id = `current_li_${clipId}`;
                             console.log(li);
                             li.style.cursor = 'pointer';
+                            li.onclick=function () {
+                                editCurrentLi(li);
+                            };
                         }
     
                         // Reset the form
