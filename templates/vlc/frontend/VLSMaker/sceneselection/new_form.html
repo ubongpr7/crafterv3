@@ -576,6 +576,7 @@
             document.getElementById('add-subclip-popup').style.display = 'flex';
             const formElement = document.getElementById('add-subclip-form')
             formElement.action = `/text/add_subclip/${clipId}/`
+            formElement.id=`add-subclip-form${clipId}`
             const htmlContainer = document.getElementById('submit-cont');
             clip_id = clipId
             htmlContainer.innerHTML = `
@@ -743,9 +744,9 @@
                         remainingInput.value = remainingText;
                         span.innerText = remainingText;
                         openPopup(clipId, selectedText, remainingText);
-                        document.getElementById('add-subclip-form').addEventListener('submit', (e) => {
+                        document.getElementById(`add-subclip-form${clipId}`).addEventListener('submit', (e) => {
                             e.preventDefault();
-                            attachValidation('add-subclip-form', clipId);
+                            attachValidation(`add-subclip-form${clipId}`, clipId);
                         })
 
 
@@ -771,6 +772,7 @@
             submitCheck=true
             const editForm = document.getElementById('add-subclip-form')
             editForm.action = `/text/edit_subclip/${clipId}/`
+            editForm.id=`add-subclip-form${clipId}`
 
             const htmlContainer = document.getElementById('submit-cont');
             const selectedText = liElement.textContent
@@ -844,7 +846,7 @@
             editForm.addEventListener('submit', (e) => {
                 e.preventDefault();
 
-                attachValidation('add-subclip-form', clipId);
+                attachValidation(editForm.id, clipId);
 
             });
 
