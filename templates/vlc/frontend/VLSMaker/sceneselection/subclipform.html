@@ -498,7 +498,6 @@ function attachValidation(formId, clipId) {
             })
             .finally(() => {
                 // Re-enable the form and reset the file input
-                form.id='add-subclip-form'
                 form.disabled = false;
                 if (fileInput) {
                     fileInput.value = ""; // Clear file input
