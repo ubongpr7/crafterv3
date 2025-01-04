@@ -387,8 +387,8 @@
             .then(data => {
                 if (data.success) {
                     console.log("Subclip created with ID:", data.subclip_id);
-                    if (document.getElementById(`current_li_${formClipID}_${num}`)){
-                        const liItem=document.getElementById(`current_li_${formClipID}_${num}`);
+                    if (document.getElementById(`current_li_${clip_id}_${num}`)){
+                        const liItem=document.getElementById(`current_li_${clip_id}_${num}`);
                         liItem.dataset.video_clip_id=data.video_clip_id;
                         liItem.dataset.current_file=data.current_file;
                         liItem.dataset.cat_id=data.cat_id;
