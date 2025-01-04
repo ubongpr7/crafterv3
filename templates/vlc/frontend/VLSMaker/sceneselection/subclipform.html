@@ -398,10 +398,8 @@ function attachValidation(formId, clipId) {
                     sessionStorage.clear();
                     form.reset(); // Clear all inputs in the form
                     console.log('Clip Submitted Successfully');
-                    setTimeout(() => {
-                        document.getElementById('submit-cont').innerHTML='<h1>Form Submitted Successfully</h1>'
-                        }, 1000);
-                    // document.getElementById('add-subclip-popup').style.display = 'none';
+                    
+                    document.getElementById('add-subclip-popup').style.display = 'none';
                     form.disabled=false;
                     form.style.display='default'
 
