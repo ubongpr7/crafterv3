@@ -25,45 +25,71 @@ from botocore.exceptions import NoCredentialsError, PartialCredentialsError
 from django.apps import apps
 import tempfile
 
+def get_subclip_data(request, subclip_id):
+    text=request.GET.get('text')
+    clip = get_object_or_404(TextLineVideoClip, id=subclip_id)
+    subclip = SubClip.objects.filter(subtittle=text,main_line=clip).values("id")
+    
+    return JsonResponse( safe=False)
+
 def get_clips_id(request, textfile_id):
     text_file = get_object_or_404(TextFile, id=textfile_id)
     clips = TextLineVideoClip.objects.filter(text_file=text_file).values("id")
     
-    # Convert queryset to a list of clip ids
     clip_ids = [clip["id"] for clip in clips]
     return JsonResponse(clip_ids, safe=False)
-def add_subclip(request,id):
-    
-    text_clip= TextLineVideoClip.objects.get(id=id)
 
-    if request.method=="POST":
-        textfile_id=request.POST.get('textfile_id')
-        remaining=request.POST.get('remaining')
-        file_=request.FILES.get(f'slide_file')
-        text=request.POST.get(f'slide_text')
-        asset_clip_id=request.POST.get(f'selected_video')
+def add_subclip(request, id):
+    text_clip = get_object_or_404(TextLineVideoClip, id=id)
+
+    if request.method == "POST":
+        textfile_id = request.POST.get('textfile_id')
+        remaining = request.POST.get('remaining')
+        file_ = request.FILES.get('slide_file')
+        text = request.POST.get('slide_text')
+        asset_clip_id = request.POST.get('selected_video')
+
+        subclip = None  # Initialize variable for created subclip
+
         if file_:
-            subclip=SubClip.objects.create(
+            subclip = SubClip.objects.create(
                 subtittle=text,
                 video_file=file_,
                 main_line=text_clip
-
             )
-            text_clip.remaining=remaining
-            text_clip.save()
         elif asset_clip_id:
-            video= VideoClip.objects.get(id=asset_clip_id)
-
-            subclip=SubClip.objects.create(
+            video = get_object_or_404(VideoClip, id=asset_clip_id)
+            subclip = SubClip.objects.create(
                 subtittle=text,
                 video_clip=video,
                 main_line=text_clip
-
             )
-            text_clip.remaining=remaining
+
+        if subclip:
+            # Update the text_clip remaining field
+            text_clip.remaining = remaining
             text_clip.save()
 
-    return redirect(f'/video/add-scene/{textfile_id}/#grid-containerid')
+            # Return the created SubClip data as JSON
+            video_clip_id=None
+            cat_id=None
+            if subclip.video_clip.id:
+                video_clip_id=subclip.video_clip.id
+                cat_id=subclip.video_clip.category.id
+
+            return JsonResponse({
+                "success": True,
+                "subclip_id": subclip.id,
+                "current_file": subclip.get_video_file_name,
+                "video_clip_id": video_clip_id,
+                "cat_id": cat_id,
+                "main_id": id,
+            })
+
+        return JsonResponse({"success": False, "error": "Failed to create subclip."}, status=400)
+
+    return JsonResponse({"success": False, "error": "Invalid request method."}, status=400)
+
 def delete_textfile(request, textfile_id):
     textfile=TextFile.objects.get(id=textfile_id)
     if request.method=='POST':
@@ -96,7 +122,23 @@ def edit_subclip(request,id):
         subclip.save()
 
         
-        return redirect(f'/video/add-scene/{textfile_id}/#grid-containerid')
+        video_clip_id=None
+        cat_id=None
+        if subclip.video_clip.id:
+            video_clip_id=subclip.video_clip.id
+            cat_id=subclip.video_clip.category.id
+
+        return JsonResponse({
+            "success": True,
+            "subclip_id": subclip.id,
+            "current_file": subclip.get_video_file_name,
+            "video_clip_id": video_clip_id,
+            "cat_id": cat_id,
+            "main_id": subclip.main_line.id,
+        })
+
+    return JsonResponse({"success": False, "error": "Failed to create subclip."}, status=400)
+
 
 @csrf_exempt
 def reset_subclip(request, id):

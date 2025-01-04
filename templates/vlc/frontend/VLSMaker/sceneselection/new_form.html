@@ -360,13 +360,7 @@
     .grid-container {
         margin-top: 2.5rem;
         margin-bottom: 62px;
-        /* display: flex;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: left;
-        width: 100%;
-        margin-bottom: 48px; */
+        
     }
 
     .title {
@@ -654,7 +648,10 @@
                     uploadElement.textContent=fileName.slice(0,15)
                     document.getElementById('currentFile').textContent = ''
                     document.getElementById('clear-file').style.display='flex'
-
+                    liItem=document.getElementById(`current_li_${clip_id}_${num}`)
+                    if (liElement){
+                        liElement.dataset.currentFile=fileName.slice(0,15)
+                    }
                     document.getElementById(`videoSelect_${clip_id}_${num}`).value=""
                     document.getElementById(`selected_topic_${clip_id}_${num}`).value=""
                     saveInput(document.getElementById(`videoSelect_${clip_id}_${num}`))
@@ -727,8 +724,19 @@
                         clip_id = clipId
                         const li = document.createElement("li");
                         li.innerText = selectedText;
-                        num = span.dataset.num
+                        li.dataset.clipId = clipId;
+                        li.dataset.num = span.dataset.num;
+                        li.dataset.currentFile = ''
+                        li.disabled=true
+                        li.style.cursor='wait'
+                        li.onclick = function () {
+                                editCurrentLi(this);
+                            };
+                            num = span.dataset.num
+                            li.id=`current_li_${clipId}_${num}`
+
                         ul.insertBefore(li, span);
+
                         const remainingText = fullText.slice(selectedText.length).trim();
                         remainingInput.value = remainingText;
                         span.innerText = remainingText;
@@ -755,8 +763,7 @@
 
 
 
-
-    <!-- edit -->
+<!-- edit -->
     <script>
         function handleEditSelection(liElement, currentFile, clipId, videoId, catId) {
             const editForm = document.getElementById('add-subclip-form')
@@ -785,7 +792,7 @@
                           <i class="ri-upload-line"></i>
                           <span id="upload-text">Choose File</span>
                           
-                          </label>
+                            </label>
                           <i id="clear-file" style="display:none" onclick="clearFileInput()" class="ri-close-circle-line"></i>
 
                       <input type="file" onchange="saveInput(this)" id="slide_file" name="slide_file" class="upload-input" accept="video/*">
@@ -838,5 +845,21 @@
             document.getElementById('add-subclip-popup').style.display = 'flex';
 
             handleEditSelection(liElement, currentFile, clipid, videoId, catId);
+        }
+    </script>
+<!-- edit current_li_ -->
+    <script>
+        function editCurrentLi(liItem) {    
+            num=liItem.dataset.num;
+            clip_id=liItem.dataset.clipId;
+            text= liItem.textContent
+            const video_clip_id= liItem.dataset.video_clip_id
+            const current_file= liItem.dataset.current_file
+            const cat_id= liItem.dataset.cat_id
+            const subclip_id= liItem.dataset.subclip_id
+            const main_id= liItem.dataset.main_id
+
+            handleEditSelection(liItem,current_file,video_clip_id,cat_id)
+
         }
     </script>

@@ -335,27 +335,84 @@
             console.log("No <li> items found to remove.");
         }
     }
+    // function attachValidation(formId, clipId) {
+    //     const form = document.getElementById(formId);
+    //     if (form) {
+    //         const formClipID = document.getElementById('clipId').value;
+
+    //         const fileInput = document.getElementById('slide_file');
+    //         const videoSelect = document.getElementById(`videoSelect_${formClipID}_${num}`);
+
+    //         if ((!fileInput.value || fileInput.value.trim() === "") &&
+    //             (!videoSelect || !videoSelect.value || videoSelect.value.trim() === "")) {
+    //             // alert("Please either upload a video file or select a video clip.");
+    //             document.getElementById('error-slide').textContent = 'Select A Clip';
+    //             videoSelect.focus();
+    //         } else {
+    //             document.getElementById('submit-clip').disabled = true
+    //             document.getElementById('submit-clip').style.cursor = 'wait'
+
+    //             form.submit();
+    //         }
+
+    //     }
+    // }
     function attachValidation(formId, clipId) {
-        const form = document.getElementById(formId);
-        if (form) {
-            const formClipID = document.getElementById('clipId').value;
+    const form = document.getElementById(formId);
+    if (form) {
+        const formClipID = document.getElementById('clipId').value;
+        const fileInput = document.getElementById('slide_file');
+        const videoSelect = document.getElementById(`videoSelect_${formClipID}_${num}`);
 
-            const fileInput = document.getElementById('slide_file');
-            const videoSelect = document.getElementById(`videoSelect_${formClipID}_${num}`);
+        if ((!fileInput.value || fileInput.value.trim() === "") &&
+            (!videoSelect || !videoSelect.value || videoSelect.value.trim() === "")) {
+            document.getElementById('error-slide').textContent = 'Select A Clip';
+            videoSelect.focus();
+        } else {
+            document.getElementById('submit-clip').disabled = true;
+            document.getElementById('submit-clip').style.cursor = 'wait';
 
-            if ((!fileInput.value || fileInput.value.trim() === "") &&
-                (!videoSelect || !videoSelect.value || videoSelect.value.trim() === "")) {
-                // alert("Please either upload a video file or select a video clip.");
-                document.getElementById('error-slide').textContent = 'Select A Clip';
-                videoSelect.focus();
-            } else {
-                document.getElementById('submit-clip').disabled = true
-                document.getElementById('submit-clip').style.cursor = 'wait'
+            // Create a FormData object to gather all form inputs
+            const formData = new FormData(form);
 
-                form.submit();
-            }
-
+            // Send the AJAX request
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest', // For Django to identify AJAX request
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log("Subclip created with ID:", data.subclip_id);
+                    if (document.getElementById(`current_li_${formClipID}_${num}`)){
+                        const liItem=document.getElementById(`current_li_${formClipID}_${num}`);
+                        liItem.dataset.video_clip_id=data.video_clip_id;
+                        liItem.dataset.current_file=data.current_file;
+                        liItem.dataset.cat_id=data.cat_id;
+                        liItem.dataset.id=data.subclip_id;
+                        liItem.dataset.subclip_id=data.subclip_id;
+                        liItem.dataset.main_id=data.main_id;
+                        liItem.disabled=false;
+                        document.getElementById('add-subclip-popup').style.display = 'none';
+                    };
+                    alert('Clip Submitted Successfully');
+                } else {
+                    document.getElementById('error-slide').textContent = data.error || "An error occurred.";
+                }
+            })
+            .catch(error => {
+                console.error("Error submitting form:", error);
+                document.getElementById('error-slide').textContent = "An error occurred.";
+            })
+            .finally(() => {
+                document.getElementById('submit-clip').disabled = false;
+                document.getElementById('submit-clip').style.cursor = 'pointer';
+            });
         }
     }
+}
 
 </script>
