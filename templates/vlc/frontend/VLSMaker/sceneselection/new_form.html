@@ -860,7 +860,9 @@
 <!-- edit current_li_ -->
     <script>
         function editCurrentLi(liItem) {  
-              
+            if (liItem.disabled){
+
+            }else{
             console.log(liItem)
             clip_id=liItem.dataset.subclip_id;
             num=clip_id
@@ -876,6 +878,7 @@
 
  
             handleEditSelection(liItem,current_file,subclip_id,video_clip_id,cat_id)
+            }
 
         }
     </script>
