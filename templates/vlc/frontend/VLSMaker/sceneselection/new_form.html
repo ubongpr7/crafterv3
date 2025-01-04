@@ -419,7 +419,7 @@
 
                                 {% for subclip in clip.subclips.all %}
                                 <li data-id="{{subclip.id}}"
-                                id="current_li_{{subclip.id}}" data-video_clip_id="{{subclip.video_clip.id}}" data-current_file="{{subclip.get_video_file_name}}" data-cat_id="{{subclip.video_clip.category.id}}" data-subclip_id="{{subclip.id}}" data-main_id="{{subclip.main_line.id}}"
+                                id="current_li_{{subclip.id}}" data-current_file="{{subclip.get_video_file_name}}" data-video_clip_id="{{subclip.video_clip.id}}"  data-cat_id="{{subclip.video_clip.category.id}}" data-subclip_id="{{subclip.id}}" data-main_id="{{subclip.main_line.id}}"
                                     onclick="editCurrentLi(this)">
                                     {{subclip.subtittle}}</li>
                                 {% endfor %}
