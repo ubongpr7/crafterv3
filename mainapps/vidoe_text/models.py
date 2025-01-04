@@ -256,7 +256,9 @@ class SubClip(models.Model):
             return "empty"
 
     def get_video_file_name(self):
-        filename = self.video_file.name.split("/")[-1]
+        filename=''
+        if self.video_file.name:
+            filename = self.video_file.name.split("/")[-1]
         return filename[:25]
     def delete(self, *args, **kwargs):
         if self.video_file and self.video_file.name:
