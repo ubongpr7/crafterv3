@@ -296,7 +296,7 @@
                 categories.forEach(cat => {
                     const option = document.createElement("option");
                     option.value = `${cat.id}`;
-                    option.textContent = cat.title;
+                    option.textContent = cat.id;
                     selectElement.appendChild(option);
                 });
                 restoreVideoSelectInputs();
