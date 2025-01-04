@@ -476,6 +476,8 @@
         textfile_id = '{{textfile.id}}'
         let num
         let clip_id
+        let submitCheck
+
         function subclipReset(clipID) {
             const textfileID = "{{textfile.id}}"
             const url = `/text/reset_subclip/${clipID}/`;
@@ -707,6 +709,7 @@
 
 
         function handleSelection(span, ul, remainingInput, errorMessage, clipId) {
+            submitCheck=true
             document.getElementById(`grid_${clipId}`).addEventListener("mouseup", function () {
                 const selection = window.getSelection();
                 if (selection && selection.toString().trim()) {
@@ -766,6 +769,7 @@
 <!-- edit -->
     <script>
         function handleEditSelection(liElement, currentFile, clipId, videoId, catId) {
+            submitCheck=true
             const editForm = document.getElementById('add-subclip-form')
             editForm.action = `/text/edit_subclip/${clipId}/`
 
@@ -852,7 +856,8 @@
     </script>
 <!-- edit current_li_ -->
     <script>
-        function editCurrentLi(liItem) {    
+        function editCurrentLi(liItem) {  
+              
             console.log(liItem)
             clip_id=liItem.dataset.subclip_id;
             num=clip_id
