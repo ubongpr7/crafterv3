@@ -832,7 +832,7 @@
                 console.log('videoId: ',videoId )
                 document.getElementById(`selected_topic_${clipId}`).value = catId
                 await fetchVideoClips(document.getElementById(`selected_topic_${clipId}`),videoId);
-                document.getElementById(`videoSelect_${clipId}`).value = `${videoId}`;
+                document.getElementById(`videoSelect_${clipId}`).value =videoId
             }else{
 
             }
