@@ -232,6 +232,38 @@ function openPopup(clipId, selectedText, remainingText) {
         }
     }
 
+    function populateVideoCategories(selectElementId, apiUrl) {
+        const selectElement = document.getElementById(selectElementId);
+        selectElement.innerHTML=''
+        if (!selectElement) {
+            console.error(`Select element with ID "${selectElementId}" not found.`);
+            return;
+        }
+
+
+        // Fetch categories from the API
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(categories => {
+                categories.forEach(cat => {
+                    const option = document.createElement("option");
+                    option.value = cat.id;
+                    option.textContent = cat.title;
+                    selectElement.appendChild(option);
+                });
+                // restoreVideoSelectInputs();
+
+            })
+            .catch(error => {
+                console.error("Failed to fetch video categories:", error);
+            });
+    }
+
     function handleClips(clipIds) {
             clipIds.forEach(clipId => {
                 const wrapper = document.querySelector(`#wrapper_${clipId}`);
