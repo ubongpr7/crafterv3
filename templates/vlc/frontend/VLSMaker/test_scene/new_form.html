@@ -187,10 +187,10 @@ function openPopup(clipId, selectedText, remainingText) {
                     document.getElementById('currentFile').textContent = ''
                     document.getElementById('clear-file').style.display='flex'
                    
-                    document.getElementById(`videoSelect_${clip_id}`).value=""
-                    document.getElementById(`selected_topic_${clip_id}`).value=""
-                    saveInput(document.getElementById(`videoSelect_${clip_id}`))
-                    saveInput(document.getElementById(`selected_topic_${clip_id}`))
+                    document.getElementById(`videoSelect`).value=""
+                    document.getElementById(`selected_topic`).value=""
+                    saveInput(document.getElementById(`videoSelect`))
+                    saveInput(document.getElementById(`selected_topic`))
                 }
 
             } else {
