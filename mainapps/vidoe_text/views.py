@@ -95,7 +95,6 @@ def add_subcliphtmx(request, id):
     text_clip = get_object_or_404(TextLineVideoClip, id=id)
 
     if request.method == "POST":
-        textfile_id = request.POST.get('textfile_id')
         remaining = request.POST.get('remaining')
         file_ = request.FILES.get('slide_file')
         text = request.POST.get('slide_text')
@@ -131,17 +130,14 @@ def add_subcliphtmx(request, id):
 
             return JsonResponse({
                 "success": True,
-                "subclip_id": subclip.id,
-                "current_file": subclip.get_video_file_name(),
-                "video_clip_id": video_clip_id,
-                "cat_id": cat_id,
-                "video_data":video_data,
-                "main_id": id,
+                "id": subclip.id,
+                
             })
 
         return JsonResponse({"success": False, "error": "Failed to create subclip."}, status=400)
-
-    return render(request,'vlc//frontend/VLSMaker/test_scene/subclipform.html')
+    selected_text = request.GET.get('selectedText')
+    remaining_text = request.GET.get('remainingText')
+    return render(request,'vlc//frontend/VLSMaker/test_scene/subclipform.html',{'selected_text':selected_text,'remaining_text':remaining_text})
 
 def delete_textfile(request, textfile_id):
     textfile=TextFile.objects.get(id=textfile_id)

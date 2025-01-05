@@ -94,69 +94,20 @@
                 .catch(error => console.error('Error fetching clip IDs:', error));
         }
     
-//     function openPopup(clipId, selectedText, remainingText) {
-//     const modalContainer = document.getElementById('modal-cont');
-    
-//     if (modalContainer) {
-//         const getUrl = `/text/add_subcliphtmx/${clipId}/`;
-        
-//         htmx.ajax('GET', getUrl, { target: modalContainer });
-
-//         document.getElementById('add-subclip-popup').style.display = 'flex';
-//     } else {
-//         console.error("Modal container not found.");
-//     }
-// }
-// function openPopup(clipId, selectedText, remainingText) {
-//     const modalContainer = document.getElementById('modal-cont');
-//     const popup = document.getElementById('add-subclip-popup');
-
-//     if (modalContainer) {
-//         const getUrl = `/text/add_subcliphtmx/${clipId}/`;
-
-//         // Hide the popup initially
-//         if (popup) {
-//             popup.style.display = 'none';
-//         }
-
-//         // Make the HTMX request
-//         htmx.ajax('GET', getUrl, {
-//             target: modalContainer,
-//             swap: 'innerHTML',
-//             headers: {
-//                 'X-Requested-With': 'XMLHttpRequest',
-//             },
-//             onLoad: function () {
-//                 // Show the popup only after the HTMX request completes
-//                 if (popup) {
-//                     popup.style.display = 'flex';
-//                 }
-//             },
-//         });
-//     } else {
-//         console.error("Modal container not found.");
-//     }
-// }
-
 function openPopup(clipId, selectedText, remainingText) {
     const modalContainer = document.getElementById('modal-cont');
     const popup = document.getElementById('add-subclip-popup');
 
     if (modalContainer && popup) {
-        const getUrl = `/text/add_subcliphtmx/${clipId}/`;
-
-        // Hide the popup initially
+        const getUrl = `/text/add_subcliphtmx/${clipId}/?selectedText=${encodedSelectedText}&remainingText=${encodedRemainingText}`;
         popup.style.display = 'none';
 
-        // Add a listener for the HTMX `afterSwap` event
         modalContainer.addEventListener('htmx:afterSwap', function (event) {
             if (event.detail.target === modalContainer) {
-                // Show the popup only after the content is swapped in
                 popup.style.display = 'flex';
             }
-        }, { once: true }); // Ensure the listener is only executed once
+        }, { once: true }); 
 
-        // Make the HTMX request
         htmx.ajax('GET', getUrl, {
             target: "#modal-cont",
             swap: 'innerHTML',
