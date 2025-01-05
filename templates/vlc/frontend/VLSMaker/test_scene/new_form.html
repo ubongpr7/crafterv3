@@ -348,17 +348,20 @@ function openPopup(clipId, selectedText, remainingText) {
     }
     fetchClipIds("{{textfile.id}}")
     document.addEventListener("htmx:afterRequest", function (event) {
-    if (event.detail.requestConfig.url.includes("add_subcliphtmx")) {
-        const responseData = event.detail.xhr.responseText;
-
+    // Ensure requestConfig exists and the method is POST
+    const xhr = event.detail.xhr;
+    if (xhr && xhr.responseURL.includes("add_subcliphtmx") && xhr.method === "POST") {
         try {
-            const jsonResponse = JSON.parse(responseData);
+            // Parse the JSON response
+            const jsonResponse = JSON.parse(xhr.responseText);
 
             if (jsonResponse.success) {
                 const subclipId = jsonResponse.id;
 
+                // Perform additional tasks with the subclip ID
                 console.log("Subclip created with ID:", subclipId);
 
+                // Example: Add the subclip ID to a list or update the UI
                 const subclipList = document.getElementById("subclip-list");
                 if (subclipList) {
                     const newItem = document.createElement("li");
@@ -366,8 +369,10 @@ function openPopup(clipId, selectedText, remainingText) {
                     subclipList.appendChild(newItem);
                 }
 
+                // Display success message
                 alert(`Subclip created successfully with ID: ${subclipId}`);
             } else {
+                // Handle error scenario
                 console.error("Error creating subclip:", jsonResponse.error);
                 alert(`Failed to create subclip: ${jsonResponse.error}`);
             }
