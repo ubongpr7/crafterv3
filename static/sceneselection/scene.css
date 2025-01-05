@@ -5,16 +5,13 @@ p {
     background: #864af9;
     border: none;
     border-radius: 5px;
-    /* Rounded corners */
     padding: 10px 10px;
     color: white;
     font-size: 18px;
     font-family: 'Arial', sans-serif;
     cursor: pointer;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    /* Shadow effect */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    /* Animation on hover */
 }
 
 .center-container {
@@ -119,13 +116,6 @@ h6 {
     cursor: pointer;
 }
 
-/* .list-of-tags span {
-    flex: 1;
-    outline: none;
-    border: none;
-    padding: 5px;
-    font-size: 16px;
-} */
 .details {
     display: flex;
     justify-content: flex-end;
