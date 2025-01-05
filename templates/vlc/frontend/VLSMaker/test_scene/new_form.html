@@ -99,7 +99,7 @@ function openPopup(clipId, selectedText, remainingText) {
     const popup = document.getElementById('add-subclip-popup');
 
     if (modalContainer && popup) {
-        const getUrl = `/text/add_subcliphtmx/${clipId}/?selectedText=${encodedSelectedText}&remainingText=${encodedRemainingText}`;
+        const getUrl = `/text/add_subcliphtmx/${clipId}/?selectedText=${selectedText}&remainingText=${remainingText}`;
         popup.style.display = 'none';
 
         modalContainer.addEventListener('htmx:afterSwap', function (event) {
