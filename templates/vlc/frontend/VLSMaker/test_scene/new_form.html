@@ -107,37 +107,67 @@
 //         console.error("Modal container not found.");
 //     }
 // }
+// function openPopup(clipId, selectedText, remainingText) {
+//     const modalContainer = document.getElementById('modal-cont');
+//     const popup = document.getElementById('add-subclip-popup');
+
+//     if (modalContainer) {
+//         const getUrl = `/text/add_subcliphtmx/${clipId}/`;
+
+//         // Hide the popup initially
+//         if (popup) {
+//             popup.style.display = 'none';
+//         }
+
+//         // Make the HTMX request
+//         htmx.ajax('GET', getUrl, {
+//             target: modalContainer,
+//             swap: 'innerHTML',
+//             headers: {
+//                 'X-Requested-With': 'XMLHttpRequest',
+//             },
+//             onLoad: function () {
+//                 // Show the popup only after the HTMX request completes
+//                 if (popup) {
+//                     popup.style.display = 'flex';
+//                 }
+//             },
+//         });
+//     } else {
+//         console.error("Modal container not found.");
+//     }
+// }
+
 function openPopup(clipId, selectedText, remainingText) {
     const modalContainer = document.getElementById('modal-cont');
     const popup = document.getElementById('add-subclip-popup');
 
-    if (modalContainer) {
+    if (modalContainer && popup) {
         const getUrl = `/text/add_subcliphtmx/${clipId}/`;
 
         // Hide the popup initially
-        if (popup) {
-            popup.style.display = 'none';
-        }
+        popup.style.display = 'none';
+
+        // Add a listener for the HTMX `afterSwap` event
+        modalContainer.addEventListener('htmx:afterSwap', function (event) {
+            if (event.detail.target === modalContainer) {
+                // Show the popup only after the content is swapped in
+                popup.style.display = 'flex';
+            }
+        }, { once: true }); // Ensure the listener is only executed once
 
         // Make the HTMX request
         htmx.ajax('GET', getUrl, {
-            target: modalContainer,
+            target: "#modal-cont",
             swap: 'innerHTML',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
             },
-            onLoad: function () {
-                // Show the popup only after the HTMX request completes
-                if (popup) {
-                    popup.style.display = 'flex';
-                }
-            },
         });
     } else {
-        console.error("Modal container not found.");
+        console.error("Modal container or popup not found.");
     }
 }
-
     
     async function fetchNoSubclipIds() {
         try {
