@@ -85,7 +85,7 @@ def add_subclip(request, id):
                 "cat_id": cat_id,
                 "video_data":video_data,
                 "main_id": id,
-            }))
+            }),safe=False)
 
         return JsonResponse({"success": False, "error": "Failed to create subclip."}, status=400)
 
@@ -137,7 +137,7 @@ def edit_subclip(request,id):
             "video_clip_id": video_clip_id,
             "cat_id": cat_id,
             "main_id": subclip.main_line.id,
-        }))
+        }),safe=False)
 
     return JsonResponse({"success": False, "error": "Failed to create subclip."}, status=400)
 
