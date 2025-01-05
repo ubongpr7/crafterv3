@@ -188,7 +188,7 @@ function openPopup(clipId, selectedText, remainingText) {
                     document.getElementById('clear-file').style.display='flex'
                    
                     document.getElementById(`videoSelect`).value=""
-                    document.getElementById(`videoSelect`).innerHTML=""
+                    document.getElementById(`videoSelect`).innerHTML="<option value='' selected disabled>Select Video</option>"
                     document.getElementById(`selected_topic`).value=""
                     saveInput(document.getElementById(`videoSelect`))
                     saveInput(document.getElementById(`selected_topic`))
