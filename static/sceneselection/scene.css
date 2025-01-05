@@ -1,7 +1,6 @@
-p{
+p {
     text-transform: capitalize;
 }
-/* Style for the button */
 .file-button {
     background: #864af9;
     border: none;
@@ -246,7 +245,7 @@ h6 {
     background-color: #000000aa;
     width: max-content;
     opacity: 0;
-    -webkit-transition: opacity 0.2s ease-out;
+    /* -webkit-transition: opacity 0.2s ease-out; */
     color: #ffffff;
     border-radius: 6px;
 }
