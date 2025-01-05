@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.views.decorators.http import require_http_methods
 from mainapps.audio.models import BackgroundMusic
-from mainapps.video.models import VideoClip
+from mainapps.video.models import ClipCategory, VideoClip
 from mainapps.vidoe_text.decorators import (
     check_credits_and_ownership,
     check_user_credits,
@@ -94,6 +94,7 @@ def add_subclip(request, id):
 def add_subcliphtmx(request, id):
     text_clip = get_object_or_404(TextLineVideoClip, id=id)
 
+    video_categories = ClipCategory.objects.filter(user=request.user).values("id", "name", "parent_id")
     if request.method == "POST":
         remaining = request.POST.get('remaining')
         file_ = request.FILES.get('slide_file')
@@ -137,7 +138,7 @@ def add_subcliphtmx(request, id):
         return JsonResponse({"success": False, "error": "Failed to create subclip."}, status=400)
     selected_text = request.GET.get('selectedText')
     remaining_text = request.GET.get('remainingText')
-    return render(request,'vlc//frontend/VLSMaker/test_scene/subclipform.html',{'selected_text':selected_text,'remaining_text':remaining_text})
+    return render(request,'vlc//frontend/VLSMaker/test_scene/subclipform.html',{'categories':video_categories,'selected_text':selected_text,'remaining_text':remaining_text})
 
 def delete_textfile(request, textfile_id):
     textfile=TextFile.objects.get(id=textfile_id)
