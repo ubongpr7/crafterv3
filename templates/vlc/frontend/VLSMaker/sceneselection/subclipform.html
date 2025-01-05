@@ -380,19 +380,19 @@ function attachValidation(formId, clipId) {
                 })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.success) {
-                        console.log("Subclip created with ID:", data.subclip_id);
+                    if (data[0].success) {
+                        console.log("Subclip created with ID:", data[0].subclip_id);
                         
                         if (li) {
                             console.log('data: ', data);
-                            li.dataset.video_clip_id = data.video_clip_id;
-                            li.dataset.current_file = data.current_file;
-                            li.dataset.cat_id = data.cat_id;
-                            li.dataset.id = data.subclip_id;
-                            li.dataset.subclip_id = data.subclip_id;
-                            li.dataset.main_id = data.main_id;
+                            li.dataset.video_clip_id = data[0].video_clip_id;
+                            li.dataset.current_file = data[0].current_file;
+                            li.dataset.cat_id = data[0].cat_id;
+                            li.dataset.id = data[0].subclip_id;
+                            li.dataset.subclip_id = data[0].subclip_id;
+                            li.dataset.main_id = data[0].main_id;
                             li.disabled = false;
-                            clipId = data.subclip_id;
+                            clipId = data[0].subclip_id;
                             li.style.cursor = 'pointer';
                             
                         }

@@ -50,7 +50,7 @@ def add_subclip(request, id):
         asset_clip_id = request.POST.get('selected_video')
 
         subclip = None  # Initialize variable for created subclip
-
+        video_data=None
         if file_:
             subclip = SubClip.objects.create(
                 subtittle=text,
@@ -64,7 +64,7 @@ def add_subclip(request, id):
                 video_clip=video,
                 main_line=text_clip
             )
-
+            video_data = {"id": video.id, "name": video.name}  # Add video data
         if subclip:
             # Update the text_clip remaining field
             text_clip.remaining = remaining
@@ -77,14 +77,15 @@ def add_subclip(request, id):
                 video_clip_id=subclip.video_clip.id
                 cat_id=subclip.video_clip.category.id
 
-            return JsonResponse({
+            return JsonResponse(list({
                 "success": True,
                 "subclip_id": subclip.id,
                 "current_file": subclip.get_video_file_name(),
                 "video_clip_id": video_clip_id,
                 "cat_id": cat_id,
+                "video_data":video_data,
                 "main_id": id,
-            })
+            }))
 
         return JsonResponse({"success": False, "error": "Failed to create subclip."}, status=400)
 
@@ -125,17 +126,18 @@ def edit_subclip(request,id):
         video_clip_id=''
         cat_id=''
         if subclip.video_clip:
+
             video_clip_id=subclip.video_clip.id
             cat_id=subclip.video_clip.category.id
 
-        return JsonResponse({
+        return JsonResponse(list({
             "success": True,
             "subclip_id": subclip.id,
             "current_file": subclip.get_video_file_name(),
             "video_clip_id": video_clip_id,
             "cat_id": cat_id,
             "main_id": subclip.main_line.id,
-        })
+        }))
 
     return JsonResponse({"success": False, "error": "Failed to create subclip."}, status=400)
 
