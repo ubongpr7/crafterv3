@@ -91,6 +91,58 @@ def add_subclip(request, id):
 
     return JsonResponse({"success": False, "error": "Invalid request method."}, status=400)
 
+def add_subcliphtmx(request, id):
+    text_clip = get_object_or_404(TextLineVideoClip, id=id)
+
+    if request.method == "POST":
+        textfile_id = request.POST.get('textfile_id')
+        remaining = request.POST.get('remaining')
+        file_ = request.FILES.get('slide_file')
+        text = request.POST.get('slide_text')
+        asset_clip_id = request.POST.get('selected_video')
+
+        subclip = None  # Initialize variable for created subclip
+        video_data=None
+        if file_:
+            subclip = SubClip.objects.create(
+                subtittle=text,
+                video_file=file_,
+                main_line=text_clip
+            )
+        elif asset_clip_id:
+            video = get_object_or_404(VideoClip, id=asset_clip_id)
+            subclip = SubClip.objects.create(
+                subtittle=text,
+                video_clip=video,
+                main_line=text_clip
+            )
+            video_data = {"id": video.id, "name": video.name}  # Add video data
+        if subclip:
+            # Update the text_clip remaining field
+            text_clip.remaining = remaining
+            text_clip.save()
+
+            # Return the created SubClip data as JSON
+            video_clip_id=''
+            cat_id=''
+            if subclip.video_clip:
+                video_clip_id=subclip.video_clip.id
+                cat_id=subclip.video_clip.category.id
+
+            return JsonResponse({
+                "success": True,
+                "subclip_id": subclip.id,
+                "current_file": subclip.get_video_file_name(),
+                "video_clip_id": video_clip_id,
+                "cat_id": cat_id,
+                "video_data":video_data,
+                "main_id": id,
+            })
+
+        return JsonResponse({"success": False, "error": "Failed to create subclip."}, status=400)
+
+    return render(request,'vlc//frontend/VLSMaker/test_scene/subclipform.html')
+
 def delete_textfile(request, textfile_id):
     textfile=TextFile.objects.get(id=textfile_id)
     if request.method=='POST':

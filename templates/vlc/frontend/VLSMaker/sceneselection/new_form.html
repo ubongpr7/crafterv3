@@ -565,6 +565,7 @@
                 console.error('Error fetching no subclip IDs:', error);
             }
         }
+        
         function clearFileInput(){
             document.getElementById('slide_file').value='';
             document.getElementById('upload-text').textContent='Choose File'
@@ -630,6 +631,7 @@
 
             restoreForm();
         }
+        
         function fetchClipIds(textfileId) {
             fetch(`/text/get_clips_id/${textfileId}/`)
                 .then(response => response.json())
@@ -856,6 +858,7 @@
     </script>
 <!-- edit current_li_ -->
     <script>
+        
         function editCurrentLi(liItem) {  
             if (liItem.disabled){
 
@@ -878,4 +881,5 @@
             }
 
         }
-    </script>
+   
+   </script>

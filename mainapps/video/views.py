@@ -437,13 +437,15 @@ def add_video_clips(request, textfile_id):
         if video_clips:
             return render(
                 request,
-                "vlc/frontend/VLSMaker/sceneselection/index.html",
+                # "vlc/frontend/VLSMaker/sceneselection/index.html",
+                "vlc//frontend/VLSMaker/test_scene/index.html",
                 {"key":key,"video_clips": video_clips,"textfile": text_file,'video_categories':list(video_categories)},
             )
         else:
              return render(
                 request,
-                "vlc/frontend/VLSMaker/sceneselection/index.html",
+                # "vlc/frontend/VLSMaker/sceneselection/index.html",
+                "vlc//frontend/VLSMaker/test_scene/index.html",
                 { "key":key, "textfile": text_file},
             )
 

@@ -1,0 +1,298 @@
+
+<div id="grid-containerid" class="grid-container">
+    <div class="scene-container">
+        <div class="Scene">
+            <div class="select-scene-text" style="display: flex; justify-content: center; margin-bottom: 30px;">
+                <span style="font-size: 24px; font-weight: 700; line-height: 29.26px; text-align: center;">
+                    Select Your Scenes
+                </span>
+            </div>
+            <div class="grid-container"
+                style="display: grid; grid-template-columns: 0.2fr 1fr 0.1fr; border: 1px solid #0000004D;">
+                <div class="grid-item title column-1"><span>Subtitle</span></div>
+                <div class="grid-item title column-2"><span>Subtitle Text</span></div>
+                <div class="grid-item title column-3" style="text-align: center; width: 140px;"><span>Reset Clips</span>
+                </div>
+                {% for clip in video_clips %}
+
+                <div class="grid-item slide-row grid-row" data-slide="1"><span>Subtitle {{ clip.line_number }}</span>
+                </div>
+                <div class="grid-item slide-text" id="grid_{{clip.id}}" data-slide="1" tabindex="0">
+                    <div class="wrapper" id="wrapper_{{clip.id}}">
+                        <div style="width: 100%;" class="tag-box">
+                            <ul style="margin: 0;" id="list-of-tags_{{clip.id}}" class="list-of-tags">
+
+                                {% for subclip in clip.subclips.all %}
+                                <li data-id="{{subclip.id}}"
+                                id="current_li_{{subclip.id}}"
+                                    onclick="editCurrentLi(this)">
+                                    {{subclip.subtittle}}</li>
+                                {% endfor %}
+                                <span id="slide_span_{{clip.id}}" data-num="{{clip.get_number_of_subclip}}"
+                                    data-id="{{clip.id}}">{{ clip.remaining }}</span>
+                            </ul>
+                            <input id="remaining_{{clip.id}}" name="remaining_{{clip.id}}" hidden type="text">
+                        </div>
+                        <div id="error-message_{{clip.id}}" style="text-transform: capitalize;" class="error-message"></div>
+                    </div>
+
+                </div>
+                <input type="text" value="{{clip.slide}}" hidden name="slide_{{cilp.line_number}}"
+                    id="slide_{{clip.line_number}}">
+                <div class="grid-item slide-row grid-row  " data-slide="1">
+                    <!-- <div class="last-row"> -->
+                    <div class="icon-wrapper grid-item" id="icon_rapper_{{clip.id}}"
+                        onclick="subclipReset('{{clip.id}}','{{clip.total_clip}}','{{clip.line_number}}')"
+                        style="text-align: center; margin: 0 auto; border-right:none ; border-bottom:none ;">
+                        <i id="icon_{{clip.id}}" class="ri-loop-right-line fa-sync-alt"
+                            style="margin: 0 auto;font-size: 27px; font-weight: 600; cursor: pointer;"></i>
+                        <span class="notification-number">{{clip.get_number_of_subclip}}</span>
+                    </div>
+                    <!-- </div> -->
+
+
+
+                </div>
+                {% endfor %}
+                <form action="." method="post" id="processFile">
+                    {% csrf_token %}
+                    <input type="text" name="purpose" value="process" hidden>
+                </form>
+                <div class="button"
+                    style="position: absolute; right: 20px; bottom: 16px;height: 24px; width: fit-content; display: flex; justify-content: flex-end;">
+                    <div
+                        style="display: flex; align-items: center; justify-content: center; border-radius: 8px; background: #864AF9; cursor: pointer;">
+                        <button type="button" onclick="highlightNoSubclipIcons(this)" id="proceed-button"
+                            style="text-decoration: none; padding: 10px 20px; color: white; font-family: Montserrat; font-size: 18px; font-weight: 500; line-height: 24px; text-align: left; background: none; border: none; cursor: pointer;">
+                            Proceed To Background Music Selection
+                        </button>
+                        <svg width="24" height="24" type="button" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="white" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+        textfile_id = '{{textfile.id}}'
+        let num
+        let clip_id
+        let submitCheck
+
+    function fetchClipIds(textfileId) {
+            fetch(`/text/get_clips_id/${textfileId}/`)
+                .then(response => response.json())
+                .then(clipIds => {
+                    console.log('Fetched clip IDs:', clipIds);
+                    handleClips(clipIds);
+                })
+                .catch(error => console.error('Error fetching clip IDs:', error));
+        }
+    function openPopup(clipId, selectedText, remainingText) {
+            document.getElementById('add-subclip-popup').style.display = 'flex';
+            const formElement = document.getElementById('add-subclip-form')
+            formElement.action = `/text/add_subclip/${clipId}/`
+            const htmlContainer = document.getElementById('submit-cont');
+            
+        }
+    
+    async function fetchNoSubclipIds() {
+        try {
+            textfileId = textfile_id
+            const url = `/text/check_text_clip/${textfileId}/`;
+
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const idsOfNoSubclip = await response.json();
+
+            console.log('IDs of clips with no subclips:', idsOfNoSubclip);
+
+            return idsOfNoSubclip;
+        } catch (error) {
+            console.error('Error fetching no subclip IDs:', error);
+        }
+    }
+    
+    function closeModal() {
+        const errorElements = document.querySelectorAll('[id^="error"]');
+        sessionStorage.clear();
+
+        errorElements.forEach(element => {
+            element.textContent = "";
+        });
+        document.getElementById('add-subclip-popup').style.display = 'none';
+        // const form = document.getElementById('add-subclip-form');
+        // form.reset();
+        const formClipID = document.getElementById('clipId').value;
+        const ulElement = document.getElementById(`list-of-tags_${formClipID}`);
+        const spanElement = document.getElementById(`slide_span_${formClipID}`);
+        if (ulElement && ulElement.children.length > 1) {
+            const secondToLastLi = ulElement.children[ulElement.children.length - 2];
+            const secondToLastLiText = secondToLastLi.textContent;
+
+            const spanText = spanElement.textContent.trim();
+            spanElement.textContent = `${secondToLastLiText} ${spanText}`
+            console.log("Last <li> text:", secondToLastLiText);
+
+            ulElement.removeChild(secondToLastLi);
+        } else {
+            console.log("No <li> items found to remove.");
+        }
+    }
+    function saveInput(inputElement) {
+            const uploadElement = document.getElementById('upload-text');
+
+            if (inputElement.type === 'file') {
+                console.log(inputElement.value);
+
+                if (inputElement.value) {
+                    document.getElementById('error-slide').textContent = '';
+                    
+                    const fileName = inputElement.files.length > 0 ? inputElement.files[0].name : "Choode File";
+                    uploadElement.textContent=fileName.slice(0,15)
+                    document.getElementById('currentFile').textContent = ''
+                    document.getElementById('clear-file').style.display='flex'
+                   
+                    document.getElementById(`videoSelect_${clip_id}`).value=""
+                    document.getElementById(`selected_topic_${clip_id}`).value=""
+                    saveInput(document.getElementById(`videoSelect_${clip_id}`))
+                    saveInput(document.getElementById(`selected_topic_${clip_id}`))
+                }
+
+            } else {
+
+                console.log(inputElement.value);
+                
+                if (inputElement.value !== ''){
+                    document.getElementById('error-slide').textContent = '';
+
+                        console.log('first line is true')
+                    document.getElementById('currentFile').textContent = '';
+                    console.log('currentfile')
+                    document.getElementById("slide_file").value = '';
+                    console.log('slide_file')
+                    uploadElement.textContent='Choose File'
+                    console.log('uploadElement:',uploadElement)
+                    saveInput(document.getElementById("slide_file"))
+                    document.getElementById('clear-file').style.display='none'
+                    
+    
+                };
+
+            }
+
+        };
+        
+    function fetchVideoClips(selected,videoId=null) {
+        id = selected.value;
+        let video_id = `videoSelect`
+        saveInput(selected)
+        if (id ) {
+            populateVideoCategories(video_id, `/video/get_clip/${id}`)
+            if (videoId){
+                document.getElementById(video_id).value=videoId
+            }
+
+        }else {
+            document.getElementById(video_id).innerHTML=`<option selected disabled value="">Select A Video Clip</option>`
+        }
+    }
+
+    function handleClips(clipIds) {
+            clipIds.forEach(clipId => {
+                const wrapper = document.querySelector(`#wrapper_${clipId}`);
+                const span = wrapper.querySelector("span");
+                const ul = wrapper.querySelector(`#list-of-tags_${clipId}`);
+                const remainingInput = wrapper.querySelector(`#remaining_${clipId}`);
+                const errorMessage = wrapper.querySelector(`#error-message_${clipId}`);
+
+                span.dataset.clipId = clipId;
+                handleSelection(span, ul, remainingInput, errorMessage, clipId);
+            });
+        }
+         
+    function editCurrentLi(liItem) {  
+        if (liItem.disabled){
+
+        }else{
+        console.log(liItem)
+        clip_id=liItem.dataset.subclip_id;
+        num=clip_id
+        text= liItem.textContent
+        const video_clip_id= liItem.dataset.video_clip_id
+        const current_file= liItem.dataset.current_file
+        const cat_id= liItem.dataset.cat_id
+        const subclip_id= liItem.dataset.subclip_id
+        const main_id= liItem.dataset.main_id
+        // const editForm =document.getElementById('add-subclip-form')
+        // editForm.action = `/text/edit_subclip/${subclip_id}/`
+        document.getElementById('add-subclip-popup').style.display = 'flex';
+
+
+        // handleEditSelection(liItem,current_file,subclip_id,+video_clip_id,cat_id)
+        }
+
+    }
+
+    function handleSelection(span, ul, remainingInput, errorMessage, clipId) {
+        submitCheck=true
+        document.getElementById(`grid_${clipId}`).addEventListener("mouseup", function () {
+            const selection = window.getSelection();
+            if (selection && selection.toString().trim()) {
+                const selectedText = selection.toString().trim();
+                const fullText = span.innerText.trim();
+                const words = fullText.split(/\s+/);
+                const selectedWords = selectedText.split(/\s+/);
+
+                const startsCorrectly = fullText.startsWith(selectedText);
+                const isWordAligned = selectedWords.every(word => words.includes(word));
+
+                if (startsCorrectly && isWordAligned) {
+                    errorMessage.innerText = "";
+
+                    clip_id = clipId
+                    const li = document.createElement("li");
+                    li.innerText = selectedText;
+                    li.dataset.id = clipId;
+                    li.disabled=true
+                    li.style.cursor='wait'
+                    li.onclick = function () {
+                            editCurrentLi(li);
+                        };
+                        num = span.dataset.num
+                        li.id=`current_li_${clipId}`
+
+                    ul.insertBefore(li, span);
+
+                    const remainingText = fullText.slice(selectedText.length).trim();
+                    remainingInput.value = remainingText;
+                    span.innerText = remainingText;
+                    openPopup(clipId, selectedText, remainingText);
+                    
+
+
+                } else {
+                    errorMessage.innerText = "Invalid highlighting. Highlight full words starting from the beginning.";
+                }
+            }
+
+            selection.removeAllRanges();
+        });
+    }
+    fetchClipIds("{{textfile.id}}")
+</script>
