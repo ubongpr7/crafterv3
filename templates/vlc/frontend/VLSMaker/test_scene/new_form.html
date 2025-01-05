@@ -347,4 +347,34 @@ function openPopup(clipId, selectedText, remainingText) {
         });
     }
     fetchClipIds("{{textfile.id}}")
+    document.addEventListener("htmx:afterRequest", function (event) {
+    if (event.detail.requestConfig.url.includes("add_subcliphtmx")) {
+        const responseData = event.detail.xhr.responseText;
+
+        try {
+            const jsonResponse = JSON.parse(responseData);
+
+            if (jsonResponse.success) {
+                const subclipId = jsonResponse.id;
+
+                console.log("Subclip created with ID:", subclipId);
+
+                const subclipList = document.getElementById("subclip-list");
+                if (subclipList) {
+                    const newItem = document.createElement("li");
+                    newItem.textContent = `Subclip ID: ${subclipId}`;
+                    subclipList.appendChild(newItem);
+                }
+
+                alert(`Subclip created successfully with ID: ${subclipId}`);
+            } else {
+                console.error("Error creating subclip:", jsonResponse.error);
+                alert(`Failed to create subclip: ${jsonResponse.error}`);
+            }
+        } catch (error) {
+            console.error("Failed to parse response JSON:", error);
+        }
+    }
+});
+
 </script>
