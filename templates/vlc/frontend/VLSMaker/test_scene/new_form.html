@@ -202,6 +202,7 @@
         const formClipID = document.getElementById('clipId').value;
         const ulElement = document.getElementById(`list-of-tags_${formClipID}`);
         const spanElement = document.getElementById(`slide_span_${formClipID}`);
+        const liItem=document.getElementById(`saved_li_${formClipID}`);
         if (ulElement && ulElement.children.length > 1) {
             const secondToLastLi = ulElement.children[ulElement.children.length - 2];
             const secondToLastLiText = secondToLastLi.textContent;
@@ -211,7 +212,10 @@
             console.log("Last <li> text:", secondToLastLiText);
 
             ulElement.removeChild(secondToLastLi);
-        } else {
+        } else if(liItem){
+            liItem.disabled=false
+            liItem.style.cursor='pointer'
+        }else {
             console.log("No <li> items found to remove.");
         }
     }
