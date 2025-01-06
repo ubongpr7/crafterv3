@@ -311,7 +311,7 @@
                 handleSelection(span, ul, remainingInput, errorMessage, clipId);
             });
         }
-        function editAttachValidation(formId, clipId) {
+        function editAttachValidation(formId, clipId,getUrl) {
     const li = document.getElementById(`saved_li_${clipId}`);
     if (li) {
         li.disabled = true;
@@ -395,7 +395,7 @@
             });
 
             // Open and send the request
-            xhr.open('POST',`/text/edit_subcliphtmx/${id}/`);
+            xhr.open('POST',getUrl);
             xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
             xhr.send(formData);
         }
@@ -406,6 +406,7 @@
         if (liItem.disabled){
 
         }else{
+            liItem.disabled=true
         console.log(liItem)
         id=liItem.dataset.id;
         text= liItem.textContent
@@ -421,7 +422,7 @@
                 popup.style.display = 'flex';
                 document.getElementById('edit-subclip-form').addEventListener('submit', (e) => {
                     e.preventDefault();
-                    editAttachValidation('edit-subclip-form', id);
+                    editAttachValidation('edit-subclip-form', id,getUrl);
                 })
 
             }
