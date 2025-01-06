@@ -116,10 +116,11 @@ function attachValidation(formId, clipId) {
         } else {
             document.getElementById('error-slide').textContent = ''; // Clear error message
 
+            const popup = document.getElementById('add-subclip-popup');
+            if (popup) popup.style.display = 'none';
             const formData = new FormData(form);
             const xhr = new XMLHttpRequest();
 
-            // Handle the response from the server
             xhr.addEventListener('load', function () {
                 if (xhr.status === 200) {
                     const response = JSON.parse(xhr.responseText);
@@ -155,8 +156,6 @@ function attachValidation(formId, clipId) {
                             document.body.removeChild(successMessage);
                         }, 2000);
 
-                        const popup = document.getElementById('add-subclip-popup');
-                        if (popup) popup.style.display = 'none';
                     } else {
                         alert(response.error || 'Failed to add clip.');
                     }
