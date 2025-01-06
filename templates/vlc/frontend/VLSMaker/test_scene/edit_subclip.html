@@ -50,7 +50,7 @@
         
         <div class="form-group">
             <select id="videoSelect"  onclick="saveInput(this)" name="selected_video" class="form-select">
-                <option value="" disabled selected>Select A Video Clip</option>
+                <option  disabled selected>Select A Video Clip</option>
                 {% if videos %}
                 {% for video in videos %}
                 <option value="{{video.id}}" >{{video.title}}</option>
