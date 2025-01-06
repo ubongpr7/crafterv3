@@ -116,18 +116,10 @@ def add_subcliphtmx(request, id):
                 video_clip=video,
                 main_line=text_clip
             )
-            video_data = {"id": video.id, "name": video.name}  # Add video data
         if subclip:
-            # Update the text_clip remaining field
             text_clip.remaining = remaining
             text_clip.save()
 
-            # Return the created SubClip data as JSON
-            video_clip_id=''
-            cat_id=''
-            if subclip.video_clip:
-                video_clip_id=subclip.video_clip.id
-                cat_id=subclip.video_clip.category.id
 
             return JsonResponse({
                 "success": True,
