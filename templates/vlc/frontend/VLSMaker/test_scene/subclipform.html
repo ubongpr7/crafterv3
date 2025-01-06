@@ -155,7 +155,6 @@ function attachValidation(formId, clipId) {
                             document.body.removeChild(successMessage);
                         }, 2000);
 
-                        // Hide the popup
                         const popup = document.getElementById('add-subclip-popup');
                         if (popup) popup.style.display = 'none';
                     } else {
@@ -181,7 +180,7 @@ function attachValidation(formId, clipId) {
             });
 
             // Open and send the request
-            xhr.open('POST', `text/add_subcliphtmx/${clipId}/`);
+            xhr.open('POST', `/text/add_subcliphtmx/${clipId}/`);
             xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
             xhr.send(formData);
         }
