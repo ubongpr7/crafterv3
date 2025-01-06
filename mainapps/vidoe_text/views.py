@@ -131,6 +131,33 @@ def add_subcliphtmx(request, id):
     selected_text = request.GET.get('selectedText')
     remaining_text = request.GET.get('remainingText')
     return render(request,'vlc//frontend/VLSMaker/test_scene/subclipform.html',{'categories':video_categories,'selected_text':selected_text,'remaining_text':remaining_text})
+def edit_subcliphtmx(request,id):
+    video_categories = ClipCategory.objects.filter(user=request.user).values("id", "name", "parent_id")
+
+    if request.method =='POST':
+        subclip= SubClip.objects.get(id= id)
+        textfile_id=request.POST.get('textfile_id')
+        file_=request.FILES.get(f'slide_file')
+        asset_clip_id=request.POST.get(f'selected_video')
+        if subclip.video_file:
+            subclip.video_file.delete(save=False)
+        subclip.video_clip=None
+        if file_:
+            subclip.video_file=file_
+        elif asset_clip_id:
+            video= VideoClip.objects.get(id=asset_clip_id)
+            subclip.video_clip=video
+        subclip.save()
+
+        return JsonResponse({
+                "success": True,
+                "id": subclip.id,
+                
+            })
+    return render(request,'vlc//frontend/VLSMaker/test_scene/edit_subclip.html',{'categories':video_categories})
+
+
+
 
 def delete_textfile(request, textfile_id):
     textfile=TextFile.objects.get(id=textfile_id)

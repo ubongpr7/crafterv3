@@ -24,7 +24,7 @@
 
                                 {% for subclip in clip.subclips.all %}
                                 <li data-id="{{subclip.id}}"
-                                id="current_li_{{subclip.id}}"
+                                id="saved_li_{{subclip.id}}"
                                     onclick="editCurrentLi(this)">
                                     {{subclip.subtittle}}</li>
                                 {% endfor %}
@@ -317,20 +317,38 @@
 
         }else{
         console.log(liItem)
-        clip_id=liItem.dataset.subclip_id;
-        num=clip_id
+        id=liItem.dataset.id;
         text= liItem.textContent
-        const video_clip_id= liItem.dataset.video_clip_id
-        const current_file= liItem.dataset.current_file
-        const cat_id= liItem.dataset.cat_id
-        const subclip_id= liItem.dataset.subclip_id
-        const main_id= liItem.dataset.main_id
-        // const editForm =document.getElementById('add-subclip-form')
-        // editForm.action = `/text/edit_subclip/${subclip_id}/`
-        document.getElementById('add-subclip-popup').style.display = 'flex';
+        
+        const popup= document.getElementById('add-subclip-popup')
+
+        if (modalContainer && popup) {
+        const getUrl = `/text/add_subcliphtmx/${id}/`;
+        popup.style.display = 'none';
+
+        modalContainer.addEventListener('htmx:afterSwap', function (event) {
+            if (event.detail.target === modalContainer) {
+                popup.style.display = 'flex';
+                document.getElementById('add-subclip-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    attachValidation('add-subclip-form', id);
+                })
+
+            }
+        }, { once: true }); 
+
+        htmx.ajax('GET', getUrl, {
+            target: "#modal-cont",
+            swap: 'innerHTML',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        });
+    } else {
+        console.error("Modal container or popup not found.");
+    }
 
 
-        // handleEditSelection(liItem,current_file,subclip_id,+video_clip_id,cat_id)
         }
 
     }
