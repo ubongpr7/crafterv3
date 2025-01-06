@@ -319,11 +319,11 @@
         console.log(liItem)
         id=liItem.dataset.id;
         text= liItem.textContent
-        
+        const modalContainer =document.getElementById('modal-cont')
         const popup= document.getElementById('add-subclip-popup')
 
         if (modalContainer && popup) {
-        const getUrl = `/text/add_subcliphtmx/${id}/`;
+        const getUrl = `/text/edit_subcliphtmx/${id}/`;
         popup.style.display = 'none';
 
         modalContainer.addEventListener('htmx:afterSwap', function (event) {
