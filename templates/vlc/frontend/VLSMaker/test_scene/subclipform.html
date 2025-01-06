@@ -100,7 +100,7 @@ function attachValidation(formId, clipId) {
                             li.disabled = false;
                             li.style.cursor = 'pointer';
                         }
-
+                        sessionStorage.setItem(`${newId}`,videoSelect.value)
                         // Show success message
                         const successMessage = document.createElement('div');
                         successMessage.textContent = 'Clip added successfully!';

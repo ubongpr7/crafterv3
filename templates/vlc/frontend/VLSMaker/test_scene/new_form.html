@@ -311,11 +311,10 @@
                 handleSelection(span, ul, remainingInput, errorMessage, clipId);
             });
         }
-        function editAttachValidation(formId, clipId,getUrl) {
-    const li = document.getElementById(`saved_li_${clipId}`);
+        function editAttachValidation(formId, clipId,getUrl,li) {
+    
     if (li) {
         li.disabled = true;
-        li.style.cursor = 'wait';
         console.log(li.dataset.id, ' has been disabled');
     }
 
@@ -331,7 +330,6 @@
             videoSelect.focus();
         } else {
             document.getElementById('error-slide').textContent = ''; // Clear error message
-
             const popup = document.getElementById('add-subclip-popup');
             if (popup) popup.style.display = 'none';
             const formData = new FormData(form);
@@ -351,6 +349,7 @@
                             li.disabled = false;
                             li.style.cursor = 'pointer';
                         }
+                        sessionStorage.setItem(`${newId}`,videoSelect.value)
 
                         // Show success message
                         const successMessage = document.createElement('div');
@@ -407,6 +406,8 @@
 
         }else{
             liItem.disabled=true
+            li.style.cursor = 'wait';
+
         console.log(liItem)
         id=liItem.dataset.id;
         text= liItem.textContent
@@ -422,7 +423,7 @@
                 popup.style.display = 'flex';
                 document.getElementById('edit-subclip-form').addEventListener('submit', (e) => {
                     e.preventDefault();
-                    editAttachValidation('edit-subclip-form', id,getUrl);
+        editAttachValidation('edit-subclip-form', id,getUrl,li);
                 })
 
             }

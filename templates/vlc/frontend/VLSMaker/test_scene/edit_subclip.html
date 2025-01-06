@@ -160,7 +160,8 @@ function restoreSelectFields(){
     if ('{{subclip.video_clip}}'){
         topic.value= '{{subclip.video_clip.category.id}}'
         fetchVideoClips(topic)
-        // videoClip.value= '{{subclip.video_clip.id}}'
+        videoClip.value= sessionStorage.getItem('{{subclip.id}}')
+        console.log(`sessionStorage.getItem('{{subclip.id}}')`,sessionStorage.getItem('{{subclip.id}}'))
 
     }else{
         topic.value=''
