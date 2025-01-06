@@ -51,8 +51,8 @@
         <div class="form-group">
             <select id="videoSelect"  onclick="saveInput(this)" name="selected_video" class="form-select">
                 <option value="" disabled selected>Select A Video Clip</option>
-                {% if subclip.video_clip %}
-                {% for video in subclip.video_clip.video_clips.all %}
+                {% if videos %}
+                {% for video in  %}
                 <option value="{{video.id}}" disabled selected>{{video.title}}</option>
                 {% endfor %}
                 {%endif%}
