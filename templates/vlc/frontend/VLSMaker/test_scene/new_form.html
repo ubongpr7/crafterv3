@@ -401,6 +401,38 @@
     }
 }
 
+function highlightNoSubclipIcons(button) {
+            fetchNoSubclipIds().then((ids) => {
+                if (Array.isArray(ids) && ids.length > 0) {
+                    ids.forEach((id) => {
+                        const elementId = `icon_${id}`;
+                        const slide_span_ = document.getElementById(`slide_span_${id}`)
+                        const element = document.getElementById(elementId);
+
+                        if (element) {
+                            element.style.border = '2px solid red';
+                            slide_span_.style.border = '2px solid red';
+                            document.getElementById(`error-message_${id}`).textContent = 'Add Clip To The Remaning Text'
+                        } else {
+                            console.warn(`Element with ID ${elementId} not found.`);
+                        }
+                    });
+                } else {
+                    const form = document.getElementById('processFile');
+                    if (form) {
+                        button.disabled = true
+
+                        form.submit();
+                    } else {
+                        console.error("Form with ID 'processFile' not found.");
+                    }
+                }
+            }).catch((error) => {
+                console.error("Error fetching no subclip IDs:", error);
+            });
+        }
+
+
     function editCurrentLi(liItem) {  
         if (liItem.disabled){
 
