@@ -52,7 +52,7 @@
             <select id="videoSelect"  onclick="saveInput(this)" name="selected_video" class="form-select">
                 <option value="" disabled selected>Select A Video Clip</option>
                 {% if videos %}
-                {% for video in  %}
+                {% for video in videos %}
                 <option value="{{video.id}}" disabled selected>{{video.title}}</option>
                 {% endfor %}
                 {%endif%}
