@@ -53,7 +53,7 @@
                 <option value="" disabled selected>Select A Video Clip</option>
                 {% if videos %}
                 {% for video in videos %}
-                <option value="{{video.id}}" disabled selected>{{video.title}}</option>
+                <option value="{{video.id}}" >{{video.title}}</option>
                 {% endfor %}
                 {%endif%}
 
