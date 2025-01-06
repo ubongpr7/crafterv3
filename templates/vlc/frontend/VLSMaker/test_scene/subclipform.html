@@ -1,9 +1,7 @@
 
 <form   class="popup-content" method="POST" enctype="multipart/form-data"
  id="add-subclip-form"
- hx-post="{{ request.path }}" 
-      hx-target="#modal-cont" 
-      hx-swap="innerHTML"
+ 
     style="grid-template-columns: 0.7fr 1fr;width:100%;">
     <br>
     {% csrf_token %}
@@ -64,6 +62,39 @@
 <script>
 
 
+// function attachValidation(formId, clipId) {
+//     const li = document.getElementById(`current_li_${clipId}`);
+//     if (li) {
+//         li.disabled = true;
+//         li.style.cursor = 'wait';
+//         console.log(li, ' has been disabled');
+//     }
+
+//     const form = document.getElementById(formId);
+    
+//     if (form) {
+//         const fileInput = document.getElementById('slide_file');
+//         const videoSelect = document.getElementById(`videoSelect`);
+
+//         if ((!fileInput.value || fileInput.value.trim() === "") &&
+//             (!videoSelect || !videoSelect.value || videoSelect.value.trim() === "")) {
+//             document.getElementById('error-slide').textContent = 'Select A Clip';
+//             videoSelect.focus();
+//         } else {
+//         const popup = document.getElementById('add-subclip-popup');
+//         popup.display='none'
+
+//             // handle form submission with xhr here
+//             // colleect id from the response if successful,
+//             // change the id of the li if it exist to  `saved_li_${id}` where id is from the response, 
+//             // set li's dataset.id=id
+//             // set the li.disabeled=false and cursor to pointer 
+//             // create a div and attach it to the body makining position fixed and in it a beautiful message telling the user that the clip was added successfully, style it properly, ikt should only be there for 2s
+//             // use should be able to seee the message at the topright corner of the page
+
+//         }
+//     }
+// }
 function attachValidation(formId, clipId) {
     const li = document.getElementById(`current_li_${clipId}`);
     if (li) {
@@ -73,23 +104,86 @@ function attachValidation(formId, clipId) {
     }
 
     const form = document.getElementById(formId);
-    
+
     if (form) {
         const fileInput = document.getElementById('slide_file');
-        const videoSelect = document.getElementById(`videoSelect`);
+        const videoSelect = document.getElementById('videoSelect');
 
         if ((!fileInput.value || fileInput.value.trim() === "") &&
             (!videoSelect || !videoSelect.value || videoSelect.value.trim() === "")) {
             document.getElementById('error-slide').textContent = 'Select A Clip';
             videoSelect.focus();
         } else {
-            // Ensure HTMX handles the form submission
-            form.setAttribute("hx-post", form.action);
-            form.setAttribute("hx-target", "#response-container"); // Target a container to update dynamically
-            form.setAttribute("hx-swap", "innerHTML"); // Replace the target's content with the response
+            document.getElementById('error-slide').textContent = ''; // Clear error message
 
-            // Automatically submit the form using HTMX
-            form.submit();
+            const formData = new FormData(form);
+            const xhr = new XMLHttpRequest();
+
+            // Handle the response from the server
+            xhr.addEventListener('load', function () {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+
+                    if (response.success) {
+                        const newId = response.id;
+
+                        // Update the li element
+                        if (li) {
+                            li.id = `saved_li_${newId}`;
+                            li.dataset.id = newId;
+                            li.disabled = false;
+                            li.style.cursor = 'pointer';
+                        }
+
+                        // Show success message
+                        const successMessage = document.createElement('div');
+                        successMessage.textContent = 'Clip added successfully!';
+                        successMessage.style.position = 'fixed';
+                        successMessage.style.top = '20px';
+                        successMessage.style.right = '20px';
+                        successMessage.style.padding = '10px 15px';
+                        successMessage.style.backgroundColor = '#4CAF50';
+                        successMessage.style.color = 'white';
+                        successMessage.style.borderRadius = '5px';
+                        successMessage.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+                        successMessage.style.zIndex = '1000';
+
+                        document.body.appendChild(successMessage);
+
+                        // Remove the success message after 2 seconds
+                        setTimeout(() => {
+                            document.body.removeChild(successMessage);
+                        }, 2000);
+
+                        // Hide the popup
+                        const popup = document.getElementById('add-subclip-popup');
+                        if (popup) popup.style.display = 'none';
+                    } else {
+                        alert(response.error || 'Failed to add clip.');
+                    }
+                } else {
+                    alert('An error occurred while saving the clip.');
+                }
+
+                if (li) {
+                    li.disabled = false;
+                    li.style.cursor = 'pointer';
+                }
+            });
+
+            // Handle errors
+            xhr.addEventListener('error', function () {
+                alert('An error occurred during the request.');
+                if (li) {
+                    li.disabled = false;
+                    li.style.cursor = 'pointer';
+                }
+            });
+
+            // Open and send the request
+            xhr.open('POST', `/add_subcliphtmx/${clipId}/`);
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+            xhr.send(formData);
         }
     }
 }
