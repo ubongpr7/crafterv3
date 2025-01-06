@@ -130,7 +130,7 @@ def add_subcliphtmx(request, id):
         return JsonResponse({"success": False, "error": "Failed to create subclip."}, status=400)
     selected_text = request.GET.get('selectedText')
     remaining_text = request.GET.get('remainingText')
-    return render(request,'vlc//frontend/VLSMaker/test_scene/subclipform.html',{'categories':video_categories,'selected_text':selected_text,'remaining_text':remaining_text})
+    return render(request,'vlc//frontend/VLSMaker/test_scene/subclipform.html',{'clipId':id,'categories':video_categories,'selected_text':selected_text,'remaining_text':remaining_text})
 def edit_subcliphtmx(request,id):
     video_categories = ClipCategory.objects.filter(user=request.user).values("id", "name", "parent_id")
     videos=None
