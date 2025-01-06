@@ -54,7 +54,7 @@
                 {% if subclip.video_clip %}
                 {% for video in subclip.video_clip.video_clips.all %}
                 <option value="{{video.id}}" disabled selected>{{video.title}}</option>
-
+                {% endfor %}
                 {%endif%}
 
             </select>
