@@ -51,6 +51,11 @@
         <div class="form-group">
             <select id="videoSelect"  onclick="saveInput(this)" name="selected_video" class="form-select">
                 <option value="" disabled selected>Select A Video Clip</option>
+                {% if subclip.video_clip %}
+                {% for video in subclip.video_clip.video_clips.all %}
+                <option value="{{video.id}}" disabled selected>{{video.title}}</option>
+
+                {%endif%}
 
             </select>
             <p style="color:red; font-size:13px;" id="error-slide"></p>
@@ -159,8 +164,9 @@ function restoreSelectFields(){
     const videoClip=document.getElementById('videoSelect')
     if ('{{subclip.video_clip}}'){
         topic.value= '{{subclip.video_clip.category.id}}'
-        fetchVideoClips(topic)
-        videoClip.value= sessionStorage.getItem('{{subclip.id}}')
+        // fetchVideoClips(topic)
+        // videoClip.value= sessionStorage.getItem('{{subclip.id}}')
+        videoClip.value = '{{subclip.video_clip.id}}'
         console.log(`sessionStorage.getItem('{{subclip.id}}')`,sessionStorage.getItem('{{subclip.id}}'))
 
     }else{
