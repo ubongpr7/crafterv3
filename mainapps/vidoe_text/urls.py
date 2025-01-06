@@ -17,6 +17,7 @@ urlpatterns = [
     ),
     path("progress/<str:text_file_id>/", views.progress, name="progress"),
     path("add_subclip/<str:id>/", views.add_subclip, name="add_subclip"),
+    path("edit_subcliphtmx/<str:id>/", views.edit_subcliphtmx, name="edit_subcliphtmx"),
     path("add_subcliphtmx/<str:id>/", views.add_subcliphtmx, name="add_subcliphtmx"),
     path("reset_subclip/<str:id>/", views.reset_subclip , name="reset_subclip"),
     path("edit_subclip/<str:id>/", views.edit_subclip, name="edit_subclip"),
