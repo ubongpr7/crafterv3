@@ -134,9 +134,8 @@ def add_subcliphtmx(request, id):
 def edit_subcliphtmx(request,id):
     video_categories = ClipCategory.objects.filter(user=request.user).values("id", "name", "parent_id")
 
+    subclip= SubClip.objects.get(id= id)
     if request.method =='POST':
-        subclip= SubClip.objects.get(id= id)
-        textfile_id=request.POST.get('textfile_id')
         file_=request.FILES.get(f'slide_file')
         asset_clip_id=request.POST.get(f'selected_video')
         if subclip.video_file:
@@ -154,7 +153,7 @@ def edit_subcliphtmx(request,id):
                 "id": subclip.id,
                 
             })
-    return render(request,'vlc//frontend/VLSMaker/test_scene/edit_subclip.html',{'categories':video_categories})
+    return render(request,'vlc//frontend/VLSMaker/test_scene/edit_subclip.html',{'categories':video_categories,'subclip':subclip})
 
 
 

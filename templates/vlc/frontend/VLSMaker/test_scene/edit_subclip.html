@@ -11,8 +11,8 @@
             <input id="slide_text" hidden  name="slide_text" value="some text" readonly required class="form-input">
         </div>
         
-        <input id="clipId" type="number" hidden name="clipId" value="1">
-        <!-- <input type="hidden" name="textfile_id" value="{{textfile.id}}"> -->
+        <input id="clipId" type="number" hidden name="clipId" value="{{subclip.id}}">
+        
 
         <input type="text" value="some text" hidden id="remaining" name="remaining">
         <div style="display: grid;grid-template-columns: 0.7fr 1fr;border-radius: 8px;border: 1px solid #00000080;overflow: hidden;"  class="form-grid-cont">
@@ -29,14 +29,18 @@
                 <input type="file" onchange="saveInput(this)" id="slide_file" name="slide_file" class="upload-input" accept="video/*">
 
             </div>
-            
+            {% if subclip.video_file %}
+            <p id="currentFile">Current File: {{ subclip.get_video_file_name}}</p>
+            {% else %}
             <p id="currentFile"></p>
+            {% endif %}
         
         </div>
         </div>
         <div style="border-left:0.8px solid #864AF9" class="form-grid-item ">
 
         <div  class="form-group">
+
             <select id="selected_topic" onchange="fetchVideoClips(this)" name="selected_topic" class="form-select">
                 <option value="">Select Topic</option>
                 {%for cat in categories%}
@@ -150,5 +154,15 @@ function attachValidation(formId, clipId) {
         }
     }
 }
+function restoreSelectFields(){
+    if ('{{subclip.video_clip}}'){
+        const topic=document.getElementById('selected_topic')
+        const videoClip=document.getElementById('videoSelect')
+        topic.value= '{{subclip.video_clip.category.id}}'
+        fetchVideoClips(topic)
+        videoClip.value= '{{subclip.video_clip.id}}'
 
+    }
+};
+restoreSelectFields();
 </script>
