@@ -419,7 +419,7 @@
         modalContainer.addEventListener('htmx:afterSwap', function (event) {
             if (event.detail.target === modalContainer) {
                 popup.style.display = 'flex';
-                document.getElementById('add-subclip-form').addEventListener('submit', (e) => {
+                document.getElementById('edit-subclip-form').addEventListener('submit', (e) => {
                     e.preventDefault();
                     editAttachValidation('edit-subclip-form', id);
                 })
