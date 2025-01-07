@@ -246,7 +246,7 @@ class SubClip(models.Model):
         null=True, blank=True, max_digits=12, decimal_places=6, default=0.1
     )
     created_at = models.DateTimeField(default=timezone.now)
-
+    position_in_slide = models.IntegerField(null=True, blank=True)
     video_file = models.FileField(upload_to=text_clip_upload_path)
     main_line=models.ForeignKey(TextLineVideoClip,on_delete=models.CASCADE,related_name='subclips')
     def get_file_status(self):
@@ -268,7 +268,15 @@ class SubClip(models.Model):
         if self.video_file and self.video_file.name:
             self.video_file.delete(save=False)
         super().delete(*args, **kwargs)
-
+    def save(self, *args, **kwargs):
+        # Ensure the main_line and slide exist
+        if self.main_line and self.main_line.slide:
+            # Find the position of the `subtittle` in the `slide`
+            try:
+                self.position_in_slide = self.main_line.slide.index(self.subtittle)
+            except ValueError:
+                self.position_in_slide = -1  # Default for not found
+        super().save(*args, **kwargs)
     def to_dict(self):
         if self.video_clip:
             video_path = (
@@ -284,7 +292,7 @@ class SubClip(models.Model):
             "video_path": video_path,  
         }
     class Meta:
-        ordering = ['main_line__slide', 'start']
+        ordering = ['main_line__slide', 'position_in_slide']
 
 class LogoModel(models.Model):
     logo = models.FileField(upload_to="logos/")
