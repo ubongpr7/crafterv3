@@ -316,7 +316,7 @@ function subclipReset(clipID) {
 
         };
         
-    function fetchVideoClips(selected,videoId=null) {
+    function fetchVideoClips(selected,videoId='') {
         id = selected.value;
         let video_id = `videoSelect`
         saveInput(selected)
@@ -331,7 +331,7 @@ function subclipReset(clipID) {
         }
     }
 
-    function populateVideoCategories(selectElementId, apiUrl) {
+    function populateVideoCategories(selectElementId, apiUrl,videoId) {
         const selectElement = document.getElementById(selectElementId);
         selectElement.innerHTML=''
         if (!selectElement) {
@@ -348,14 +348,16 @@ function subclipReset(clipID) {
                 }
                 return response.json();
             })
-            .then(categories => {
-                categories.forEach(cat => {
+            .then(videos => {
+                videos.forEach(video => {
                     const option = document.createElement("option");
-                    option.value = cat.id;
-                    option.textContent = cat.title;
+                    option.value = video.id;
+                    option.textContent = video.title;
                     selectElement.appendChild(option);
+                    
                 });
                 // restoreVideoSelectInputs();
+                selectElement.value=videoId
 
             })
             .catch(error => {
@@ -703,8 +705,8 @@ function highlightNoSubclipIcons(button) {
 
         videoClip.innerHTML=`<option value="${liItem.dataset.clipid}">${liItem.dataset.name}</optikon>` ;
         (async () => {
-        await fetchVideoClips(topic);
-                videoClip.value = liItem.dataset.clipid;
+        await fetchVideoClips(topic,liItem.dataset.clipid);
+                // videoClip.value = liItem.dataset.clipid;
             })();
 
 
