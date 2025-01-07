@@ -27,7 +27,7 @@
                                 data-clipid="{{subclip.video_clip.id}}"
                                 data-cat_id="{{subclip.video_clip.category.id}}"
                                 data-name="{{subclip.video_clip.title}}"
-                                data-currnt_file="{{subclip.get_video_file_name}}"
+                                data-current_file="{{subclip.get_video_file_name}}"
                                 id="saved_li_{{subclip.id}}"
                                     onclick="editCurrentLi(this)">
                                     {{subclip.subtittle}}</li>
@@ -726,7 +726,6 @@ function highlightNoSubclipIcons(button) {
     const videoClip=document.getElementById('videoSelect')
     if (liItem.dataset.clipid){
         topic.value=liItem.dataset.cat_id
-        videoClip.value= sessionStorage.getItem('{{subclip.id}}')
 
         videoClip.innerHTML=`<option value="${liItem.dataset.clipid}">${liItem.dataset.name}</optikon>` ;
         videoClip.value=liItem.dataset.clipid;
