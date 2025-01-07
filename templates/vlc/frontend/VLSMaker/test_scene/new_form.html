@@ -355,9 +355,10 @@ function subclipReset(clipID) {
                     option.textContent = video.title;
                     selectElement.appendChild(option);
                     
+                    selectElement.value=videoId;
                 });
                 // restoreVideoSelectInputs();
-                selectElement.value=videoId
+                
 
             })
             .catch(error => {
