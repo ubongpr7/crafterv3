@@ -279,7 +279,6 @@ function subclipReset(clipID) {
     function closeModal() {
         const errorElements = document.querySelectorAll('[id^="error"]');
         sessionStorage.clear();
-        document.getElementById('modal-cont').innerHTML=''
 
         errorElements.forEach(element => {
             element.textContent = "";
@@ -303,6 +302,7 @@ function subclipReset(clipID) {
         } else if(liItem){
             liItem.disabled=false
             liItem.style.cursor='pointer'
+            
         }else {
             console.log("No <li> items found to remove.");
         }
