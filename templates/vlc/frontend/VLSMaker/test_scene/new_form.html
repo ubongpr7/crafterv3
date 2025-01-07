@@ -728,9 +728,10 @@ function highlightNoSubclipIcons(button) {
         topic.value=liItem.dataset.cat_id
 
         videoClip.innerHTML=`<option value="${liItem.dataset.clipid}">${liItem.dataset.name}</optikon>` ;
-        videoClip.value=liItem.dataset.clipid;
-        fetchVideoClips(topic)
-        videoClip.value=liItem.dataset.clipid;
+        (async () => {
+        await fetchVideoClips(topic);
+                videoClip.value = liItem.dataset.clipid;
+            })();
 
 
     }else if (liItem.dataset.current_file){
