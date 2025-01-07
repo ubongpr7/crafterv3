@@ -354,12 +354,13 @@ function subclipReset(clipID) {
                     option.value = video.id;
                     option.textContent = video.title;
                     selectElement.appendChild(option);
-                    
-                    
-                })
-                // restoreVideoSelectInputs();
-                .then(videos=>{
+                    if (video.id ==videoId ){
                     selectElement.value=videoId;
+                    console.lo('They are same')
+
+                    }
+                    
+                    
                 })
 
             })
@@ -706,7 +707,6 @@ function highlightNoSubclipIcons(button) {
     if (liItem.dataset.clipid){
         topic.value=liItem.dataset.cat_id
 
-        // videoClip.innerHTML=`<option value="${liItem.dataset.clipid}">${liItem.dataset.name}</optikon>` ;
         fetchVideoClips(topic,liItem.dataset.clipid);
 
     }else if (liItem.dataset.current_file){
