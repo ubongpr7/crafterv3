@@ -723,7 +723,7 @@ function highlightNoSubclipIcons(button) {
     popup.style.display='flex'
     document.getElementById('edit-subclip-form').addEventListener('submit', (e) => {
             e.preventDefault();
-    editAttachValidation('edit-subclip-form', id,`/text/edit_subcliphtmx/${id}/`,liItem);
+    editAttachValidation('edit-subclip-form', id,`/text/edit_subcliphtmx/${liItem.dataset.id}/`,liItem);
     });
     restoreSelectFields(liItem);
 
