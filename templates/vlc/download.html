@@ -329,6 +329,32 @@
             </video>
           </div>
         </div>
+        {% if user.subscription.plan.name|lower != 'free'%}
+        <a
+             href="/text/manage_textfile"
+             
+             style="display: flex;
+                    box-sizing: border-box;
+                    align-items: center;
+                    justify-content: center;
+                    text-decoration: none;
+                    background: white;
+                    border-radius: 8px;
+                    font-family: Montserrat;
+                    font-size: 18px;
+                    font-weight: 500;
+                    margin-top: -40px;
+                    line-height: 21.94px;
+                    text-align: left;
+                    color: #864AF9;
+                    width: 100%;
+                    padding: 12px 24px;
+                    border:0.8px solid #864AF9;
+                    gap: 10px">
+            <!-- <i style="width: 24px; height: 24px;color: #864AF9; " class="ri-save-line"></i> -->
+            <span style="line-height: 24px;">Save as Draft</span>
+          </a>
+          {%endif%}
         {% if bg_music == 'false' %}
           <a id="downloadButton"
              href="{% url 'video_text:download_file' file_key=text_file.generated_final_video.name textfile_id=text_file.id %}"
@@ -393,32 +419,7 @@
         <p style="margin-top:-40px;font-size:12px;">
           *Please Note That  When You Click Download, Watermark Will Be Removed
         </p>
-        {% if user.subscription.plan.name|lower != 'free'%}
-        <a
-             href="/text/manage_textfile"
-             
-             style="display: flex;
-                    box-sizing: border-box;
-                    align-items: center;
-                    justify-content: center;
-                    text-decoration: none;
-                    background: white;
-                    border-radius: 8px;
-                    font-family: Montserrat;
-                    font-size: 18px;
-                    font-weight: 500;
-                    margin-top: -40px;
-                    line-height: 21.94px;
-                    text-align: left;
-                    color: #864AF9;
-                    width: 100%;
-                    padding: 12px 24px;
-                    border:0.8px solid #864AF9;
-                    gap: 10px">
-            <!-- <i style="width: 24px; height: 24px;color: #864AF9; " class="ri-save-line"></i> -->
-            <span style="line-height: 24px;">Save as Draft</span>
-          </a>
-          {%endif%}
+        
       </div>
 
     </div>
