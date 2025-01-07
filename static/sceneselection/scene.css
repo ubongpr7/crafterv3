@@ -1,6 +1,9 @@
 p {
     text-transform: capitalize;
 }
+.ri-close-circle-line{
+    color: red;
+}
 .file-button {
     background: #864af9;
     border: none;
