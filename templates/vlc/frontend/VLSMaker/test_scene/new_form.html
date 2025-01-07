@@ -318,7 +318,7 @@ function subclipReset(clipID) {
 
         };
         
-    function fetchVideoClips(selected) {
+    async function fetchVideoClips(selected) {
         id = selected.value;
         let video_id = `videoSelect`
         // saveInput(selected)
@@ -703,13 +703,13 @@ function highlightNoSubclipIcons(button) {
 
     }
 
-    function restoreSelectFields(liItem){
+   async  function restoreSelectFields(liItem){
     const topic=document.getElementById('selected_topic')
     const videoClip=document.getElementById('videoSelect')
     if (liItem.dataset.clipid){
         topic.value=liItem.dataset.cat_id
 
-        fetchVideoClips(topic,);
+         await fetchVideoClips(topic,);
     videoClip.value= sessionStorage.getItem(`${liItem.dataset.id}`)
     }else if (liItem.dataset.current_file){
         topic.value=''
