@@ -108,3 +108,5 @@ class VideoClip(models.Model):
 
     def __str__(self):
         return f"{self.title or 'Untitled'}"
+    def id_as_string(self):
+        return str(self.id)

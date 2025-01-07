@@ -460,12 +460,19 @@ def fetch_video_categories(request):
 #     videos = VideoClip.objects.filter(category=category).values("id", "title", )
 #     return JsonResponse(list(videos), safe=False)
 
+# def get_clip(request, cat_id):
+#     category = get_object_or_404(ClipCategory, id=cat_id)
+#     videos = VideoClip.objects.filter(category=category).annotate(
+#         id_as_string=Func(F("id"), Value(""), function="CAST", output_field=CharField())
+#     ).values("id_as_string", "title")
+
+#     # Rename `id_as_string` to `id` for the response
+#     response_data = [{"id": video["id_as_string"], "title": video["title"]} for video in videos]
+#     return JsonResponse(response_data, safe=False)
 def get_clip(request, cat_id):
     category = get_object_or_404(ClipCategory, id=cat_id)
-    videos = VideoClip.objects.filter(category=category).annotate(
-        id_as_string=Func(F("id"), Value(""), function="CAST", output_field=CharField())
-    ).values("id_as_string", "title")
+    videos = VideoClip.objects.filter(category=category)
 
-    # Rename `id_as_string` to `id` for the response
-    response_data = [{"id": video["id_as_string"], "title": video["title"]} for video in videos]
+    # Use the `id_as_string` method
+    response_data = [{"id": video.id_as_string(), "title": video.title} for video in videos]
     return JsonResponse(response_data, safe=False)
