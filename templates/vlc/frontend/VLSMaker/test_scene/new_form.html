@@ -190,7 +190,7 @@ function subclipReset(clipID) {
             const textfileID = "{{textfile.id}}"
             const url = `/text/reset_subclip/${clipID}/`;
 
-            if (confirm("Are you sure you want to reset this clip?")) {
+            if (confirm("Are You Sure You Want To Reset This Sentence?")) {
                 sessionStorage.clear();
                 fetch(url, {
                     method: 'POST',
@@ -436,7 +436,7 @@ function subclipReset(clipID) {
             
                         // Show success message
                         const successMessage = document.createElement('div');
-                        successMessage.textContent = 'Clip added successfully!';
+                        successMessage.textContent = 'Clip Added Successfully!';
                         successMessage.style.position = 'fixed';
                         successMessage.style.top = '20px';
                         successMessage.style.right = '20px';
@@ -446,6 +446,7 @@ function subclipReset(clipID) {
                         successMessage.style.borderRadius = '5px';
                         successMessage.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
                         successMessage.style.zIndex = '1000';
+                        // successMessage.style.textTransform = 'capitalise';
 
                         document.body.appendChild(successMessage);
 
@@ -715,11 +716,17 @@ function highlightNoSubclipIcons(button) {
         topic.value=''
         videoClip.value=''
 
-        document.getElementById('currentFile').textContent= `Current File: ${liItem.dataset.current_file}`
+        document.getElementById('currentFile').innerHTML= `Current File: ${liItem.dataset.current_file} 
+                    <i id="clearCurrentFile"  onclick="clearCurrentFile()" class="ri-close-circle-line"></i>
+        
+        `
 
 
     }
 };
+function clearCurrentFile(){
+    document.getElementById('currentFile').innerHTML=''
+}
     // function editCurrentLi(liItem) {  
     //     if (liItem.disabled){
 
