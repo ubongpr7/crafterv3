@@ -263,7 +263,7 @@ class SubClip(models.Model):
         filename=''
         if self.video_file.name:
             filename = self.video_file.name.split("/")[-1]
-        return filename[:25]
+        return filename[:15]
     def delete(self, *args, **kwargs):
         if self.video_file and self.video_file.name:
             self.video_file.delete(save=False)
