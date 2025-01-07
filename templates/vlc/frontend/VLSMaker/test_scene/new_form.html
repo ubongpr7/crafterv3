@@ -706,14 +706,8 @@ function highlightNoSubclipIcons(button) {
     if (liItem.dataset.clipid){
         topic.value=liItem.dataset.cat_id
 
-        videoClip.innerHTML=`<option value="${liItem.dataset.clipid}">${liItem.dataset.name}</optikon>` ;
-        (async () => {
-        await fetchVideoClips(topic,liItem.dataset.clipid);
-                // videoClip.value = liItem.dataset.clipid;
-                console.log(liItem.dataset.clipid)
-
-            })();
-
+        // videoClip.innerHTML=`<option value="${liItem.dataset.clipid}">${liItem.dataset.name}</optikon>` ;
+        fetchVideoClips(topic,liItem.dataset.clipid);
 
     }else if (liItem.dataset.current_file){
         topic.value=''
