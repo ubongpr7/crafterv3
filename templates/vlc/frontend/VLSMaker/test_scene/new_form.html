@@ -32,6 +32,7 @@
                                     onclick="editCurrentLi(this)">
                                     {{subclip.subtittle}}</li>
                                 {% endfor %}
+                                <input type="number" hidden id="clip_id_{{subclip.id}}" value="{{subclip.video_clip.id}}">
                                 <span id="slide_span_{{clip.id}}" data-num="{{clip.get_number_of_subclip}}"
                                     data-id="{{clip.id}}">{{ clip.remaining }}</span>
                             </ul>
@@ -173,6 +174,7 @@
             element.textContent = "";
         });
         };
+        
         popup.style.display = 'flex';
         document.getElementById(`add-subclip-form-${clipId}`).addEventListener('submit', (e) => {
             e.preventDefault();
@@ -316,22 +318,19 @@ function subclipReset(clipID) {
 
         };
         
-    function fetchVideoClips(selected,videoId='') {
+    function fetchVideoClips(selected) {
         id = selected.value;
         let video_id = `videoSelect`
         // saveInput(selected)
         if (id ) {
             populateVideoCategories(video_id, `/video/get_clip/${id}`)
-            // if (videoId){
-            //     document.getElementById(video_id).value=videoId
-            // }
 
         }else {
             document.getElementById(video_id).innerHTML=`<option selected disabled value="">Select A Video Clip</option>`
         }
     }
 
-    function populateVideoCategories(selectElementId, apiUrl,videoId) {
+    function populateVideoCategories(selectElementId, apiUrl) {
         const selectElement = document.getElementById(selectElementId);
         selectElement.innerHTML=''
         if (!selectElement) {
@@ -356,8 +355,8 @@ function subclipReset(clipID) {
                     selectElement.appendChild(option);
                     
                     // if (video.id === String(videoId)){
-                        console.log('They are same')
-                    selectElement.value=String(videoId)
+                        // console.log('They are same')
+                    // selectElement.value=String(videoId)
 
                     // }
                     
@@ -403,7 +402,7 @@ function subclipReset(clipID) {
             videoSelect.focus();
         } else {
             document.getElementById('error-slide').textContent = ''; // Clear error message
-
+            
             const popup = document.getElementById('add-subclip-popup');
             if (popup) popup.style.display = 'none';
             const formData = new FormData(form);
@@ -433,6 +432,8 @@ function subclipReset(clipID) {
                             li.style.cursor = 'pointer';
                         }
                         sessionStorage.setItem(`${newId}`,videoSelect.value)
+                        
+            
                         // Show success message
                         const successMessage = document.createElement('div');
                         successMessage.textContent = 'Clip added successfully!';
@@ -708,11 +709,12 @@ function highlightNoSubclipIcons(button) {
     if (liItem.dataset.clipid){
         topic.value=liItem.dataset.cat_id
 
-        fetchVideoClips(topic,liItem.dataset.clipid);
-
+        fetchVideoClips(topic,);
+    videoClip.value= sessionStorage.getItem(`${liItem.datset.id}`)
     }else if (liItem.dataset.current_file){
         topic.value=''
         videoClip.value=''
+
         document.getElementById('currentFile').textContent= `Current File: ${liItem.dataset.current_file}`
 
 
