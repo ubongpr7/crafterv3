@@ -101,8 +101,8 @@ def add_subcliphtmx(request, id):
         text = request.POST.get('slide_text')
         asset_clip_id = request.POST.get('selected_video')
 
-        subclip = None  # Initialize variable for created subclip
-        video_data=None
+        subclip = None 
+        
         if file_:
             subclip = SubClip.objects.create(
                 subtittle=text,
@@ -124,6 +124,9 @@ def add_subcliphtmx(request, id):
             return JsonResponse({
                 "success": True,
                 "id": subclip.id,
+                 "current_file": subclip.get_video_file_name(),
+                "video_clip":subclip.get_video_clip_id(),
+                
                 
             })
 
@@ -152,13 +155,14 @@ def edit_subcliphtmx(request,id):
         subclip.save()
 
         return JsonResponse({
-                "success": True,
-                "id": subclip.id,
-                
-            })
+            "success": True,
+            "id": subclip.id,
+                "current_file": subclip.get_video_file_name(),
+            "video_clip":subclip.get_video_clip_id(),
+            
+            
+        })
     return render(request,'vlc//frontend/VLSMaker/test_scene/edit_subclip.html',{'videos':videos,'categories':video_categories,'subclip':subclip})
-
-
 
 
 def delete_textfile(request, textfile_id):

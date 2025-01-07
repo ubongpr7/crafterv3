@@ -254,7 +254,11 @@ class SubClip(models.Model):
             return "filled"
         else:
             return "empty"
-
+    def get_video_clip_id(self):
+        if self.video_clip:
+            return {'id':self.video_clip.id,'cat_id':self.video_clip.category.id,'name':self.video_clip.title}
+        else :
+            return None
     def get_video_file_name(self):
         filename=''
         if self.video_file.name:
