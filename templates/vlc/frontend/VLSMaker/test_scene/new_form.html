@@ -354,9 +354,10 @@ function subclipReset(clipID) {
                     option.value = video.id;
                     option.textContent = video.title;
                     selectElement.appendChild(option);
-                    if (Number(video.id) === Number(videoId) ){
+                    
+                    if (video.id === videoId ){
+                        console.lo('They are same')
                     selectElement.value=video.id;
-                    console.lo('They are same')
 
                     }
                     

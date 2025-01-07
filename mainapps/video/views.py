@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.urls import reverse
 from django.http import JsonResponse
 import tempfile
+from django.db.models import F, Func, Value, CharField
 
 def rename_video_clip(request, video_id):
     video_clip = get_object_or_404(VideoClip, id=video_id)
@@ -454,7 +455,17 @@ def fetch_video_categories(request):
     categories = ClipCategory.objects.filter(user=request.user).values("id", "name", "parent_id")
     return JsonResponse(list(categories), safe=False)
 
+# def get_clip(request, cat_id):
+#     category = get_object_or_404(ClipCategory, id=cat_id)
+#     videos = VideoClip.objects.filter(category=category).values("id", "title", )
+#     return JsonResponse(list(videos), safe=False)
+
 def get_clip(request, cat_id):
     category = get_object_or_404(ClipCategory, id=cat_id)
-    videos = VideoClip.objects.filter(category=category).values("id", "title", )
-    return JsonResponse(list(videos), safe=False)
+    videos = VideoClip.objects.filter(category=category).annotate(
+        id_as_string=Func(F("id"), Value(""), function="CAST", output_field=CharField())
+    ).values("id_as_string", "title")
+
+    # Rename `id_as_string` to `id` for the response
+    response_data = [{"id": video["id_as_string"], "title": video["title"]} for video in videos]
+    return JsonResponse(response_data, safe=False)
