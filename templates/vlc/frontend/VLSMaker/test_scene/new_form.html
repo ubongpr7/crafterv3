@@ -302,7 +302,7 @@ function subclipReset(clipID) {
         } else if(liItem){
             liItem.disabled=false
             liItem.style.cursor='pointer'
-            
+
         }else {
             console.log("No <li> items found to remove.");
         }
@@ -546,9 +546,19 @@ function subclipReset(clipID) {
                         // Update the li element
                         if (li) {
                             li.id = `saved_li_${newId}`;
+                            li.id = `saved_li_${newId}`;
                             li.dataset.id = newId;
+                            if(response.video_clip){
+                                li.dataset.name=response.video_clip.name
+                                li.dataset.clipid=response.video_clip.id
+                                li.dataset.cat_id=response.video_clip.cat_id
+                                
+                                
+                            };
+                            li.dataset.current_file=response.current_file
                             li.disabled = false;
                             li.style.cursor = 'pointer';
+                        
                         }
                         sessionStorage.setItem(`${newId}`,videoSelect.value)
 
@@ -713,7 +723,7 @@ function highlightNoSubclipIcons(button) {
     popup.style.display='flex'
     document.getElementById('edit-subclip-form').addEventListener('submit', (e) => {
             e.preventDefault();
-    editAttachValidation('edit-subclip-form', id,getUrl,liItem);
+    editAttachValidation('edit-subclip-form', id,`/text/edit_subcliphtmx/${id}/`,liItem);
     });
     restoreSelectFields(liItem);
 
