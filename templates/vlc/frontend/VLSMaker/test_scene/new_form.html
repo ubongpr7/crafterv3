@@ -187,10 +187,7 @@
             e.preventDefault();
             attachValidation(`add-subclip-form-${clipId}`, clipId);
         })
-        const disabledDiv= document.getElementById('disabled-div')
-        if (disabledDiv){
-            disabledDiv.disabled=true
-        }
+        disableForFree()
     }
 
    
@@ -732,12 +729,26 @@ function highlightNoSubclipIcons(button) {
 
 
         }
-        const disabledDiv= document.getElementById('disabled-div')
-        if (disabledDiv){
-            disabledDiv.disabled=true
-        }
+        disableForFree()
     }
+function disableForFree(){
+    const disabledDiv = document.getElementById('disabled-div');
+if (disabledDiv) {
+    // Apply styles to disable interaction
+    // disabledDiv.style.pointerEvents = "none";
+    disabledDiv.style.cursor = "not-allowed";
+    disabledDiv.disabled=true
 
+    // Apply cursor to all children for consistent appearance
+    const children = disabledDiv.querySelectorAll('*');
+    children.forEach(child => {
+        child.style.cursor = "not-allowed";
+        child.disabled=true
+
+    });
+}
+
+}
    async  function restoreSelectFields(liItem){
     const topic=document.getElementById('selected_topic')
     const videoClip=document.getElementById('videoSelect')
