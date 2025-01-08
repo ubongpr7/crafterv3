@@ -247,7 +247,10 @@ function subclipReset(clipID) {
         errorElements.forEach(element => {
             element.textContent = "";
         });
-       
+       const slide_span_s= document.querySelectorAll('[id^="slide_span_"]');
+       slide_span_s.forEach(element => {
+            element.style.border = "none";
+        });
     }
     function closeModal() {
         const errorElements = document.querySelectorAll('[id^="error"]');
