@@ -193,7 +193,7 @@
 function clearFileInput(){
     document.getElementById('slide_file').value=''
     document.getElementById('clear-file').textContent=''
-    document.getElementById('upload-text').textContent=''
+    document.getElementById('upload-text').textContent='Choose File'
 
 
 }
@@ -307,7 +307,7 @@ function subclipReset(clipID) {
                     document.getElementById('error-slide').textContent = '';
                     
                     const fileName = inputElement.files.length > 0 ? inputElement.files[0].name : "Choode File";
-                    uploadElement.textContent=fileName.slice(0,15)
+                    uploadElement.textContent=fileName.slice(0,13)
                     document.getElementById('currentFile').textContent = ''
                     document.getElementById('clear-file').style.display='flex'
                    
