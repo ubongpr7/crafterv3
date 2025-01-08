@@ -422,9 +422,17 @@ function subclipReset(clipID) {
 
         if ((!fileInput.value || fileInput.value.trim() === "") &&
             (!videoSelect || !videoSelect.value || videoSelect.value.trim() === "")) {
-            document.getElementById('error-slide').textContent = 'Select A Clip';
+            if (videoSelect.disabled){
+                document.getElementById('upload-text').style.color='red'
+            }else{
+
+                document.getElementById('error-slide').textContent = 'Select A Clip';
+            }
+
             videoSelect.focus();
         } else {
+            document.getElementById('upload-text').style.color='inherit'
+
             document.getElementById('error-slide').textContent = ''; // Clear error message
             
             const popup = document.getElementById('add-subclip-popup');
@@ -523,9 +531,16 @@ function subclipReset(clipID) {
 
         if ((!fileInput.value || fileInput.value.trim() === "") &&
             (!videoSelect || !videoSelect.value || videoSelect.value.trim() === "")) {
-            document.getElementById('error-slide').textContent = 'Select A Clip';
+            if (videoSelect.disabled){
+                document.getElementById('upload-text').style.color='red'
+            }else{
+
+                document.getElementById('error-slide').textContent = 'Select A Clip';
+            }
             videoSelect.focus();
         } else {
+            document.getElementById('upload-text').style.color='black'
+
             document.getElementById('error-slide').textContent = ''; // Clear error message
             const popup = document.getElementById('add-subclip-popup');
             if (popup) popup.style.display = 'none';
