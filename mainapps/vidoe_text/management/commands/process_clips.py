@@ -21,6 +21,7 @@ from moviepy.editor import (
     TextClip,
     VideoFileClip,
 )
+from moviepy.video.fx.all import crop as fix_all_crop
 import moviepy.video.fx.resize as rz
 from moviepy.video.fx.crop import crop
 from moviepy.video.fx.loop import loop
@@ -1312,7 +1313,14 @@ class Command(BaseCommand):
         # else:
         #     clip= self.add_margin_based_on_aspect_ratio(clip,desired_aspect_ratio)
         #     return clip
+        if desired_aspect_ratio==9/16:
+            crop_width = original_height * 9/16
+    # x1,y1 is the top left corner, and x2, y2 is the lower right corner of the cropped area.
 
+            x1, x2 = (original_width - crop_width)//2, (w+crop_width)//2
+            y1, y2 = 0, original_height
+            cropped_clip = fix_all_crop(clip, x1=x1, y1=y1, x2=x2, y2=y2)
+            return cropped_clip
         
         if original_aspect_ratio > desired_aspect_ratio:
             new_width = int(original_height * desired_aspect_ratio)
