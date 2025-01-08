@@ -1310,14 +1310,11 @@ class Command(BaseCommand):
             abs(original_aspect_ratio - desired_aspect_ratio) < 0.01
         ):  
             return clip
-        # else:
-        #     clip= self.add_margin_based_on_aspect_ratio(clip,desired_aspect_ratio)
-        #     return clip
+        
         if desired_aspect_ratio==9/16:
             crop_width = original_height * 9/16
-    # x1,y1 is the top left corner, and x2, y2 is the lower right corner of the cropped area.
 
-            x1, x2 = (original_width - crop_width)//2, (w+crop_width)//2
+            x1, x2 = (original_width - crop_width)//2, (original_width+crop_width)//2
             y1, y2 = 0, original_height
             cropped_clip = fix_all_crop(clip, x1=x1, y1=y1, x2=x2, y2=y2)
             return cropped_clip
