@@ -396,7 +396,7 @@ def add_video_clips(request, textfile_id):
                     if slides_count > 10:
                         messages.error(
                             request,
-                            "Adding More Than 10 Slides Is Only Available On Paid Plans. Please Delete Some Slides From Txt File",
+                            "Adding More Than 10 Lines Is Only Available On Paid Plans. Please Delete Some Slides From Txt File",
                         )
                         return redirect(reverse("video:add_scenes", args=[textfile_id]))
 
