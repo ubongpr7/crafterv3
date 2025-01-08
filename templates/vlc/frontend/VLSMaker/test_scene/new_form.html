@@ -190,7 +190,11 @@
         disableForFree()
     }
 
-   
+function clearFileInput(){
+    document.getElementById('sile_file').value=''
+    document.getElementById('clear-file').textContent=''
+
+}
 function subclipReset(clipID) {
         const grid= document.getElementById(`grid_${clipID}`)
         // grid.disabled=true
