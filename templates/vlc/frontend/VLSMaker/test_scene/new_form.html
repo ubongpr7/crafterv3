@@ -682,7 +682,7 @@ function highlightNoSubclipIcons(button) {
         
         </div>
         </div>
-        <div style="border-left:0.8px solid #864AF9" class="form-grid-item ">
+        <div style="border-left:0.8px solid #864AF9 {% if user.subscription.plan.name|lower == 'free' %}background-color:eeeeeebb; pointer-events: none; opacity: 0.5; cursor: not-allowed {% endif %}" class="form-grid-item ">
 
         <div  class="form-group">
             <select id="selected_topic"  onchange="fetchVideoClips(this)"   name="selected_topic" class="form-select">
