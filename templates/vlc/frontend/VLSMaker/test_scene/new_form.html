@@ -141,7 +141,14 @@
         
         </div>
         </div>
-        <div style="border-left:0.8px solid #864AF9; {% if user.subscription.plan.name|lower == 'free' %}background-color:eeeeeebb; pointer-events: none; opacity: 0.5; cursor: not-allowed {% endif %}" class="form-grid-item ">
+        {% if user.subscription.plan.name|lower == 'free' %}
+
+        <div id='disabled-div' data-tooltip="Only Available On Paid Plans" style="border-left:0.8px solid #864AF9;background-color:eeeeeebb;  opacity: 0.5; cursor: not-allowed" class="form-grid-item ">
+         {% else %}
+         <div style="border-left:0.8px solid #864AF9;" class="form-grid-item ">
+        {% endif %}
+
+
 
         <div  class="form-group">
             <select id="selected_topic" onchange="fetchVideoClips(this)" name="selected_topic" class="form-select">
@@ -180,6 +187,10 @@
             e.preventDefault();
             attachValidation(`add-subclip-form-${clipId}`, clipId);
         })
+        const disabledDiv= document.getElementById('disabled-div')
+        if (disabledDiv){
+            disabledDiv.disabled=true
+        }
     }
 
    
@@ -682,7 +693,12 @@ function highlightNoSubclipIcons(button) {
         
         </div>
         </div>
-        <div style="border-left:0.8px solid #864AF9 {% if user.subscription.plan.name|lower == 'free' %}background-color:eeeeeebb; pointer-events: none; opacity: 0.5; cursor: not-allowed {% endif %}" class="form-grid-item ">
+        {% if user.subscription.plan.name|lower == 'free' %}
+
+        <div id='disabled-div' data-tooltip="Only Available On Paid Plans" style="border-left:0.8px solid #864AF9;background-color:eeeeeebb;  opacity: 0.5; cursor: not-allowed" class="form-grid-item ">
+         {% else %}
+         <div style="border-left:0.8px solid #864AF9;" class="form-grid-item ">
+        {% endif %}
 
         <div  class="form-group">
             <select id="selected_topic"  onchange="fetchVideoClips(this)"   name="selected_topic" class="form-select">
@@ -716,7 +732,10 @@ function highlightNoSubclipIcons(button) {
 
 
         }
-
+        const disabledDiv= document.getElementById('disabled-div')
+        if (disabledDiv){
+            disabledDiv.disabled=true
+        }
     }
 
    async  function restoreSelectFields(liItem){
