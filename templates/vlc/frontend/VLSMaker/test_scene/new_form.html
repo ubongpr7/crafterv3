@@ -593,9 +593,15 @@ function highlightNoSubclipIcons(button) {
                         const element = document.getElementById(elementId);
 
                         if (element) {
+                            
                             element.style.border = '2px solid red';
-                            slide_span_.style.border = '2px solid red';
-                            document.getElementById(`error-message_${id}`).textContent = 'Add Clip To The Remaning Text'
+                            if (slide_span_.textContent ===''){
+                                
+                                document.getElementById(`error-message_${id}`).textContent = 'Please Wait For Clips To Process'
+                            }else{
+                                slide_span_.style.border = '2px solid red';
+                                document.getElementById(`error-message_${id}`).textContent = 'Add Clip To The Remaning Text'
+                            }
                         } else {
                             console.warn(`Element with ID ${elementId} not found.`);
                         }
