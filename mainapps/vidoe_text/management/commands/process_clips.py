@@ -1317,7 +1317,7 @@ class Command(BaseCommand):
             # x1, x2 = (original_width - crop_width)//2, (original_width+crop_width)//2
             # y1, y2 = 0, original_height
             # cropped_clip = fix_all_crop(clip, x1=x1, y1=y1, x2=x2, y2=y2)
-            cropped_clip = fix_all_crop(clip, width=1080, height=1920, x_center=original_width/2, y_center=original_height/2)
+            cropped_clip = fix_all_crop(clip, width=600, height=5000, x_center=original_width/2, y_center=original_height/2)
             return cropped_clip
         
         if original_aspect_ratio > desired_aspect_ratio:
