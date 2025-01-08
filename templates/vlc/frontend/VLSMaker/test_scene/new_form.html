@@ -304,6 +304,8 @@ function subclipReset(clipID) {
                 console.log(inputElement.value);
 
                 if (inputElement.value) {
+                document.getElementById('upload-text').style.color='black'
+
                     document.getElementById('error-slide').textContent = '';
                     
                     const fileName = inputElement.files.length > 0 ? inputElement.files[0].name : "Choode File";
