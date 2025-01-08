@@ -242,7 +242,13 @@ function subclipReset(clipID) {
             console.error('Error fetching no subclip IDs:', error);
         }
     }
-    
+    function clearErrorMessages(){
+        const errorElements = document.querySelectorAll('[id^="error"]');
+        errorElements.forEach(element => {
+            element.textContent = "";
+        });
+       
+    }
     function closeModal() {
         const errorElements = document.querySelectorAll('[id^="error"]');
         sessionStorage.clear();
@@ -250,6 +256,7 @@ function subclipReset(clipID) {
         errorElements.forEach(element => {
             element.textContent = "";
         });
+       
         document.getElementById('add-subclip-popup').style.display = 'none';
         
         const formClipID = document.getElementById('clipId').value;
@@ -446,8 +453,7 @@ function subclipReset(clipID) {
                         successMessage.style.borderRadius = '5px';
                         successMessage.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
                         successMessage.style.zIndex = '1000';
-                        // successMessage.style.textTransform = 'capitalise';
-
+                        clearErrorMessages();
                         document.body.appendChild(successMessage);
 
                         // Remove the success message after 2 seconds
@@ -546,7 +552,7 @@ function subclipReset(clipID) {
                         successMessage.style.borderRadius = '5px';
                         successMessage.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
                         successMessage.style.zIndex = '1000';
-
+                        clearErrorMessages();
                         document.body.appendChild(successMessage);
 
                         // Remove the success message after 2 seconds
@@ -594,10 +600,10 @@ function highlightNoSubclipIcons(button) {
 
                         if (element) {
                             
-                            element.style.border = '2px solid red';
+                            // element.style.border = '2px solid red';
                             if (slide_span_.textContent ===''){
                                 
-                                document.getElementById(`error-message_${id}`).textContent = 'Please Wait For Clips To Process'
+                                document.getElementById(`error-message_${id}`).textContent = 'Please Wait For Clip To Process'
                             }else{
                                 slide_span_.style.border = '2px solid red';
                                 document.getElementById(`error-message_${id}`).textContent = 'Add Clip To The Remaning Text'
