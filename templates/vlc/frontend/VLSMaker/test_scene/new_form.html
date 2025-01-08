@@ -59,7 +59,7 @@
 
                 </div>
                 {% endfor %}
-                <form action="." method="post" id="processFile">
+                <form action="."  method="post" id="processFile">
                     {% csrf_token %}
                     <input type="text" name="purpose" value="process" hidden>
                 </form>
@@ -141,7 +141,7 @@
         
         </div>
         </div>
-        <div style="border-left:0.8px solid #864AF9; {% if user.subscription.plan.name|lower == 'free' %}background-color:gray; {% endif %}" class="form-grid-item ">
+        <div style="border-left:0.8px solid #864AF9; {% if user.subscription.plan.name|lower == 'free' %}background-color:eeeeeebb; pointer-events: none; opacity: 0.5; cursor: not-allowed {% endif %}" class="form-grid-item ">
 
         <div  class="form-group">
             <select id="selected_topic" onchange="fetchVideoClips(this)" name="selected_topic" class="form-select">
