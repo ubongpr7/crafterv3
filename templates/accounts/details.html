@@ -354,8 +354,13 @@
         <div class="section">
           <p class="credit-header">Credit Usage</p>
           <div class="credit-info">
+            {% if   cur_plan.name|lower == 'free' or  cur_plan.name|lower == 'cancelled' %}
+            <p>You currently do not have an active plan.</p>
+            <p>Unused credits will expire in  {{days_left}} Days </p>
+            {%else%}
             <p>Any unused credit will roll over to the next month</p>
-            <p>{{ days_left }} days left</p>
+            <p>Next recharge in {{days_left}} Days </p>
+            {% endif %}
           </div>
         </div>
       </div>
