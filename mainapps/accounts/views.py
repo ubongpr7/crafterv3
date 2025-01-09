@@ -202,6 +202,7 @@ def register(request):
                     user.subscription = subscription
                     user.save()
             except Exception as _:
+                print(_)
                 messages.error(request, "Subscription Failed. Please Try Again Later.")
                 return redirect(
                     f'/accounts/register/?session_id={checkout_session_id}'
@@ -404,8 +405,129 @@ def subscribe(request, price_id):
             return redirect(reverse("home:home"))
 
 
+# @login_required
+# def manage_subscription(request):
+#     stripe.api_key = settings.STRIPE_SEC_KEY
+#     user_url=request.session.get('user_url')
+
+#     if request.GET.get('session_id'):
+#         checkout_session_id = request.GET.get("session_id")
+#         if checkout_session_id and request.user.is_authenticated:
+#             user= request.user
+            
+#             checkout_session = stripe.checkout.Session.retrieve(checkout_session_id)
+#             stripe_customer_id = checkout_session.customer
+#             checkout_session = stripe.checkout.Session.retrieve(checkout_session_id)
+#             stripe_customer_id = checkout_session.customer
+#             subscription_id = checkout_session.get("subscription")
+#             if subscription_id:
+#                 subscription = stripe.Subscription.retrieve(subscription_id)
+#                 price_id = subscription["items"]["data"][0]["price"]["id"]
+#                 print("Price ID:", price_id)
+#                 customer_id = 0
+#                 plan=Plan.objects.get(stripe_price_id=price_id)
+#                 try:
+#                     customer = StripeCustomer.objects.get(
+#                         stripe_customer_id=stripe_customer_id
+#                     )
+
+#                     if customer is not None:
+#                         customer.user = user
+#                         customer.save()
+
+#                         customer_id = customer.id
+#                 except StripeCustomer.DoesNotExist:
+#                     new_customer = StripeCustomer(
+#                         user=user, stripe_customer_id=stripe_customer_id
+#                     )
+#                     new_customer.save()
+#                     customer=new_customer
+#                     customer_id = new_customer.id
+                
+
+#                 try:
+#                     try:
+
+#                         subscription = Subscription.objects.create(
+#                         plan=plan,
+#                         credits=plan.vsl_limit +user.subscription.credits,
+#                         customer=customer,
+#                         stripe_subscription_id=subscription_id,
+#                         )   
+#                     except Exception as e:
+#                         subscription = Subscription.objects.create(
+#                         plan=plan,
+#                         credits=plan.vsl_limit,
+#                         customer=customer,
+#                         stripe_subscription_id=subscription_id,
+#                         )   
+#                     user.subscription = subscription
+#                     user.save()
+
+            
+#                 except Exception as e:
+#                     print(e)
+#                     logout(request)
+#                     return redirect('/')
+
+
+#     credits_left = request.user.subscription.credits
+#     total_credits = max(request.user.subscription.plan.vsl_limit, credits_left)
+
+#     current_period_end = 0
+#     if request.user.subscription.stripe_subscription_id is not None:
+#         stripe.api_key = settings.STRIPE_SEC_KEY
+
+#         subscription = stripe.Subscription.retrieve(
+#             request.user.subscription.stripe_subscription_id
+#         )
+
+#         current_period_end = int(subscription["current_period_end"])
+#     else:
+#         current_period_end = request.user.subscription.current_period_end
+
+#     now = int(datetime.now().timestamp())
+#     days_left = int((current_period_end - now) / 60 / 60 / 24)
+#     days_left = max(-1, days_left)
+#     days_left += 1
+#     if user_url:
+#         request.session['user_url']=None
+#         return redirect(user_url)
+#     credits_left = request.user.subscription.credits
+#     total_credits = max(request.user.subscription.plan.vsl_limit, credits_left)
+
+#     current_period_end = 0
+#     if request.user.subscription.stripe_subscription_id is not None:
+#         stripe.api_key = settings.STRIPE_SEC_KEY
+
+#         subscription = stripe.Subscription.retrieve(
+#             request.user.subscription.stripe_subscription_id
+#         )
+
+#         current_period_end = int(subscription["current_period_end"])
+#     else:
+#         current_period_end = request.user.subscription.current_period_end
+
+#     now = int(datetime.now().timestamp())
+#     days_left = int((current_period_end - now) / 60 / 60 / 24)
+#     days_left = max(-1, days_left)
+#     days_left += 1
+
+#     return render(
+#         request,
+#         "accounts/details.html",
+#         context={
+#             "total_credits": total_credits,
+#             "credits_left": credits_left,
+#             "cur_plan": request.user.subscription.plan,
+#             "plans": Plan.objects.all(),
+#             "days_left": days_left,
+#         },
+#     )
+
 @login_required
 def manage_subscription(request):
+    
     credits_left = request.user.subscription.credits
     total_credits = max(request.user.subscription.plan.vsl_limit, credits_left)
 
@@ -437,7 +559,6 @@ def manage_subscription(request):
             "days_left": days_left,
         },
     )
-
 
 @login_required
 def upgrade_subscription(request, price_id):
