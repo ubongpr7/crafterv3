@@ -342,7 +342,7 @@
 
         <div class="section">
           <p>Subscription Status:</p>
-          {% if cur_plan.name|lower == 'free' %}
+          {% if cur_plan.name|lower == 'free' or cur_plan.name|lower == 'cancelled' %}
             <p class="btn">Trial</p>
           {% else %}
             <p class="active">Active</p>
@@ -382,7 +382,7 @@
                  required
                  placeholder="Enter the amount of credits" />
           <button type="submit"
-                  {% if cur_plan.name|lower == 'free' %}disabled{% endif %}>Buy</button>
+                  {% if cur_plan.name|lower == 'free' or  cur_plan.name|lower == 'cancelled' %}disabled{% endif %}>Buy</button>
         </form>
       </div>
     </div>
@@ -409,7 +409,7 @@
           <button type="button" class="cancel_button" id="up">
             Cancel Subscription
           </button>
-        {% elif cur_plan.name|lower == 'free' %}
+        {% elif cur_plan.name|lower == 'free' or cur_plan.name|lower == 'cancelled' %}
           <a href="{% url 'accounts:upgrade_subscription' price_id=plans.0.stripe_price_id %}?success_path=/accounts/manage-subscription&cancel_path=/accounts/manage-subscription">Upgrade Subscription</a>
         {% else %}
           <button type="button" id="downgradeButton">Downgrade Subscription</button>

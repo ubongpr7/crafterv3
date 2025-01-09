@@ -641,6 +641,7 @@ def cancel_subscription(request):
         messages.success(request, "Subscription Cancelled Successfully")
         return redirect(reverse("accounts:manage_subscription"))
     except Exception as _:
+        print(_)
         messages.error(
             request, "Something Went Wrong. Couldn't Cancel Your Subscription."
         )
