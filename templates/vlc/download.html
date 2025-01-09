@@ -476,7 +476,7 @@
                 </div>
                 <div class="benefits">
                   <img src="{% static 'assets/icons/check.svg' %}" alt="" />
-                  <span class="benefits-text">Create Up To {{ plans.0.vsl_limit }} VSLs Per Month</span>
+                  <span class="benefits-text">Create Up To {{ plans.0.vsl_limit }} Videos Per Month</span>
                 </div>
                 <a href="{% url 'accounts:upgrade_subscription' price_id=plans.0.stripe_price_id %}?success_path=/accounts/manage-subscription&cancel_path=/accounts/manage-subscription"
                    class="p-button"
@@ -492,7 +492,7 @@
                   </div>
                   <div class="benefits">
                     <img src="{% static 'assets/icons/check.svg' %}" alt="" />
-                    <span class="benefits-text">Create Up To {{ plans.1.vsl_limit }} VSLs Per Month</span>
+                    <span class="benefits-text">Create Up To {{ plans.1.vsl_limit }} Video Per Month</span>
                   </div>
                   <a href="{% url 'accounts:upgrade_subscription' price_id=plans.1.stripe_price_id %}?success_path=/accounts/manage-subscription&cancel_path=/accounts/manage-subscription"
                      class="p-button"

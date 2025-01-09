@@ -53,7 +53,7 @@ def contact_view(request):
 def logout_view(request):
     logout(request)
 
-    messages.success(request, "You Have Been Successfully Logged Out.")
+    # messages.success(request, "You Have Been Successfully Logged Out.")
 
     return redirect("/")
 
@@ -379,7 +379,11 @@ def stripe_webhook(request):
 
 
 def subscribe(request, price_id):
+
     if request.method == "GET":
+        user_url = request.GET.get("user_url")
+        if user_url:
+            request.session['user_url']=user_url
         try:
             stripe.api_key = settings.STRIPE_SEC_KEY
 
@@ -415,6 +419,7 @@ def subscribe(request, price_id):
 
 @login_required
 def manage_subscription(request):
+    user_url=request.session.get('user_url')
     
     if request.GET.get('session_id'):
         checkout_session_id = request.GET.get("session_id")
@@ -476,7 +481,9 @@ def manage_subscription(request):
                     logout(request)
                     return redirect('/')
 
-
+    if user_url:
+        request.session['user_url']=None
+        return redirect(user_url)
     credits_left = request.user.subscription.credits
     total_credits = max(request.user.subscription.plan.vsl_limit, credits_left)
 
