@@ -478,7 +478,7 @@
                   <img src="{% static 'assets/icons/check.svg' %}" alt="" />
                   <span class="benefits-text">Create Up To {{ plans.0.vsl_limit }} Videos Per Month</span>
                 </div>
-                <a href="{% url 'accounts:upgrade_subscription' price_id=plans.0.stripe_price_id %}?success_path=/accounts/manage-subscription&cancel_path=/accounts/manage-subscription"
+                <a href="{% url 'accounts:upgrade_subscription' price_id=plans.0.stripe_price_id %}?success_path=/accounts/manage-subscription&cancel_path=/accounts/manage-subscription&user_url=/text/download/{{text_file.id}}"
                    class="p-button"
                    style="text-decoration: none">Get Started</a>
               </div>
@@ -494,7 +494,7 @@
                     <img src="{% static 'assets/icons/check.svg' %}" alt="" />
                     <span class="benefits-text">Create Up To {{ plans.1.vsl_limit }} Video Per Month</span>
                   </div>
-                  <a href="{% url 'accounts:upgrade_subscription' price_id=plans.1.stripe_price_id %}?success_path=/accounts/manage-subscription&cancel_path=/accounts/manage-subscription"
+                  <a href="{% url 'accounts:upgrade_subscription' price_id=plans.1.stripe_price_id %}?success_path=/accounts/manage-subscription&cancel_path=/accounts/manage-subscription&user_url=/text/download/{{text_file.id}}"
                      class="p-button"
                      style="text-decoration: none">Get Started</a>
                 </div>
