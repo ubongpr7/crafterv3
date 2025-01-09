@@ -342,8 +342,10 @@
 
         <div class="section">
           <p>Subscription Status:</p>
-          {% if cur_plan.name|lower == 'free' or cur_plan.name|lower == 'cancelled' %}
+          {% if cur_plan.name|lower == 'free'  %}
             <p class="btn">Trial</p>
+            {% elif  cur_plan.name|lower == 'cancelled'%}
+            <p class="btn">Not Active</p>
           {% else %}
             <p class="active">Active</p>
           {% endif %}
