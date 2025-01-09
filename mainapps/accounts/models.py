@@ -9,6 +9,8 @@ class Plan(models.Model):
     price_per_vsl = models.DecimalField(max_digits=5, decimal_places=2, null=True)
     vsl_limit = models.IntegerField(default=0)
 
+    class Meta:
+        ordering = ['id'] 
 
 class StripeCustomer(models.Model):
     user = models.ForeignKey("User", on_delete=models.CASCADE, null=True)
