@@ -172,44 +172,92 @@ def register(request):
                 "accounts/register.html",
                 context={"price_id": "free", "success": True},
             )
+#         else:
+#             checkout_session = stripe.checkout.Session.retrieve(checkout_session_id)
+#             stripe_customer_id = checkout_session.customer
+
+#             customer_id = 0
+#             try:
+#                 customer = StripeCustomer.objects.get(
+#                     stripe_customer_id=stripe_customer_id
+#                 )
+
+#                 if customer is not None:
+#                     customer.user = user
+#                     customer.save()
+
+#                     customer_id = customer.id
+#             except StripeCustomer.DoesNotExist:
+#                 new_customer = StripeCustomer(
+#                     user=user, stripe_customer_id=stripe_customer_id
+#                 )
+#                 new_customer.save()
+
+#                 customer_id = new_customer.id
+#             subscription=None
+#             try:
+#                 subscription = Subscription.objects.get(customer_id=customer_id)
+
+                
+#             except Exception as _:
+#                 print(_)
+#                 messages.error(request, "Subscription Failed. Please Try Again Later.")
+#                 # return redirect(
+#                 #     f'/accounts/register/?session_id={checkout_session_id}'
+#                 #     # reverse(
+#                 #     #     "accounts:register", kwargs={"session_id": checkout_session_id}
+#                 #     # )
+#                 # )
+
+#                 if subscription is  None:
+#                     subscription=Subscription.objects.create(customer_id=customer_id,stripe_customer_id=stripe_customer_id,plan=)
+# `               `
+                
+#                 user.subscription = subscription
+#                 user.save()
         else:
             checkout_session = stripe.checkout.Session.retrieve(checkout_session_id)
             stripe_customer_id = checkout_session.customer
+            subscription_id = checkout_session.get("subscription")
+            if subscription_id:
+                subscription = stripe.Subscription.retrieve(subscription_id)
+                price_id = subscription["items"]["data"][0]["price"]["id"]
+                print("Price ID:", price_id)
+                customer_id = 0
+                plan=Plan.objects.get(stripe_price_id=price_id)
+                try:
+                    customer = StripeCustomer.objects.get(
+                        stripe_customer_id=stripe_customer_id
+                    )
 
-            customer_id = 0
-            try:
-                customer = StripeCustomer.objects.get(
-                    stripe_customer_id=stripe_customer_id
-                )
+                    if customer is not None:
+                        customer.user = user
+                        customer.save()
 
-                if customer is not None:
-                    customer.user = user
-                    customer.save()
+                        customer_id = customer.id
+                except StripeCustomer.DoesNotExist:
+                    new_customer = StripeCustomer(
+                        user=user, stripe_customer_id=stripe_customer_id
+                    )
+                    new_customer.save()
 
-                    customer_id = customer.id
-            except StripeCustomer.DoesNotExist:
-                new_customer = StripeCustomer(
-                    user=user, stripe_customer_id=stripe_customer_id
-                )
-                new_customer.save()
+                    customer_id = new_customer.id
 
-                customer_id = new_customer.id
+                try:
 
-            try:
-                subscription = Subscription.objects.get(customer_id=customer_id)
-
-                if subscription is not None:
+                    subscription = Subscription.objects.create(
+                    plan=plan,
+                    credits=plan.vsl_limit,
+                    customer=new_customer,
+                    stripe_subscription_id=subscription_id,
+                    )   
                     user.subscription = subscription
                     user.save()
-            except Exception as _:
-                print(_)
-                messages.error(request, "Subscription Failed. Please Try Again Later.")
-                return redirect(
-                    f'/accounts/register/?session_id={checkout_session_id}'
-                    # reverse(
-                    #     "accounts:register", kwargs={"session_id": checkout_session_id}
-                    # )
-                )
+
+                except Exception as _:
+                    messages.error(request, f"Subscription Failed. Please Try Again Later. {_}")
+                    return redirect(f'/accounts/register/?session_id={checkout_session_id}'
+                    )
 
             send_html_email2(
                 subject="Welcome to VideoCrafter.io",
