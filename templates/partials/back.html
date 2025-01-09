@@ -14,13 +14,7 @@
     // Get the referrer URL
     var referrer = document.referrer;
     
-    // Check if the previous page URL contains 'progress'
-    if (referrer.includes('progress')) {
-        // Go back two steps
-        window.history.go(-2);
-    } else {
-        // Go back one step
-        window.history.back();
+    window.location='/text/'
     }
 });
 
