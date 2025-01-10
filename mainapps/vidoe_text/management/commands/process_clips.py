@@ -1312,8 +1312,8 @@ class Command(BaseCommand):
                             ffmpeg_command = [
                             "ffmpeg",
                             "-i", os.path.normpath(file_path),
-                            "-c:v", "libx264",
-                            "-c:a", "aac",
+                            "-c:v", 'copy',
+                            "-c:a", 'copy',
                             os.path.normpath(converted_path)
                             ]
                             subprocess.run(ffmpeg_command, check=True)
