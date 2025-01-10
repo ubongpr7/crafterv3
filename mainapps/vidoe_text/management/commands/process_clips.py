@@ -1312,8 +1312,9 @@ class Command(BaseCommand):
                             ffmpeg_command = [
                                 "ffmpeg",
                                 "-i", os.path.normpath(file_path),
-                                "-vcodec", "h264",
-                                "-acodec", "mp2",
+                                "-c:v", "copy",
+                                "-c:a", "copy",
+                                "-movflags", "faststart",
                                 os.path.normpath(converted_path)
                             ]
 
