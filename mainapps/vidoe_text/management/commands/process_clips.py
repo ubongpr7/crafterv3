@@ -1233,45 +1233,114 @@ class Command(BaseCommand):
 
         return [clip.video_file for clip in video_clips ]
 
-    def load_video_from_file_field(self, file_field) -> VideoFileClip:
+    # def load_video_from_file_field(self, file_field) -> VideoFileClip:
+    #     """
+    #     Load a video from a file field, downloading it from S3,
+    #     and return it as a MoviePy VideoFileClip.
+
+    #     Args:
+    #         file_field: The FileField containing the S3 path for the video file.
+
+    #     Returns:
+    #         VideoFileClip: The loaded video clip.
+
+    #     Raises:
+    #         ValueError: If the file field is empty or not a valid video file.
+    #     """
+    #     try:
+    #         if not file_field or not file_field.name:
+    #             raise ValueError("File field is empty or invalid.")
+    #         file_extension = os.path.splitext(file_field.name)[1].lower()
+
+    #         with tempfile.NamedTemporaryFile(suffix=file_extension, delete=False) as temp_file:
+    #             file_content = download_from_s3(file_field.name, temp_file.name)
+
+    #             if not file_content:
+    #                 raise ValueError("Failed to download the video from S3.")
+    #             clip=None
+    #             with open(temp_file.name, "wb") as video_file:
+    #                 video_file.write(file_content)
+    #             if file_extension in VIDEO_EXTENSIONS:
+    #                 clip = VideoFileClip(os.path.normpath(temp_file.name))
+    #             elif file_extension in IMAGE_EXTENSIONS:
+    #                 clip = ImageClip(os.path.normpath(temp_file.name))
+
+    #             # Return the video clip
+    #             return clip
+
+    #     except Exception as e:
+    #         logging.error(f"Error loading video from file field: {e}")
+    #         raise
+
+    def load_video_from_file_field(self,file_field) -> VideoFileClip:
         """
-        Load a video from a file field, downloading it from S3,
-        and return it as a MoviePy VideoFileClip.
+        Load a video or image from a file field, downloading it from S3, converting if necessary,
+        and returning it as a MoviePy VideoFileClip or ImageClip.
 
         Args:
-            file_field: The FileField containing the S3 path for the video file.
+            file_field: The FileField containing the S3 path for the file.
 
         Returns:
-            VideoFileClip: The loaded video clip.
+            VideoFileClip or ImageClip: The loaded clip.
 
         Raises:
-            ValueError: If the file field is empty or not a valid video file.
+            ValueError: If the file field is empty or not a valid video/image file.
         """
         try:
             if not file_field or not file_field.name:
                 raise ValueError("File field is empty or invalid.")
+
             file_extension = os.path.splitext(file_field.name)[1].lower()
 
+            # Create a temporary file to store the downloaded content
             with tempfile.NamedTemporaryFile(suffix=file_extension, delete=False) as temp_file:
-                file_content = download_from_s3(file_field.name, temp_file.name)
+                file_path = temp_file.name
+                file_content = download_from_s3(file_field.name, file_path)
 
                 if not file_content:
-                    raise ValueError("Failed to download the video from S3.")
-                clip=None
-                with open(temp_file.name, "wb") as video_file:
-                    video_file.write(file_content)
-                if file_extension in VIDEO_EXTENSIONS:
-                    clip = VideoFileClip(os.path.normpath(temp_file.name))
-                elif file_extension in IMAGE_EXTENSIONS:
-                    clip = ImageClip(os.path.normpath(temp_file.name))
+                    raise ValueError("Failed to download the file from S3.")
 
-                # Return the video clip
+                # Check if the file is a video
+                if file_extension in VIDEO_EXTENSIONS:
+                    if file_extension == ".mp4":
+                        # Load the video clip directly if it's already an mp4
+                        clip = VideoFileClip(os.path.normpath(file_path))
+                    else:
+                        # Convert to mp4 using ffmpeg
+                        with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as converted_file:
+                            converted_path = converted_file.name
+                            ffmpeg_command = [
+                                "ffmpeg",
+                                "-i", os.path.normpath(file_path),  # Input file
+                                "-c:v", "libx264",  # Use H.264 codec
+                                "-preset", "fast",  # Fast preset for encoding
+                                "-crf", "23",       # Quality factor
+                                "-c:a", "aac",      # Use AAC codec for audio
+                                "-b:a", "192k",     # Audio bitrate
+                                os.path.normpath(converted_path)
+                            ]
+                            subprocess.run(ffmpeg_command, check=True)
+                            logging.info(f'ffmpeg is done converting {file_extension} to .mp4')
+                            # Load the converted video clip
+                            clip = VideoFileClip(os.path.normpath(converted_path))
+
+                # Check if the file is an image
+                elif file_extension in IMAGE_EXTENSIONS:
+                    clip = ImageClip(os.path.normpath(file_path))
+
+                else:
+                    raise ValueError("Unsupported file type.")
+
+                # Return the loaded clip
                 return clip
+
+        except subprocess.CalledProcessError as ffmpeg_error:
+            logging.error(f"FFmpeg error during conversion: {ffmpeg_error}")
+            raise
 
         except Exception as e:
             logging.error(f"Error loading video from file field: {e}")
-            raise
-
+        raise
 
     def add_margin_based_on_aspect_ratio(self,clip, target_aspect_ratio):
         """
