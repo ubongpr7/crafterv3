@@ -1309,16 +1309,17 @@ class Command(BaseCommand):
                         # Convert to mp4 using ffmpeg
                         with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as converted_file:
                             converted_path = converted_file.name
-                            ffmpeg_command = [
-                                "ffmpeg",
-                                "-i", os.path.normpath(file_path),  # Input file
-                                "-c:v", "libx264",  # Use H.264 codec
-                                "-preset", "fast",  # Fast preset for encoding
-                                "-crf", "23",       # Quality factor
-                                "-c:a", "aac",      # Use AAC codec for audio
-                                "-b:a", "192k",     # Audio bitrate
-                                os.path.normpath(converted_path)
-                            ]
+                            ffmpeg_command=f'ffmpeg -i {os.path.normpath(file_path)} -c:v libx264 -c:a aac {os.path.normpath(converted_path)}'
+                            # ffmpeg_command = [
+                            #     "ffmpeg",
+                            #     "-i", os.path.normpath(file_path),  # Input file
+                            #     "-c:v", "libx264",  # Use H.264 codec
+                            #     "-preset", "fast",  # Fast preset for encoding
+                            #     "-crf", "23",       # Quality factor
+                            #     "-c:a", "aac",      # Use AAC codec for audio
+                            #     "-b:a", "192k",     # Audio bitrate
+                            #     os.path.normpath(converted_path)
+                            # ]
                             subprocess.run(ffmpeg_command, check=True)
                             logging.info(f'ffmpeg is done converting {file_extension} to .mp4')
                             # Load the converted video clip
