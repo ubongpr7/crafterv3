@@ -1272,7 +1272,74 @@ class Command(BaseCommand):
     #         logging.error(f"Error loading video from file field: {e}")
     #         raise
 
-    def load_video_from_file_field(self,file_field) -> VideoFileClip:
+    # def load_video_from_file_field(self,file_field) -> VideoFileClip:
+    #     """
+    #     Load a video or image from a file field, downloading it from S3, converting if necessary,
+    #     and returning it as a MoviePy VideoFileClip or ImageClip.
+
+    #     Args:
+    #         file_field: The FileField containing the S3 path for the file.
+
+    #     Returns:
+    #         VideoFileClip or ImageClip: The loaded clip.
+
+    #     Raises:
+    #         ValueError: If the file field is empty or not a valid video/image file.
+    #     """
+    #     try:
+    #         if not file_field or not file_field.name:
+    #             raise ValueError("File field is empty or invalid.")
+
+    #         file_extension = os.path.splitext(file_field.name)[1].lower()
+
+    #         # Create a temporary file to store the downloaded content
+    #         with tempfile.NamedTemporaryFile(suffix=file_extension, delete=False) as temp_file:
+    #             file_path = temp_file.name
+    #             file_content = download_from_s3(file_field.name, file_path)
+
+    #             if not file_content:
+    #                 raise ValueError("Failed to download the file from S3.")
+
+    #             # Check if the file is a video
+    #             if file_extension in VIDEO_EXTENSIONS:
+    #                 if file_extension == ".mp4":
+    #                     # Load the video clip directly if it's already an mp4
+    #                     clip = VideoFileClip(os.path.normpath(file_path))
+    #                 else:
+    #                     # Convert to mp4 using ffmpeg
+    #                     with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as converted_file:
+    #                         converted_path = converted_file.name
+    #                         ffmpeg_command = [
+    #                             "ffmpeg",
+    #                             "-i", os.path.normpath(file_path),
+    #                             "-vcodec", "h264",
+    #                             "-acodec", "mp2",
+    #                             os.path.normpath(converted_path)
+    #                         ]
+
+    #                         subprocess.run(ffmpeg_command, check=True)
+    #                         logging.info(f'ffmpeg is done converting {file_extension} to .mp4')
+    #                         # Load the converted video clip
+    #                         clip = VideoFileClip(os.path.normpath(converted_path))
+
+    #             # Check if the file is an image
+    #             elif file_extension in IMAGE_EXTENSIONS:
+    #                 clip = ImageClip(os.path.normpath(file_path))
+
+    #             else:
+    #                 raise ValueError("Unsupported file type.")
+
+    #             # Return the loaded clip
+    #             return clip
+
+    #     except subprocess.CalledProcessError as ffmpeg_error:
+    #         logging.error(f"FFmpeg error during conversion: {ffmpeg_error}")
+    #         raise
+
+    #     except Exception as e:
+    #         logging.error(f"Error loading video from file field: {e}")
+    #     raise
+    def load_video_from_file_field(self, file_field) -> VideoFileClip:
         """
         Load a video or image from a file field, downloading it from S3, converting if necessary,
         and returning it as a MoviePy VideoFileClip or ImageClip.
@@ -1303,24 +1370,39 @@ class Command(BaseCommand):
                 # Check if the file is a video
                 if file_extension in VIDEO_EXTENSIONS:
                     if file_extension == ".mp4":
-                        # Load the video clip directly if it's already an mp4
+                        # Load the video clip directly if it's already an MP4
                         clip = VideoFileClip(os.path.normpath(file_path))
                     else:
-                        # Convert to mp4 using ffmpeg
-                        with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as converted_file:
-                            converted_path = converted_file.name
-                            ffmpeg_command = [
+                        # Re-encode the video to its current format
+                        with tempfile.NamedTemporaryFile(suffix=file_extension, delete=False) as reencoded_file:
+                            reencoded_path = reencoded_file.name
+                            reencode_command = [
                                 "ffmpeg",
                                 "-i", os.path.normpath(file_path),
-                                "-c:v", "copy",
-                                "-c:a", "copy",
-                                "-movflags", "faststart",
-                                os.path.normpath(converted_path)
+                                "-c:v", "libx264",  # Use H.264 codec for video re-encoding
+                                "-c:a", "aac",      # Use AAC codec for audio re-encoding
+                                os.path.normpath(reencoded_path),
                             ]
 
-                            subprocess.run(ffmpeg_command, check=True)
-                            logging.info(f'ffmpeg is done converting {file_extension} to .mp4')
-                            # Load the converted video clip
+                            subprocess.run(reencode_command, check=True)
+                            logging.info(f"Video re-encoded to original format: {file_extension}")
+
+                        # Convert re-encoded video to MP4
+                        with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as converted_file:
+                            converted_path = converted_file.name
+                            convert_command = [
+                                "ffmpeg",
+                                "-i", os.path.normpath(reencoded_path),
+                                "-c:v", "libx264",
+                                "-c:a", "aac",
+                                "-movflags", "faststart",
+                                os.path.normpath(converted_path),
+                            ]
+
+                            subprocess.run(convert_command, check=True)
+                            logging.info(f"Video converted from {file_extension} to .mp4")
+
+                            # Load the MP4 video clip
                             clip = VideoFileClip(os.path.normpath(converted_path))
 
                 # Check if the file is an image
@@ -1339,7 +1421,36 @@ class Command(BaseCommand):
 
         except Exception as e:
             logging.error(f"Error loading video from file field: {e}")
-        raise
+            raise
+
+    def add_moov_atom(self,input_path, output_path):
+        """
+        Adds the moov atom to a .mov video using FFmpeg.
+
+        Args:
+            input_path (str): Path to the input .mov video.
+            output_path (str): Path to save the output .mov video with moov atom.
+
+        Returns:
+            str: Path to the fixed video file.
+        Raises:
+            Exception: If FFmpeg fails to process the file.
+        """
+        try:
+            ffmpeg_command = [
+                "ffmpeg",
+                "-i", input_path,
+                "-c:v", "copy",
+                "-c:a", "copy",
+                "-movflags", "faststart",
+                output_path
+            ]
+            subprocess.run(ffmpeg_command, check=True)
+            print(f"Successfully added moov atom to: {output_path}")
+            return output_path
+        except subprocess.CalledProcessError as e:
+            raise Exception(f"FFmpeg error: {e}")
+
 
     def add_margin_based_on_aspect_ratio(self,clip, target_aspect_ratio):
         """
