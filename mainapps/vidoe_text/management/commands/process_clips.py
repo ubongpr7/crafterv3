@@ -1310,12 +1310,13 @@ class Command(BaseCommand):
                         with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as converted_file:
                             converted_path = converted_file.name
                             ffmpeg_command = [
-                            "ffmpeg",
-                            "-i", os.path.normpath(file_path),
-                            "-c:v", 'copy',
-                            "-c:a", 'copy',
-                            os.path.normpath(converted_path)
+                                "ffmpeg",
+                                "-i", os.path.normpath(file_path),
+                                "-vcodec", "h264",
+                                "-acodec", "mp2",
+                                os.path.normpath(converted_path)
                             ]
+
                             subprocess.run(ffmpeg_command, check=True)
                             logging.info(f'ffmpeg is done converting {file_extension} to .mp4')
                             # Load the converted video clip
