@@ -98,7 +98,7 @@ def repair_video_with_untrunc(reference_file, corrupted_file):
     """
     Repair a corrupted video using untrunc and return the path to the repaired file.
     """
-    repaired_file = corrupted_file.replace("/bad/", "/repaired/")  # Save repaired videos in /media/repaired
+    repaired_file = corrupted_file.replace(".mov", "_fixed.mov")  # Save repaired videos in /media/repaired
     repaired_dir = os.path.dirname(repaired_file)
     os.makedirs(repaired_dir, exist_ok=True)
 
