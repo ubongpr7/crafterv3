@@ -636,7 +636,6 @@ def process_textfile(request, textfile_id):
     if not textfile_id:
         return JsonResponse({"error": "text_file_id is required."}, status=400)
 
-    # Run process_video command in a new thread
     def run_process_command(textfile_id):
         try:
             call_command("process_clips", textfile_id)
