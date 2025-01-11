@@ -493,9 +493,6 @@ class Command(BaseCommand):
                 preset="ultrafast",
                 audio_codec="aac",
                 fps=30,
-                # temp_audiofile='temp-audio.m4a', 
-                # remove_temp=True
-                # ffmpeg_params=["-movflags", "+faststart"],
             )
 
             if file_to_write:
@@ -1360,14 +1357,11 @@ class Command(BaseCommand):
 
             file_extension = os.path.splitext(file_field.name)[1].lower()
 
-            # Create temp files for the corrupted video and repaired video
             with tempfile.NamedTemporaryFile(suffix=file_extension, delete=False) as bad_video:
                 bad_video_path = bad_video.name
 
-                # Download the corrupted video from S3
                 download_from_s3(file_field.name, bad_video_path)
 
-                # Create another tempfile for the repaired video
                 with tempfile.NamedTemporaryFile(suffix=file_extension, delete=False) as repaired_video:
                     repaired_video_path = repaired_video.name
 
@@ -1419,7 +1413,6 @@ class Command(BaseCommand):
 
             file_extension = os.path.splitext(file_field.name)[1].lower()
 
-            # Create a temporary file to store the downloaded content
             with tempfile.NamedTemporaryFile(suffix=file_extension, delete=False) as temp_file:
                 file_path = temp_file.name
                 file_content = download_from_s3(file_field.name, file_path)
@@ -1427,13 +1420,35 @@ class Command(BaseCommand):
                 if not file_content:
                     raise ValueError("Failed to download the file from S3.")
 
-                # Check if the file is a video
                 if file_extension in VIDEO_EXTENSIONS:
                     if file_extension == ".mp4":
-                        # Load the video clip directly if it's already an MP4
                         clip = VideoFileClip(os.path.normpath(file_path))
                     else:
-                        return self.repair_and_load_video(file_field)
+                        other_ext_clip = VideoFileClip(os.path.normpath(file_path))
+                        with tempfile.NamedTemporaryFile(
+                            suffix=".mp4", delete=False
+                        ) as temp_output_video:
+
+                            other_ext_clip.write_videofile(
+                                temp_output_video.name,
+                                codec="libx264",
+                                preset="ultrafast",
+                                audio_codec="aac",
+                                fps=30,
+                            )
+
+                            if file_field:
+                                file_field.delete(save=False)
+
+                            with open(temp_output_video.name, "rb") as output_video_file:
+                                video_content = output_video_file.read()
+
+                                file_field.save(
+                                    f"video_{self.generate_random_string()}_{timestamp}.mp4",
+                                    ContentFile(video_content),
+                                )
+                                self.load_video_from_file_field(file_field)
+                        
                 elif file_extension in IMAGE_EXTENSIONS:
                     clip = ImageClip(os.path.normpath(file_path))
 
