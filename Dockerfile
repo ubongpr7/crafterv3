@@ -5,11 +5,10 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV IMAGEMAGICK_BINARY=/usr/bin/convert
 
-# Install the base dependencies
 RUN apt update
 RUN apt -y install \
   wget \
-  unzip \  
+  unzip \
   build-essential \
   libssl* \
   libffi-dev \
@@ -28,7 +27,10 @@ RUN apt -y install \
   fonts-liberation \
   libavformat-dev \
   libavcodec-dev \
-  libavutil-dev
+  libavutil-dev \
+  libtool \
+  autoconf \
+  pkg-config
 
 # Install Python 3.10.14 from source (optional as you're already using python:3.10-slim, may not be necessary)
 RUN wget https://www.python.org/ftp/python/3.10.14/Python-3.10.14.tgz
@@ -43,7 +45,10 @@ WORKDIR /tmp
 RUN wget https://github.com/ponchio/untrunc/archive/refs/heads/master.zip
 RUN unzip master.zip
 WORKDIR /tmp/untrunc-master
-RUN g++ -o untrunc file.cpp main.cpp track.cpp atom.cpp mp4.cpp -L/usr/local/lib -lavformat -lavcodec -lavutil
+
+# Compile Untrunc with required libraries and tools
+RUN g++ -o untrunc file.cpp main.cpp track.cpp atom.cpp mp4.cpp -L/usr/local/lib -lavformat -lavcodec -lavutil -lavdevice -lavfilter -lstdc++ -lm
+
 RUN mv untrunc /usr/local/bin/untrunc
 
 # Set the working directory to /app
