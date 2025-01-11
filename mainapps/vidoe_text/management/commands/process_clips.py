@@ -1399,13 +1399,70 @@ class Command(BaseCommand):
             logging.error(f"Error loading video from file field: {e}")
             raise
 
-    def load_video_from_file_field(self, file_field) -> VideoFileClip:
+    # def load_video_from_file_field(self, file_field) -> VideoFileClip:
+    #     """
+    #     Load a video or image from a file field, downloading it from S3, converting if necessary,
+    #     and returning it as a MoviePy VideoFileClip or ImageClip.
+
+    #     Args:
+    #         file_field: The FileField containing the S3 path for the file.
+
+    #     Returns:
+    #         VideoFileClip or ImageClip: The loaded clip.
+
+    #     Raises:
+    #         ValueError: If the file field is empty or not a valid video/image file.
+    #     """
+    #     try:
+    #         if not file_field or not file_field.name:
+    #             raise ValueError("File field is empty or invalid.")
+
+    #         file_extension = os.path.splitext(file_field.name)[1].lower()
+
+    #         # Create a temporary file to store the downloaded content
+    #         with tempfile.NamedTemporaryFile(suffix=file_extension, delete=False) as temp_file:
+    #             file_path = temp_file.name
+    #             file_content = download_from_s3(file_field.name, file_path)
+
+    #             if not file_content:
+    #                 raise ValueError("Failed to download the file from S3.")
+
+    #             # Check if the file is a video
+    #             if file_extension in VIDEO_EXTENSIONS:
+    #                 if file_extension == ".mp4":
+    #                     # Load the video clip directly if it's already an MP4
+    #                     clip = VideoFileClip(os.path.normpath(file_path))
+    #                 else:
+    #                     pass
+    #                     # repair the video using untrunc here and return a clip 
+    #             # Check if the file is an image
+    #             elif file_extension in IMAGE_EXTENSIONS:
+    #                 clip = ImageClip(os.path.normpath(file_path))
+
+    #             else:
+    #                 raise ValueError("Unsupported file type.")
+
+    #             # Return the loaded clip
+    #             return clip
+
+    #     except subprocess.CalledProcessError as ffmpeg_error:
+    #         logging.error(f"FFmpeg error during conversion: {ffmpeg_error}")
+    #         raise
+
+    #     except Exception as e:
+    #         logging.error(f"Error loading video from file field: {e}")
+    #         raise
+
+
+
+    def load_video_from_file_field(self, file_field, ): 
         """
-        Load a video or image from a file field, downloading it from S3, converting if necessary,
+        Load a video or image from a file field, downloading it from S3, repairing if necessary,
         and returning it as a MoviePy VideoFileClip or ImageClip.
 
         Args:
-            file_field: The FileField containing the S3 path for the file.
+            file_field: The FileField containing the S3 path for the corrupted video file.
+            good_video_field: The FileField containing the S3 path for the reference (good) video file.
 
         Returns:
             VideoFileClip or ImageClip: The loaded clip.
@@ -1419,69 +1476,70 @@ class Command(BaseCommand):
 
             file_extension = os.path.splitext(file_field.name)[1].lower()
 
-            # Create a temporary file to store the downloaded content
-            with tempfile.NamedTemporaryFile(suffix=file_extension, delete=False) as temp_file:
-                file_path = temp_file.name
-                file_content = download_from_s3(file_field.name, file_path)
+            # Create a temporary file for the corrupted video
+            with tempfile.NamedTemporaryFile(suffix=file_extension, delete=False) as bad_temp_file:
+                bad_file_path = bad_temp_file.name
+                download_from_s3(file_field.name, bad_file_path)
 
-                if not file_content:
-                    raise ValueError("Failed to download the file from S3.")
+                if not os.path.exists(bad_file_path):
+                    raise ValueError("Failed to download the corrupted video from S3.")
 
-                # Check if the file is a video
+                # Check if it's a valid video
                 if file_extension in VIDEO_EXTENSIONS:
                     if file_extension == ".mp4":
-                        # Load the video clip directly if it's already an MP4
-                        clip = VideoFileClip(os.path.normpath(file_path))
+                        # Load MP4 directly
+                        return VideoFileClip(os.path.normpath(bad_file_path))
                     else:
-                        # Re-encode the video to its current format
-                        with tempfile.NamedTemporaryFile(suffix=file_extension, delete=False) as reencoded_file:
-                            reencoded_path = reencoded_file.name
-                            reencode_command = [
-                            "ffmpeg", 
-                            "-i",  os.path.normpath(file_path), 
-                            "-movflags", "faststart",
-                            "-c", "copy",       
-                            os.path.normpath(reencoded_path),       
-                        ]
+                        good_video_field= LogoModel.objects.get(id=3).logo
+                        if not good_video_field or not good_video_field.name:
+                            raise ValueError("Good video file is required to repair the corrupted video.")
 
-                            subprocess.run(reencode_command, check=True)
-                            logging.info(f"Video re-encoded to original format: {file_extension}")
+                        # Create a temporary file for the reference (good) video
+                        with tempfile.NamedTemporaryFile(delete=False) as good_temp_file:
+                            good_file_path = good_temp_file.name
+                            download_from_s3(good_video_field.name, good_file_path)
 
-                        # Convert re-encoded video to MP4
-                        with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as converted_file:
-                            converted_path = converted_file.name
-                            convert_command = [
-                                "ffmpeg",
-                                "-i", os.path.normpath(reencoded_path),
-                                "-c:v", "libx264",
-                                "-c:a", "aac",
-                                "-movflags", "faststart",
-                                os.path.normpath(converted_path),
-                            ]
+                            if not os.path.exists(good_file_path):
+                                raise ValueError("Failed to download the reference video from S3.")
 
-                            subprocess.run(convert_command, check=True)
-                            logging.info(f"Video converted from {file_extension} to .mp4")
+                            # Use untrunc to repair the video
+                            repaired_temp_file = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
+                            repaired_file_path = repaired_temp_file.name
+                            repaired_temp_file.close()
 
-                            # Load the MP4 video clip
-                            clip = VideoFileClip(os.path.normpath(converted_path))
+                            try:
+                                subprocess.run(
+                                    ["untrunc", "-o", repaired_file_path, good_file_path, bad_file_path],
+                                    check=True
+                                )
 
-                # Check if the file is an image
+                                if not os.path.exists(repaired_file_path):
+                                    raise FileNotFoundError(f"Repaired video not created: {repaired_file_path}")
+
+                                return VideoFileClip(os.path.normpath(repaired_file_path))
+                            finally:
+                                os.remove(good_file_path)
+                                os.remove(repaired_file_path)
+
                 elif file_extension in IMAGE_EXTENSIONS:
-                    clip = ImageClip(os.path.normpath(file_path))
+                    return ImageClip(os.path.normpath(bad_file_path))
 
                 else:
-                    raise ValueError("Unsupported file type.")
+                    raise ValueError(f"Unsupported file type: {file_extension}")
 
-                # Return the loaded clip
-                return clip
-
-        except subprocess.CalledProcessError as ffmpeg_error:
-            logging.error(f"FFmpeg error during conversion: {ffmpeg_error}")
+        except subprocess.CalledProcessError as untrunc_error:
+            logging.error(f"Untrunc error: {untrunc_error}")
             raise
 
         except Exception as e:
-            logging.error(f"Error loading video from file field: {e}")
+            logging.exception(f"Error loading video from file field: {e}")
             raise
+
+        finally:
+            # Always clean up the corrupted video file
+            if os.path.exists(bad_file_path):
+                os.remove(bad_file_path)
+
 
     def add_moov_atom(self,input_path, output_path):
         """
