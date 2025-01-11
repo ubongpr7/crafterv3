@@ -26,7 +26,7 @@ RUN apt -y install \
   fonts-liberation\
   libavformat-dev\
   libavcodec-dev\
-  libavutil-dev\
+  libavutil-dev
 
 RUN git clone https://github.com/anthwlock/untrunc.git
 RUN make
