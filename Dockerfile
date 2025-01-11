@@ -36,8 +36,6 @@ RUN wget https://www.python.org/ftp/python/3.10.14/Python-3.10.14.tgz \
     && cd .. \
     && rm -rf Python-3.10.14.tgz Python-3.10.14
 
-# Enable and configure snapd
-RUN systemctl enable snapd.service && systemctl start snapd.service && snap install core
 RUN snap install michaelp-anthwlock-untrunc
 
 # Set working directory
