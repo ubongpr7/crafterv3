@@ -7,7 +7,8 @@ ENV PYTHONUNBUFFERED=1
 ENV IMAGEMAGICK_BINARY=/usr/bin/convert
 
 # Update and install required packages
-RUN apt update && apt -y install \
+RUN apt update 
+RUN apt -y install \
   wget \
   build-essential \
   libssl* \
