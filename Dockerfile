@@ -25,7 +25,7 @@ RUN apt -y install \
   libfontconfig1 \
   fonts-liberation
 
-RUN add-apt-repository ppa:xtradeb/apps -y
+# RUN add-apt-repository ppa:xtradeb/apps -y
 RUN apt update
 RUN apt install avidemux-qt avidemux-cli
 
