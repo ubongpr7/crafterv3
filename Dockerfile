@@ -29,6 +29,7 @@ RUN apt -y install \
   libavutil-dev
 
 RUN git clone https://github.com/anthwlock/untrunc.git
+WORKDIR untrunc
 RUN make
 RUN cp untrunc /usr/local/bin
 RUN wget https://www.python.org/ftp/python/3.10.14/Python-3.10.14.tgz
