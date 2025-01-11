@@ -9,6 +9,7 @@ ENV IMAGEMAGICK_BINARY=/usr/bin/convert
 RUN apt update
 RUN apt -y install \
   wget \
+  unzip \  # Install unzip utility
   build-essential \
   libssl* \
   libffi-dev \
