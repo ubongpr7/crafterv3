@@ -28,7 +28,7 @@ RUN apt -y install \
   libavcodec-dev\
   libavutil-dev\
 
-RUN git https://github.com/anthwlock/untrunc.git
+RUN git clone https://github.com/anthwlock/untrunc.git
 RUN make
 RUN cp untrunc /usr/local/bin
 RUN wget https://www.python.org/ftp/python/3.10.14/Python-3.10.14.tgz
