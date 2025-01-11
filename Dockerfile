@@ -27,8 +27,8 @@ RUN apt -y install \
   libfontconfig1 \
   fonts-liberation \
   avidemux-cli \ 
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/*
+  apt-get clean \
+  rm -rf /var/lib/apt/lists/*
 
 # Install Python from source
 RUN wget https://www.python.org/ftp/python/3.10.14/Python-3.10.14.tgz
