@@ -27,7 +27,9 @@ RUN apt -y install \
 
 # RUN add-apt-repository ppa:xtradeb/apps -y
 RUN apt update
-RUN apt install avidemux-qt avidemux-cli
+RUN apt -y install\ 
+  avidemux-qt\
+  avidemux-cli
 
 RUN wget https://www.python.org/ftp/python/3.10.14/Python-3.10.14.tgz
 RUN tar -xzvf Python-3.10.14.tgz
