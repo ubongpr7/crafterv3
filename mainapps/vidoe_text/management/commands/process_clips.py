@@ -1341,7 +1341,7 @@ class Command(BaseCommand):
                                     f"video_{self.generate_random_string()}_{timestamp}.mp4",
                                     ContentFile(video_content),
                                 )
-                                self.load_video_from_file_field(file_field)
+                                return self.load_video_from_file_field(file_field)
                         
                 elif file_extension in IMAGE_EXTENSIONS:
                     clip = ImageClip(os.path.normpath(file_path))
@@ -1352,9 +1352,7 @@ class Command(BaseCommand):
                 # Return the loaded clip
                 return clip
 
-        except subprocess.CalledProcessError as ffmpeg_error:
-            logging.error(f"FFmpeg error during conversion: {ffmpeg_error}")
-            raise
+        
 
         except Exception as e:
             logging.error(f"Error loading video from file field: {e}")
