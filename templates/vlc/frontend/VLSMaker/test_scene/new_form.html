@@ -87,6 +87,7 @@
         let num
         let clip_id
         let submitCheck
+        document.getElementById('proceed-button').disabled=false
 
     function fetchClipIds(textfileId) {
             fetch(`/text/get_clips_id/${textfileId}/`)
@@ -622,7 +623,6 @@ function subclipReset(clipID) {
         }
     }
 }
-
 function highlightNoSubclipIcons(button) {
             fetchNoSubclipIds().then((ids) => {
                 if (Array.isArray(ids) && ids.length > 0) {
