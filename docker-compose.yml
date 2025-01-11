@@ -1,6 +1,6 @@
 services:
   web:
-    image: nas415/video_crafter1:latest
+    image: nas415/crafterv3:latest
     env_file:
       - .env
     command: >
