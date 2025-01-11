@@ -1339,6 +1339,66 @@ class Command(BaseCommand):
     #     except Exception as e:
     #         logging.error(f"Error loading video from file field: {e}")
     #     raise
+   
+    def repair_and_load_video(self, file_field) -> VideoFileClip:
+        """
+        Load a video or image from a file field, downloading it from S3, repairing it with untrunc if necessary,
+        and returning it as a MoviePy VideoFileClip or ImageClip.
+
+        Args:
+            file_field: The FileField containing the S3 path for the file.
+
+        Returns:
+            VideoFileClip or ImageClip: The loaded clip.
+
+        Raises:
+            ValueError: If the file field is empty or not a valid video/image file.
+        """
+        try:
+            if not file_field or not file_field.name:
+                raise ValueError("File field is empty or invalid.")
+
+            file_extension = os.path.splitext(file_field.name)[1].lower()
+
+            # Create temp files for the corrupted video and repaired video
+            with tempfile.NamedTemporaryFile(suffix=file_extension, delete=False) as bad_video:
+                bad_video_path = bad_video.name
+
+                # Download the corrupted video from S3
+                download_from_s3(file_field.name, bad_video_path)
+
+                # Create another tempfile for the repaired video
+                with tempfile.NamedTemporaryFile(suffix=file_extension, delete=False) as repaired_video:
+                    repaired_video_path = repaired_video.name
+
+                    # Use untrunc to repair the video
+                    reference_video_path = "/app/reference.mp4"  # Reference video must be mounted in the untrunc container
+                    repair_command = [
+                        "docker", "exec", "untrunc_service",  # Run the command in the 'untrunc' container
+                        "untrunc",
+                        reference_video_path,
+                        bad_video_path,
+                    ]
+
+                    subprocess.run(repair_command, check=True)
+                    logging.info(f"Video repaired: {repaired_video_path}")
+
+                    # Load the repaired video clip into MoviePy
+                    clip = VideoFileClip(repaired_video_path)
+
+                    # Clean up the temp files
+                    os.unlink(bad_video_path)
+                    os.unlink(repaired_video_path)
+
+                    return clip
+        except subprocess.CalledProcessError as untrunc_error:
+            logging.error(f"Untrunc error during video repair: {untrunc_error}")
+            raise
+
+        except Exception as e:
+            logging.error(f"Error loading video from file field: {e}")
+            raise
+
     def load_video_from_file_field(self, file_field) -> VideoFileClip:
         """
         Load a video or image from a file field, downloading it from S3, converting if necessary,
@@ -1373,39 +1433,7 @@ class Command(BaseCommand):
                         # Load the video clip directly if it's already an MP4
                         clip = VideoFileClip(os.path.normpath(file_path))
                     else:
-                        # Re-encode the video to its current format
-                        with tempfile.NamedTemporaryFile(suffix=file_extension, delete=False) as reencoded_file:
-                            reencoded_path = reencoded_file.name
-                            reencode_command = [
-                                "ffmpeg",
-                                "-i", os.path.normpath(file_path),
-                                "-c:v", "libx264",  # Use H.264 codec for video re-encoding
-                                "-c:a", "aac",      # Use AAC codec for audio re-encoding
-                                os.path.normpath(reencoded_path),
-                            ]
-
-                            subprocess.run(reencode_command, check=True)
-                            logging.info(f"Video re-encoded to original format: {file_extension}")
-
-                        # Convert re-encoded video to MP4
-                        with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as converted_file:
-                            converted_path = converted_file.name
-                            convert_command = [
-                                "ffmpeg",
-                                "-i", os.path.normpath(reencoded_path),
-                                "-c:v", "libx264",
-                                "-c:a", "aac",
-                                "-movflags", "faststart",
-                                os.path.normpath(converted_path),
-                            ]
-
-                            subprocess.run(convert_command, check=True)
-                            logging.info(f"Video converted from {file_extension} to .mp4")
-
-                            # Load the MP4 video clip
-                            clip = VideoFileClip(os.path.normpath(converted_path))
-
-                # Check if the file is an image
+                        return self.repair_and_load_video(file_field)
                 elif file_extension in IMAGE_EXTENSIONS:
                     clip = ImageClip(os.path.normpath(file_path))
 

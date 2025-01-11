@@ -11,5 +11,14 @@ services:
       "
     volumes:
       - .:/app
+      - ./videos:/videos  
     ports:
       - "7732:7732"
+    depends_on:
+      - untrunc
+
+  untrunc:
+    image: ishad0w/ponchio-untrunc:latest
+    container_name: untrunc_service
+    volumes:
+      - ./videos:/videos  
