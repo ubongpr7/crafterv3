@@ -1,3 +1,4 @@
+import subprocess
 import threading
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
@@ -10,6 +11,8 @@ from mainapps.vidoe_text.decorators import (
 )
 from .models import SubClip, TextFile, TextLineVideoClip
 from .forms import TextFileUpdateForm
+from django.core.files.storage import default_storage
+
 import os
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse, Http404
@@ -91,6 +94,45 @@ def add_subclip(request, id):
 
     return JsonResponse({"success": False, "error": "Invalid request method."}, status=400)
 
+def repair_video_with_untrunc(reference_file, corrupted_file):
+    """
+    Repair a corrupted video using untrunc and return the path to the repaired file.
+    """
+    repaired_file = corrupted_file.replace("/bad/", "/repaired/")  # Save repaired videos in /media/repaired
+    repaired_dir = os.path.dirname(repaired_file)
+    os.makedirs(repaired_dir, exist_ok=True)
+
+    # Run untrunc command
+    try:
+        subprocess.run(
+            ["untrunc", reference_file, corrupted_file],
+            check=True
+        )
+    except subprocess.CalledProcessError as e:
+        raise Exception(f"Failed to repair the video: {e}")
+
+    # Check if the repaired file exists
+    if not os.path.exists(repaired_file):
+        raise FileNotFoundError(f"Repaired video file not created: {repaired_file}")
+
+    return repaired_file
+
+
+def save_file_locally(file, subfolder="bad"):
+    """
+    Save the uploaded file to a local folder under the media directory.
+    """
+    media_root = settings.MEDIA_ROOT  # /media directory
+    local_dir = os.path.join(media_root, subfolder)
+    os.makedirs(local_dir, exist_ok=True)
+
+    file_path = os.path.join(local_dir, file.name)
+    with open(file_path, "wb+") as destination:
+        for chunk in file.chunks():
+            destination.write(chunk)
+
+    return file_path
+
 def add_subcliphtmx(request, id):
     text_clip = get_object_or_404(TextLineVideoClip, id=id)
 
@@ -104,11 +146,39 @@ def add_subcliphtmx(request, id):
         subclip = None 
         
         if file_:
-            subclip = SubClip.objects.create(
-                subtittle=text,
-                video_file=file_,
-                main_line=text_clip
-            )
+            file_extension = os.path.splitext(file_.name)[1].lower()
+
+            if file_extension == '.mov':
+                try:
+                    reference_video = os.path.join(settings.MEDIA_ROOT, "good_videos/good_video.mov")  
+                    corrupted_file_path = save_file_locally(file_, subfolder="bad")
+
+                    repaired_file_path = repair_video_with_untrunc(reference_video, corrupted_file_path)
+                    
+                    subclip = SubClip.objects.create(
+                        subtittle=text,
+                        video_file=file_,
+                        main_line=text_clip
+                    )
+                    
+
+                    return JsonResponse({
+                        "success": True,
+                        "id": subclip.id,
+                        "current_file": subclip.get_video_file_name(),
+                        "video_clip":subclip.get_video_clip_id(),
+                    })
+                except Exception as e:
+                    print(e)
+                    return JsonResponse({"success": False, "error": str(e)}, status=500)
+
+
+            else:
+                subclip = SubClip.objects.create(
+                    subtittle=text,
+                    video_file=file_,
+                    main_line=text_clip
+                )
         elif asset_clip_id:
             video = get_object_or_404(VideoClip, id=asset_clip_id)
             subclip = SubClip.objects.create(
@@ -126,14 +196,14 @@ def add_subcliphtmx(request, id):
                 "id": subclip.id,
                  "current_file": subclip.get_video_file_name(),
                 "video_clip":subclip.get_video_clip_id(),
-                
-                
             })
-
         return JsonResponse({"success": False, "error": "Failed to create subclip."}, status=400)
     selected_text = request.GET.get('selectedText')
     remaining_text = request.GET.get('remainingText')
     return render(request,'vlc//frontend/VLSMaker/test_scene/subclipform.html',{'clipId':id,'categories':video_categories,'selected_text':selected_text,'remaining_text':remaining_text})
+
+
+
 def edit_subcliphtmx(request,id):
     video_categories = ClipCategory.objects.filter(user=request.user).values("id", "name", "parent_id")
     videos=None
