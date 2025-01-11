@@ -1487,29 +1487,23 @@ class Command(BaseCommand):
                 # Check if it's a valid video
                 if file_extension in VIDEO_EXTENSIONS:
                     if file_extension == ".mp4":
-                        # Load MP4 directly
                         return VideoFileClip(os.path.normpath(bad_file_path))
                     else:
                         good_video_field= LogoModel.objects.get(id=3).logo
                         if not good_video_field or not good_video_field.name:
                             raise ValueError("Good video file is required to repair the corrupted video.")
 
-                        # Create a temporary file for the reference (good) video
-                        with tempfile.NamedTemporaryFile(delete=False) as good_temp_file:
+                        with tempfile.NamedTemporaryFile(suffix=file_extension,delete=False) as good_temp_file:
                             good_file_path = good_temp_file.name
                             download_from_s3(good_video_field.name, good_file_path)
 
                             if not os.path.exists(good_file_path):
                                 raise ValueError("Failed to download the reference video from S3.")
 
-                            # Use untrunc to repair the video
-                            repaired_temp_file = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
-                            repaired_file_path = repaired_temp_file.name
-                            repaired_temp_file.close()
-
+                            repaired_file_path = bad_file_path.replace(file_extension,f"_fixed{file_extension}")
                             try:
                                 subprocess.run(
-                                    ["untrunc", "-o", repaired_file_path, good_file_path, bad_file_path],
+                                    ["untrunc",  good_file_path, bad_file_path],
                                     check=True
                                 )
 
