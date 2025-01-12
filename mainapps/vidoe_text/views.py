@@ -9,6 +9,7 @@ from mainapps.vidoe_text.decorators import (
     check_credits_and_ownership,
     check_user_credits,
 )
+from mainapps.vidoe_text.video_converter import  convert_mov_to_mp4
 from .models import SubClip, TextFile, TextLineVideoClip
 from .forms import TextFileUpdateForm
 from django.core.files.storage import default_storage
@@ -133,75 +134,132 @@ def save_file_locally(file, subfolder="bad"):
 
     return file_path
 
+# def add_subcliphtmx(request, id):
+#     text_clip = get_object_or_404(TextLineVideoClip, id=id)
+
+#     video_categories = ClipCategory.objects.filter(user=request.user).values("id", "name", "parent_id")
+#     if request.method == "POST":
+#         remaining = request.POST.get('remaining')
+#         file_ = request.FILES.get('slide_file')
+#         text = request.POST.get('slide_text')
+#         asset_clip_id = request.POST.get('selected_video')
+
+#         subclip = None 
+        
+#         if file_:
+#             file_extension = os.path.splitext(file_.name)[1].lower()
+
+#             if file_extension == '.mov':
+#                 """
+#                 call file  conversion
+#                 """
+#                 converted_file_path = convert_mov_to_mp4(file_)
+#                 subclip = SubClip.objects.create(
+#                     subtittle=text,
+#                     video_file=converted_file_path,
+#                     main_line=text_clip
+#                 )
+#             else:
+#                 subclip = SubClip.objects.create(
+#                     subtittle=text,
+#                     video_file=file_,
+#                     main_line=text_clip
+#                 )
+#         elif asset_clip_id:
+#             video = get_object_or_404(VideoClip, id=asset_clip_id)
+#             subclip = SubClip.objects.create(
+#                 subtittle=text,
+#                 video_clip=video,
+#                 main_line=text_clip
+#             )
+#         if subclip:
+#             text_clip.remaining = remaining
+#             text_clip.save()
+
+
+#             return JsonResponse({
+#                 "success": True,
+#                 "id": subclip.id,
+#                  "current_file": subclip.get_video_file_name(),
+#                 "video_clip":subclip.get_video_clip_id(),
+#             })
+#         return JsonResponse({"success": False, "error": "Failed to create subclip."}, status=400)
+#     selected_text = request.GET.get('selectedText')
+#     remaining_text = request.GET.get('remainingText')
+#     return render(request,'vlc//frontend/VLSMaker/test_scene/subclipform.html',{'clipId':id,'categories':video_categories,'selected_text':selected_text,'remaining_text':remaining_text})
+
 def add_subcliphtmx(request, id):
     text_clip = get_object_or_404(TextLineVideoClip, id=id)
 
     video_categories = ClipCategory.objects.filter(user=request.user).values("id", "name", "parent_id")
     if request.method == "POST":
-        remaining = request.POST.get('remaining')
-        file_ = request.FILES.get('slide_file')
-        text = request.POST.get('slide_text')
-        asset_clip_id = request.POST.get('selected_video')
+        remaining = request.POST.get("remaining")
+        file_ = request.FILES.get("slide_file")
+        text = request.POST.get("slide_text")
+        asset_clip_id = request.POST.get("selected_video")
 
-        subclip = None 
-        
+        subclip = None
+
         if file_:
             file_extension = os.path.splitext(file_.name)[1].lower()
 
-            # if file_extension == '.mov':
-            #     try:
-            #         reference_video = os.path.join(settings.MEDIA_ROOT, "good_videos/good_video.mov")  
-            #         corrupted_file_path = save_file_locally(file_, subfolder="bad")
+            if file_extension == ".mov":
+                try:
+                    # Convert .mov to .mp4
+                    converted_file_path = convert_mov_to_mp4(file_)
 
-            #         repaired_file_path = repair_video_with_untrunc(reference_video, corrupted_file_path)
-                    
-            #         subclip = SubClip.objects.create(
-            #             subtittle=text,
-            #             video_file=file_,
-            #             main_line=text_clip
-            #         )
-                    
+                    # Save converted file to SubClip
+                    with open(converted_file_path, "rb") as converted_file:
+                        subclip = SubClip.objects.create(
+                            subtittle=text,
+                            video_file=converted_file,
+                            main_line=text_clip,
+                        )
 
-            #         return JsonResponse({
-            #             "success": True,
-            #             "id": subclip.id,
-            #             "current_file": subclip.get_video_file_name(),
-            #             "video_clip":subclip.get_video_clip_id(),
-            #         })
-            #     except Exception as e:
-            #         print(e)
-            #         return JsonResponse({"success": False, "error": str(e)}, status=500)
-
-            # else:
-            
-            subclip = SubClip.objects.create(
-                subtittle=text,
-                video_file=file_,
-                main_line=text_clip
-            )
+                    # Cleanup the converted file
+                    os.remove(converted_file_path)
+                except Exception as e:
+                    return JsonResponse({"success": False, "error": str(e)}, status=500)
+            else:
+                subclip = SubClip.objects.create(
+                    subtittle=text,
+                    video_file=file_,
+                    main_line=text_clip,
+                )
         elif asset_clip_id:
             video = get_object_or_404(VideoClip, id=asset_clip_id)
             subclip = SubClip.objects.create(
                 subtittle=text,
                 video_clip=video,
-                main_line=text_clip
+                main_line=text_clip,
             )
+
         if subclip:
             text_clip.remaining = remaining
             text_clip.save()
 
-
-            return JsonResponse({
-                "success": True,
-                "id": subclip.id,
-                 "current_file": subclip.get_video_file_name(),
-                "video_clip":subclip.get_video_clip_id(),
-            })
+            return JsonResponse(
+                {
+                    "success": True,
+                    "id": subclip.id,
+                    "current_file": subclip.get_video_file_name(),
+                    "video_clip": subclip.get_video_clip_id(),
+                }
+            )
         return JsonResponse({"success": False, "error": "Failed to create subclip."}, status=400)
-    selected_text = request.GET.get('selectedText')
-    remaining_text = request.GET.get('remainingText')
-    return render(request,'vlc//frontend/VLSMaker/test_scene/subclipform.html',{'clipId':id,'categories':video_categories,'selected_text':selected_text,'remaining_text':remaining_text})
 
+    selected_text = request.GET.get("selectedText")
+    remaining_text = request.GET.get("remainingText")
+    return render(
+        request,
+        "vlc/frontend/VLSMaker/test_scene/subclipform.html",
+        {
+            "clipId": id,
+            "categories": video_categories,
+            "selected_text": selected_text,
+            "remaining_text": remaining_text,
+        },
+    )
 
 
 def edit_subcliphtmx(request,id):
