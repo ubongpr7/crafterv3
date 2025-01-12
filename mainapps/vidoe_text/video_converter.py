@@ -64,7 +64,10 @@ def convert_mov_to_mp4(file):
         logger.info("Download URL retrieved successfully.")
 
         # Download the converted file
-        converted_file_path = f"media/{generate_random_string(12)}/{file.name.replace('.mov', '.mp4')}"
+        # converted_file_path = f"media/{generate_random_string(12)}/{file.name.replace('.mov', '.mp4')}"
+        # Normalize the file extension to lowercase before replacing
+        converted_file_path = f"media/{generate_random_string(12)}/{os.path.splitext(file.name)[0]}.mp4"
+
         os.makedirs(os.path.dirname(converted_file_path), exist_ok=True)
         logger.debug("Downloading converted file to: %s", converted_file_path)
         with requests.get(download_url, stream=True) as r:
