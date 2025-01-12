@@ -148,37 +148,36 @@ def add_subcliphtmx(request, id):
         if file_:
             file_extension = os.path.splitext(file_.name)[1].lower()
 
-            if file_extension == '.mov':
-                try:
-                    reference_video = os.path.join(settings.MEDIA_ROOT, "good_videos/good_video.mov")  
-                    corrupted_file_path = save_file_locally(file_, subfolder="bad")
+            # if file_extension == '.mov':
+            #     try:
+            #         reference_video = os.path.join(settings.MEDIA_ROOT, "good_videos/good_video.mov")  
+            #         corrupted_file_path = save_file_locally(file_, subfolder="bad")
 
-                    repaired_file_path = repair_video_with_untrunc(reference_video, corrupted_file_path)
+            #         repaired_file_path = repair_video_with_untrunc(reference_video, corrupted_file_path)
                     
-                    subclip = SubClip.objects.create(
-                        subtittle=text,
-                        video_file=file_,
-                        main_line=text_clip
-                    )
+            #         subclip = SubClip.objects.create(
+            #             subtittle=text,
+            #             video_file=file_,
+            #             main_line=text_clip
+            #         )
                     
 
-                    return JsonResponse({
-                        "success": True,
-                        "id": subclip.id,
-                        "current_file": subclip.get_video_file_name(),
-                        "video_clip":subclip.get_video_clip_id(),
-                    })
-                except Exception as e:
-                    print(e)
-                    return JsonResponse({"success": False, "error": str(e)}, status=500)
+            #         return JsonResponse({
+            #             "success": True,
+            #             "id": subclip.id,
+            #             "current_file": subclip.get_video_file_name(),
+            #             "video_clip":subclip.get_video_clip_id(),
+            #         })
+            #     except Exception as e:
+            #         print(e)
+            #         return JsonResponse({"success": False, "error": str(e)}, status=500)
 
-
-            else:
-                subclip = SubClip.objects.create(
-                    subtittle=text,
-                    video_file=file_,
-                    main_line=text_clip
-                )
+            # else:
+            subclip = SubClip.objects.create(
+                subtittle=text,
+                video_file=file_,
+                main_line=text_clip
+            )
         elif asset_clip_id:
             video = get_object_or_404(VideoClip, id=asset_clip_id)
             subclip = SubClip.objects.create(
