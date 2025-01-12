@@ -278,7 +278,23 @@ def edit_subcliphtmx(request,id):
             subclip.video_file.delete(save=False)
         subclip.video_clip=None
         if file_:
-            subclip.video_file=file_
+            file_extension = os.path.splitext(file_.name)[1].lower()
+
+            if file_extension == ".mov":
+                try:
+                    converted_file_path = convert_mov_to_mp4(file_)
+
+                    with open(converted_file_path, "rb") as converted_file:
+                        file_content = converted_file.read()
+                        subclip.video_file=ContentFile(file_content, name=os.path.basename(converted_file_path))
+
+
+                    os.remove(converted_file_path)
+                except Exception as e:
+                    print(e)
+                    return JsonResponse({"success": False, "error": str(e)}, status=500)
+            else:
+                subclip.video_file=file_
         elif asset_clip_id:
             video= VideoClip.objects.get(id=asset_clip_id)
             subclip.video_clip=video
