@@ -173,6 +173,7 @@ def add_subcliphtmx(request, id):
             #         return JsonResponse({"success": False, "error": str(e)}, status=500)
 
             # else:
+            
             subclip = SubClip.objects.create(
                 subtittle=text,
                 video_file=file_,
