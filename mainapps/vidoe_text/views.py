@@ -210,9 +210,10 @@ def add_subcliphtmx(request, id):
 
                     # Save converted file to SubClip
                     with open(converted_file_path, "rb") as converted_file:
+                        file_content = converted_file.read()
                         subclip = SubClip.objects.create(
                             subtittle=text,
-                            video_file=converted_file,
+                            video_file=ContentFile(file_content, name=os.path.basename(converted_file_path)),
                             main_line=text_clip,
                         )
 
