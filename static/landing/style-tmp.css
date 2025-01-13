@@ -259,6 +259,10 @@ a {
 
 .for-marg {
     margin-bottom: 8px !important;
+    margin-top: 80px !important;
+}
+.marg{
+  margin-bottom: 48px !important;
 }
 
 /* .grid-container {
@@ -1154,7 +1158,7 @@ button:hover {
     height: fit-content;
     padding-left: 72px;
     padding-right: 72px;
-    margin-top: 60px;
+    margin-top: 90px;
     padding-top: 20px;
     padding-bottom: 80px;
     background: rgba(255, 255, 255, 0.2);
