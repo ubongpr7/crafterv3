@@ -104,6 +104,7 @@ a {
 }
 
 .h1hero {
+  margin: 0 auto;
   max-width: 1206px;
   font-size: 48px;
   font-weight: bold;
