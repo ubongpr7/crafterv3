@@ -1358,6 +1358,9 @@ button:hover {
 
 
 @media (max-width: 600px) {
+  .rocket{
+    display: none;
+  }
 
     /* Stack the .hiw-element-placeholder before .hiw-element-text-container */
     .hiw-element {
@@ -2131,9 +2134,15 @@ button:hover {
       }
     } */
 
+
+    @media (max-height: 500px) {
+      .for-mobile{
+        display: block;
+      }
+    }
 @media (max-width: 441px) {
     .howitworks {
-        margin-top: 0px;
+        margin-top: 30px;
     }
 
     .more-benefits-items {

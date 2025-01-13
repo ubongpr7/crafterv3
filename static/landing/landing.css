@@ -234,23 +234,22 @@
 
 .title-highlight {
   color: #8A2BE2;
-  /* Purple color for the "Tutorial" text */
 }
 
 /* Subtitle Styling */
 .tutorial-description {
   font-size: 18px;
   font-weight: 400;
-  /* Regular font weight */
   color: #666666;
-  /* Gray text */
   text-align: center;
   max-width: 800px;
-  /* Limit width for better readability */
   line-height: 135%;
-  /* Add line spacing for better readability */
   margin-bottom: 48px;
 }
+
+.for-mobile{
+    display: none;
+  }
 
 /* Video Placeholder */
 .video-placeholder {
