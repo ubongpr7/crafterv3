@@ -557,6 +557,12 @@
     .typography-for-mobile {
         display: flex !important;
     }
+    .cta-content-wrapper {
+        display: none;
+    }
+    #pricing{
+        margin-top: 48px;
+    }
 
 }
 
