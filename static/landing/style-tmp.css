@@ -94,7 +94,7 @@ a {
 }
 
 .typography {
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   gap: 0px;
   line-height: 70px;
