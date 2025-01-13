@@ -258,7 +258,7 @@ a {
 }
 
 .for-marg {
-    margin-bottom: 8px;
+    margin-bottom: 8px !important;
 }
 
 /* .grid-container {
