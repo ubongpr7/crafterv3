@@ -371,7 +371,7 @@
     }
 
     .feature-card {
-        width: 310px;
+        width: 350px;
         height: 280px;
     }
 
@@ -435,7 +435,7 @@
     }
 
     .p-cards-grid-item {
-        width: 300px;
+        width: 340px;
         padding: 24px;
     }
 
@@ -560,11 +560,29 @@
 
 }
 
+@media screen and (max-width:390px) {
+    .feature-card {
+        width: 311px;
+        margin: 0 auto;
+    }
+    .p-cards-grid-item {
+        width: 314px;
+        margin: 0 auto;
+    }
+}
 @media screen and (max-width:375px) {
     .dimensions-container {
         max-width: 85%;
     }
     .feature-card{
         width: 260px;
+    }
+    .p-cards-grid-item {
+        width: 300px;
+        margin: 0 auto;
+    }
+    .feature-card {
+        width: 295px;
+        margin: 0 auto;
     }
 }
