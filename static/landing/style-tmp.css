@@ -497,7 +497,7 @@ a {
 
   border-radius: 8px;
   padding: 32px 28px;
-  width: 355px;
+  max-width: 355px;
   /* height: 524px; */
 }
 
@@ -1730,7 +1730,7 @@ button:hover {
 
   .p-cards-grid-item {
     border: 2px solid #EEEEEE;
-    width: 310px;
+    /* width: 336px; */
   }
 
   .mid {
