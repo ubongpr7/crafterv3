@@ -440,7 +440,10 @@
     }
 
     .cta-content-wrapper {
-        display: none;
+        display: none !important;
+    }
+    .for-marg-c{
+        margin-bottom: 40px;
     }
 
     .typography-for-desktop {
