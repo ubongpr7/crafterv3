@@ -2171,3 +2171,12 @@ button:hover {
         padding-top: 25px;
     }
 }
+
+@media screen and (max-width: 380px) {
+.hiw-heading-text{
+  /* display: flex; */
+}
+.cta-main {
+  width: 300px !important;
+}
+}

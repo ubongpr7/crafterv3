@@ -330,6 +330,7 @@
 @media screen and (max-width:600px) {
 
   .portfolio-box {
+    max-width: 80%;
     width: 300px;
     margin: 0 auto;
     /* height: 280px; */
@@ -357,7 +358,7 @@
   }
 
   .feature-card {
-    width: 310px;
+    max-width: 310px;
     height: 280px;
   }
 
@@ -423,7 +424,8 @@
 
   .cta {
     background-color: #966ae728;
-    width: 393px;
+    /* width: 393px; */
+    margin: 0 auto;
     height: auto !important;
   }
 
@@ -435,7 +437,8 @@
     border: 2px solid #cccccc;
     border-radius: 10px;
     padding: 1rem;
-    width: 330px;
+    max-width: 330px;
+    width: 100%;
   }
 
   .cta-box {
