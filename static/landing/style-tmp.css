@@ -2121,11 +2121,10 @@ button:hover {
 @media (max-height: 600px) {
     .topbar {
         height: 50vh;
-        /* Adjust this height as necessary */
     }
 
     .howitworks {
-        margin-top: 0px;
+        /* margin-top: 0px; */
     }
 }
 
