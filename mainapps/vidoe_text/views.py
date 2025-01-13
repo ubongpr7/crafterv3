@@ -322,6 +322,7 @@ def delete_textfile(request, textfile_id):
             pass 
 
     return render(request, "partials/confirm_delete.html", {"item":textfile })
+
 def manage_textfile(request):
     user =request.user
     textfiles=TextFile.objects.filter(user=user)
@@ -383,6 +384,7 @@ def check_text_clip(request,textfile_id):
         if not clip.remaining.strip()=='':
             ids_of_no_subclip.append(clip.id)
     return JsonResponse(ids_of_no_subclip,safe=False)
+
 @require_http_methods(["DELETE"])
 def delete_background_music(request, id):
     try:
