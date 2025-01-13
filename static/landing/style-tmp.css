@@ -987,6 +987,9 @@ a {
     margin-bottom: 8px;
 }
 
+.for-mobile{
+  display: none;
+}
 .form-group input,
 .form-group textarea {
     font-family: 'Montserrat', sans-serif;
@@ -2135,7 +2138,7 @@ button:hover {
     } */
 
 
-    @media (max-height: 500px) {
+    @media screen and (max-width: 500px) {
       .for-mobile{
         display: block;
       }
