@@ -1036,7 +1036,7 @@ button:hover {
 
 .footer-wrapper {
   background: #222222;
-  height: 502px;
+  /* height: 502px; */
   display: flex;
   align-items: center;
   color: white;
