@@ -1155,7 +1155,9 @@ button:hover {
 .portfoliotext br {
   display: none;
 }
-
+.mtg{
+  margin-top: 0px !important;
+}
 .howitworks {
   width: 100%;
   box-sizing: border-box;
@@ -1187,9 +1189,6 @@ button:hover {
   word-wrap: break-word;
 }
 
-.hiw-heading-text span:nth-child(1) {
-  /* display: none; */
-}
 
 .hiw-container {
   height: fit-content;
@@ -1581,9 +1580,6 @@ button:hover {
     overflow: hidden;
   }
 
-  .hiw-heading-text span:nth-child(1) {
-    /* display: block; */
-  }
 
   .an-span {
     display: flex;
@@ -1594,18 +1590,12 @@ button:hover {
     display: none;
   }
 
-  .hiw-heading-text {
-    /* display: flex; */
-  }
 
   .howitworks {
     padding: 16px;
     height: fit-content;
   }
 
-  .hiw-column {
-    /* flex-direction: column; */
-  }
 
   .hiw-container {
     width: 100%;
@@ -2125,9 +2115,6 @@ button:hover {
     height: 50vh;
   }
 
-  .howitworks {
-    /* margin-top: 0px; */
-  }
 }
 
 
@@ -2176,9 +2163,6 @@ button:hover {
 }
 
 @media screen and (max-width: 380px) {
-  .hiw-heading-text {
-    /* display: flex; */
-  }
 
   .cta-main {
     width: 300px !important;

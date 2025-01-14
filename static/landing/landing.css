@@ -182,9 +182,7 @@
     display: none;
 }
 
-.typography-for-desktop {
-    /* display: flex; */
-}
+
 
 .feature-card h3 {
     font-size: 25px;
@@ -325,15 +323,7 @@
     }
 }
 
-/* Adjust grid for very small screens (below 480px) */
-@media (max-width: 480px) {
 
-
-    .slider-dots {
-        /* display: none; */
-        /* Hide dots on small screens */
-    }
-}
 
 @media screen and (max-width:600px) {
 
@@ -362,9 +352,6 @@
         text-transform: capitalize;
     }
 
-    .dimensions-container {
-        /* margin-left: -20px; */
-    }
 
     .howitwork {
         background-color: #FAF3FF;
@@ -513,7 +500,7 @@
         margin-top: 40px !important;
     }
 
-    ..portfoliotext {
+    .portfoliotext {
         margin-top: 0px;
         margin-bottom: 10px;
     }
