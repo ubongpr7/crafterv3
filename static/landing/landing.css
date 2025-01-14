@@ -469,6 +469,7 @@
     }
 
     .cta-box p {
+        margin: 0 auto;
         width: 297px;
         font-size: 18px;
         font-weight: 400;
