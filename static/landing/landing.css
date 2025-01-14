@@ -428,7 +428,8 @@
     .cta-content-wrapper {
         display: none !important;
     }
-    .for-marg-c{
+
+    .for-marg-c {
         margin-bottom: 40px;
     }
 
@@ -509,7 +510,8 @@
         width: 90%;
         /* margin-bottom: 40px; */
     }
-    #for-m{
+
+    #for-m {
         margin-bottom: 40px;
     }
 
@@ -546,10 +548,12 @@
     .typography-for-mobile {
         display: flex !important;
     }
+
     .cta-content-wrapper {
         display: none;
     }
-    #pricing{
+
+    #pricing {
         margin-top: 48px;
     }
 
@@ -560,22 +564,27 @@
         width: 311px;
         margin: 0 auto;
     }
+
     .p-cards-grid-item {
         width: 314px;
         margin: 0 auto;
     }
 }
+
 @media screen and (max-width:375px) {
     .dimensions-container {
         max-width: 85%;
     }
-    .feature-card{
+
+    .feature-card {
         width: 260px;
     }
+
     .p-cards-grid-item {
         width: 300px;
         margin: 0 auto;
     }
+
     .feature-card {
         width: 295px;
         margin: 0 auto;

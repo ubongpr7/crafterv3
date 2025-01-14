@@ -1155,9 +1155,11 @@ button:hover {
 .portfoliotext br {
   display: none;
 }
-.mtg{
+
+.mtg {
   margin-top: 0px !important;
 }
+
 .howitworks {
   width: 100%;
   box-sizing: border-box;
