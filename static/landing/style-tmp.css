@@ -1457,7 +1457,7 @@ button:hover {
   .phero {
     width: 413px;
     line-height: 149%;
-    margin: 0 auto;
+    margin: 0 auto !important;
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 18.9px;
