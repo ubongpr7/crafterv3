@@ -603,39 +603,40 @@
     </div>
 
     <div class="pricing" id="pricing">
+        <div class="tutorial-border"></div>
         <div class="top">
             <p class="ptop-text">
-                Plans That <span class="highlight">Scale</span><span>Scale</span> With Business
+                Pricing:
             </p>
+            <p class="ptop-text-mobile">Plans that <span class="highlight">scale</span> with business</p>
 
-            <p class="ptop-p">
-                Think About How Much You’re Currently Paying Your Video Editor. With
-                <br />
-                VideoCrafter.io, You Can Create Videos In Minutes, Saving Both Time And Money.
-            </p>
+            <p class="ptop-p">Simple. Transparent. Powerful.</p>
+            <p class="ptop-p-mobile">Think about how much you’re currently paying your video editor. With VSLMaker.io,
+                you can create VSLs in minutes, saving both time and money.</p>
         </div>
 
         <div class="middle">
             <div class="p-cards-grid">
                 <div class="p-cards-grid-container">
                     <div class="p-cards-grid-item">
-                        <span class="highlight g-head">Free Trial</span>
-
-                        <p class="g-p">
-                            Learn How VideoCrafter.io Works
-                            <br />
-                            <br />
-                        </p>
-
                         <div class="price">
                             <span><span class="bold-size">Free</span></span>
                             <br />
                             <span class="price-promo">&nbsp;</span>
+                            <p class="under-free">Test The Waters Before You Commit.</p>
                         </div>
 
                         <div class="benefits">
                             <img src="{% static 'assets/icons/check.svg' %}" alt="" />
                             <span class="benefits-text">Create 1 Video</span>
+                        </div>
+                        <div class="benefits">
+                            <img src="{% static 'assets/icons/check.svg' %}" alt="" />
+                            <span class="benefits-text">Upload and Match Video Clips</span>
+                        </div>
+                        <div class="benefits">
+                            <img src="{% static 'assets/icons/check.svg' %}" alt="" />
+                            <span class="benefits-text">No Credit Card Required</span>
                         </div>
 
                         <a href="/accounts/register/" class="p-button">Get Started</a>
@@ -644,20 +645,38 @@
                     <div class="p-cards-grid-item mid">
                         <div class="mp">
                             <span class="highlight g-head">Growth Plan</span>
-                            <span class="hype">Most popular</span>
+                            <span class="hype">Most Popular</span>
                         </div>
-
-                        <p class="g-p">Perfect For Scaling Your Video Advertising Campaigns</p>
 
                         <div class="price">
                             <span><span class="bold-size">$497</span> <span class="font">/Month</span><span>
                                     <br />
-                                    <span class="price-promo">Just $19.88 Per VIdeo</span>
+                                    <span class="price-promo">Just $19.88 Per Video</span>
                         </div>
 
                         <div class="benefits">
                             <img src="{% static 'assets/icons/check.svg' %}" alt="" />
-                            <span class="benefits-text">Create Up To 25 Videos Per Month</span>
+                            <span class="benefits-text">Create up to 25 Videos Per Month</span>
+                        </div>
+                        <div class="benefits">
+                            <img src="{% static 'assets/icons/check.svg' %}" alt="" />
+                            <span class="benefits-text">Full Access to All Tools</span>
+                        </div>
+                        <div class="benefits">
+                            <img src="{% static 'assets/icons/check.svg' %}" alt="" />
+                            <span class="benefits-text">Upload and Match Video Clips</span>
+                        </div>
+                        <div class="benefits">
+                            <img src="{% static 'assets/icons/check.svg' %}" alt="" />
+                            <span class="benefits-text">Organize and Reuse Clips</span>
+                        </div>
+                        <div class="benefits">
+                            <img src="{% static 'assets/icons/check.svg' %}" alt="" />
+                            <span class="benefits-text">Background Music Control</span>
+                        </div>
+                        <div class="benefits">
+                            <img src="{% static 'assets/icons/check.svg' %}" alt="" />
+                            <span class="benefits-text">Priority Support</span>
                         </div>
 
                         <a href="/accounts/subscribe/{{ price_ids.growth }}?success_path={% url 'accounts:register' %}&cancel_path={% url 'home:home' %}"
@@ -665,10 +684,7 @@
                     </div>
 
                     <div class="p-cards-grid-item">
-                        <span class="highlight g-head">Pro Plan</span>
-
-                        <p class="g-p">Ideal For High-Volume Marketers And Agencies</p>
-
+                        <span class="highlight g-head g-head-margin">Pro Plan</span>
                         <div class="price">
                             <span><span class="bold-size">$997</span> <span class="font">/Month</span><span>
                                     <br />
@@ -679,32 +695,33 @@
                             <img src="{% static 'assets/icons/check.svg' %}" alt="" />
                             <span class="benefits-text">Create Up To 60 Videos Per Month</span>
                         </div>
+                        <div class="benefits">
+                            <img src="{% static 'assets/icons/check.svg' %}" alt="" />
+                            <span class="benefits-text">Everything in Growth Plan</span>
+                        </div>
+                        <div class="benefits">
+                            <img src="{% static 'assets/icons/check.svg' %}" alt="" />
+                            <span class="benefits-text">Upload and Match Video Clips</span>
+                        </div>
+                        <div class="benefits">
+                            <img src="{% static 'assets/icons/check.svg' %}" alt="" />
+                            <span class="benefits-text">Organize and Reuse Clips</span>
+                        </div>
+                        <div class="benefits">
+                            <img src="{% static 'assets/icons/check.svg' %}" alt="" />
+                            <span class="benefits-text">Background Music Control</span>
+                        </div>
+                        <div class="benefits">
+                            <img src="{% static 'assets/icons/check.svg' %}" alt="" />
+                            <span class="benefits-text">Advanced Clip Management</span>
+                        </div>
+                        <div class="benefits">
+                            <img src="{% static 'assets/icons/check.svg' %}" alt="" />
+                            <span class="benefits-text">Dedicated Support</span>
+                        </div>
+
                         <a href="/accounts/subscribe/{{ price_ids.pro }}?success_path={% url 'accounts:register' %}&cancel_path={% url 'home:home' %}"
                             class="p-button">Get Started</a>
-                    </div>
-
-                    <div class="bottom">
-                        <div class="bottom-heading">All Plans Include</div>
-
-                        <div class="more-benefits">
-                            <div class="more-benefits-items">
-                                <img src="{% static 'assets/icons/check.svg' %}" alt="" />
-                                <span class="more-benefits-text">Ability to upload your own video clips and
-                                    assets</span>
-                            </div>
-                            <div class="more-benefits-items">
-                                <img src="{% static 'assets/icons/check.svg' %}" alt="" />
-                                <span class="more-benefits-text">Customizable background music and timing</span>
-                            </div>
-                            <div class="more-benefits-items">
-                                <img src="{% static 'assets/icons/check.svg' %}" alt="" />
-                                <span class="more-benefits-text">Fast, easy, and intuitive interface</span>
-                            </div>
-                            <div class="more-benefits-items">
-                                <img src="{% static 'assets/icons/check.svg' %}" alt="" />
-                                <span class="more-benefits-text">No video editing skills required</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -718,16 +735,35 @@
         <img src="{% static 'assets/background/Ellipse 2.svg' %}" alt="" class="cta-circle cc2" />
 
         <img src="{% static 'assets/background/Ellipse 2.svg' %}" alt="" class="cta-circle cc3" />
+        <img src="{% static 'assets/background/Ellipse 2.svg' %}" alt="" class="cta-circle cc1" />
+        <img src="{% static 'assets/background/Ellipse 2.svg' %}" alt="" class="cta-circle cc4" />
+        <img src="{% static 'assets/background/Ellipse 2.svg' %}" alt="" class="cta-circle cc5" />
+        <img src="{% static 'assets/background/Ellipse 2.svg' %}" alt="" class="cta-circle cc6" />
+        <img src="{% static 'assets/background/Ellipse 2.svg' %}" alt="" class="cta-circle cc7" />
+        <img src="{% static 'assets/background/Ellipse 2.svg' %}" alt="" class="cta-circle cc8" />
 
-        <div class="cta-content-wrapper">
+        <div class="cta-content-wrapper for-disp">
             <div class="cta-content">
-                <span class="cta-text">Choose The Plan That’s Right For
+                <span class="cta-text">Try VideoCrafter.io FREE
                     <br />
-                    You And Start Creating Videos Like A
-                    <br />
-                    Pro Today!</span>
-                <a href="#pricing" class="cta-button">Get Video Crafter Now</a>
+                    No Credit Card Required
+                    <br /></span>
+                <a href="#pricing" class="cta-button">Sign Up for Free</a>
             </div>
+            <p style="text-align: left;">Get hands-on with VideoCrafter.io and experience the speed and <br>simplicity
+                for yourself. Stop waiting. Start
+                creating.</p>
+        </div>
+
+
+        <div class="cta-main" style="background-color: white; z-index: 100;">
+            <div class="cta-box">
+                <h1>Try VideoCrafter.io FREE<br>No Credit Card Required</h1>
+                <p style="margin: 0 auto;">Get hands-on with VideoCrafter.io and experience the speed and simplicity for
+                    yourself. Stop waiting.
+                    Start creating.</p>
+            </div>
+            <button class="cta-button">Get VideoCrafter Now</button>
         </div>
     </div>
 
@@ -775,23 +811,26 @@
 
     <div class="contact-section-wrapper" id="contact">
         <div class="contact-section">
-            <h1>Contact us</h1>
+            <h1>Contact Us</h1>
             <p>We’d love to hear from you. Please fill out this form.</p>
-            <form class="contact-form" id="contactForm">
+            <form class="contact-form" id="contactForm" autocomplete="on">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="first-name">First name</label>
-                        <input type="text" id="first-name" name="first_name" placeholder="First name" required />
+                        <input type="text" id="first-name" name="first_name" placeholder="First name"
+                            autocomplete="given-name" required />
                     </div>
                     <div class="form-group">
                         <label for="last-name">Last name</label>
-                        <input type="text" id="last-name" name="last_name" placeholder="Last name" required />
+                        <input type="text" id="last-name" name="last_name" placeholder="Last name"
+                            autocomplete="family-name" required />
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="you@company.com" required />
+                    <input type="email" id="email" name="email" placeholder="you@company.com" autocomplete="email"
+                        required />
                 </div>
 
                 <div class="form-group">
@@ -801,6 +840,7 @@
 
                 <button type="submit">Send Message</button>
             </form>
+
         </div>
     </div>
 
