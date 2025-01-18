@@ -956,6 +956,15 @@
     </script>
 
     <script src="{% static 'landing/script.js' %}"></script>
+    <script>
+        flowplayer(".flowplayer", {
+            clip: {
+                sources: [
+                    { type: "video/mp4", src: "{% static 'videos/tiktok/tiktok2.mp4' %}" }
+                ]
+            }
+        });
+    </script>
 </body>
 
 </html>
