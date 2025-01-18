@@ -963,7 +963,7 @@
     <script src="{% static 'landing/script.js' %}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Initialize MediaElement.js
+            console.log('Initialize MediaElement.js')
             const player = new MediaElementPlayer('player1', {
                 // Options
                 features: ['playpause', 'progress', 'volume', 'fullscreen'], // Customize controls
