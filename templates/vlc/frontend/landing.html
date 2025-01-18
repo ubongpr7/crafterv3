@@ -24,6 +24,7 @@
 
     <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet" />
     <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
+    <script src="//releases.flowplayer.org/7.2.7/flowplayer.min.js"></script>
 
 
 </head>
@@ -157,7 +158,13 @@
                     <!-- <video src="{% static 'videos/tiktok/tiktok1.mp4' %}" class="tiktok-video" controls></video> -->
                 </div>
                 <div class="grid-item">
-                    <video src="{% static 'videos/tiktok/tiktok2.mp4' %}" class="tiktok-video" controls></video>
+                    <div class="flowplayer">
+                        <video>
+                            <source type="application/x-mpegURL" src="{% static 'videos/tiktok/tiktok2.mp4' %}">
+                        </video>
+                    </div>
+                    
+                    <!-- <video src="{% static 'videos/tiktok/tiktok2.mp4' %}" class="tiktok-video" controls></video> -->
                 </div>
                 <div class="grid-item">
                     <video src="{% static 'videos/tiktok/tiktok3.mp4' %}" class="tiktok-video" controls></video>
