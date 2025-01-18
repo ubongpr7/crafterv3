@@ -24,7 +24,6 @@
 
     <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet" />
     <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
-    <script src="//releases.flowplayer.org/7.2.7/flowplayer.min.js"></script>
 
 
 </head>
@@ -151,20 +150,12 @@
             <h2 class="subtitle">TikTok Ad Examples</h2>
             <div class="grid-container">
                 <div class="grid-item">
-                    <video id="my-video" class="video-js tiktok-video" controls preload="auto" width="640" height="360"
-                        data-setup='{}'>
-                        <source src="{% static 'videos/tiktok/tiktok1.mp4' %}" type="video/mp4" />
-                    </video>
-                    <!-- <video src="{% static 'videos/tiktok/tiktok1.mp4' %}" class="tiktok-video" controls></video> -->
+                    
+                    <video src="{% static 'videos/tiktok/tiktok1.mp4' %}" class="tiktok-video" controls></video>
                 </div>
                 <div class="grid-item">
-                    <div class="flowplayer">
-                        <video class="tiktok-video">
-                            <source type="application/x-mpegURL" src="{% static 'videos/tiktok/tiktok2.mp4' %}">
-                        </video>
-                    </div>
                     
-                    <!-- <video src="{% static 'videos/tiktok/tiktok2.mp4' %}" class="tiktok-video" controls></video> -->
+                    <video src="{% static 'videos/tiktok/tiktok2.mp4' %}" class="tiktok-video" controls></video>
                 </div>
                 <div class="grid-item">
                     <video src="{% static 'videos/tiktok/tiktok3.mp4' %}" class="tiktok-video" controls></video>
@@ -956,15 +947,6 @@
     </script>
 
     <script src="{% static 'landing/script.js' %}"></script>
-    <script>
-        flowplayer(".flowplayer", {
-            clip: {
-                sources: [
-                    { type: "video/mp4", src: "{% static 'videos/tiktok/tiktok2.mp4' %}" }
-                ]
-            }
-        });
-    </script>
 </body>
 
 </html>
