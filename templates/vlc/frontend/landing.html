@@ -25,7 +25,17 @@
     <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet" />
     <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
 
-
+<!-- MediaElement.js CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.16/mediaelementplayer.min.css">
+<!-- MediaElement.js JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.16/mediaelement-and-player.min.js"></script>
+<style>
+.mejs-container {
+    max-width: 100%;
+    height: auto;
+    margin: auto;
+}
+</style>
 </head>
 
 <body>
@@ -150,8 +160,12 @@
             <h2 class="subtitle">TikTok Ad Examples</h2>
             <div class="grid-container">
                 <div class="grid-item">
-                    
-                    <video src="{% static 'videos/tiktok/tiktok1.mp4' %}" class="tiktok-video" controls></video>
+                    <video id="player1" controls preload="auto"  class="tiktok-video">
+                        <source src="{% static 'videos/tiktok/tiktok1.mp4' %}" type="video/mp4">
+                        <!-- Optional fallback for older browsers -->
+                        Your browser does not support the video tag.
+                    </video>
+                    <!-- <video src="{% static 'videos/tiktok/tiktok1.mp4' %}" class="tiktok-video" controls></video> -->
                 </div>
                 <div class="grid-item">
                     
@@ -947,6 +961,22 @@
     </script>
 
     <script src="{% static 'landing/script.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize MediaElement.js
+            const player = new MediaElementPlayer('player1', {
+                // Options
+                features: ['playpause', 'progress', 'volume', 'fullscreen'], // Customize controls
+                stretching: 'responsive', // Makes player responsive
+                success: function (mediaElement, originalNode, instance) {
+                    console.log('Player initialized successfully!');
+                },
+                error: function () {
+                    console.error('Error initializing player.');
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
