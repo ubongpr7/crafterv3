@@ -160,12 +160,8 @@
             <h2 class="subtitle">TikTok Ad Examples</h2>
             <div class="grid-container">
                 <div class="grid-item">
-                    <video id="player1" controls preload="auto"  class="tiktok-video">
-                        <source src="{% static 'videos/tiktok/tiktok1.mp4' %}" type="video/mp4">
-                        <!-- Optional fallback for older browsers -->
-                        Your browser does not support the video tag.
-                    </video>
-                    <!-- <video src="{% static 'videos/tiktok/tiktok1.mp4' %}" class="tiktok-video" controls></video> -->
+                    
+                    <video src="{% static 'videos/tiktok/tiktok1.mp4' %}" class="tiktok-video" controls></video>
                 </div>
                 <div class="grid-item">
                     
@@ -961,22 +957,6 @@
     </script>
 
     <script src="{% static 'landing/script.js' %}"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            console.log('Initialize MediaElement.js')
-            const player = new MediaElementPlayer('player1', {
-                // Options
-                features: ['playpause', 'progress', 'volume', 'fullscreen'], // Customize controls
-                stretching: 'responsive', // Makes player responsive
-                success: function (mediaElement, originalNode, instance) {
-                    console.log('Player initialized successfully!');
-                },
-                error: function () {
-                    console.error('Error initializing player.');
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>
