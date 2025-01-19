@@ -1459,7 +1459,7 @@ button:hover {
 
 .dimensions-container {
   display: flex;
-  justify-content: center;
+  justify-content: center !important;
   gap: 15px;
   align-items: center;
 }
@@ -1858,7 +1858,7 @@ button:hover {
     font-weight: 400;
     line-height: 21.6px;
     text-align: left;
-    margin-bottom: 15px;
+    margin-bottom: 15px !important;
   }
 
   .hiw-element-placeholder {
