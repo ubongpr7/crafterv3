@@ -2,6 +2,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
+
+* {
+  box-sizing: border-box;
+}
+
 body,
 html {
   margin: 0;
@@ -11,6 +16,7 @@ html {
   font-family: 'Montserrat', sans-serif;
   font-optical-sizing: auto;
 }
+
 
 body {
   overflow-x: hidden;
@@ -104,27 +110,21 @@ a {
 }
 
 .h1hero {
-  max-width: 1206px;
-  font-size: 48px;
-  font-weight: bold;
+  font-size: 3rem;
+  font-weight: 700;
   letter-spacing: -3%;
-  margin-top: 72px;
 }
 
 .phero {
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 400;
-  line-height: 135%;
+  line-height: 27px;
   letter-spacing: -3%;
   text-align: center;
-  /* width: 58%; */
-  text-transform: capitalize;
-  color: rgba(0, 0, 0, 0.7);
-  ;
 }
 
 .highlight {
-  color: #9400FF;
+  color: #864af9;
 }
 
 .heroButton {
@@ -145,6 +145,7 @@ a {
   align-items: center;
   justify-content: center;
   text-align: center;
+
   /* margin-top: 32px; */
   min-height: 300px;
 }
@@ -234,7 +235,7 @@ a {
   position: relative;
   /* margin-top: 100px; */
   margin-top: 25px;
-  margin-bottom: 48px;
+  /* margin-bottom: 25px; */
 }
 
 .portfoliotext h2 {
@@ -245,7 +246,6 @@ a {
   letter-spacing: -0.01em;
   text-align: left;
 }
-
 
 /* .grid-container {
     display: grid;
@@ -298,6 +298,8 @@ a {
   height: auto;
 }
 
+
+
 .tiktok-video {
   width: 350px;
   /* Adjust to desired width */
@@ -324,6 +326,7 @@ a {
   width: 60px;
   height: auto;
 }
+
 
 .hiwText {
   display: flex;
@@ -445,16 +448,15 @@ a {
 }
 
 .ptop-p {
-  font-size: 20px;
-  color: #00000080;
+  font-size: 1.125rem;
   font-weight: 400;
-  line-height: 135%;
+  line-height: 27px;
   letter-spacing: -3%;
   text-align: center;
   width: 70%;
   margin: 0 auto;
-  /* margin-top: 20px;
-    margin-bottom: 20px; */
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .p-cards-grid-container {
@@ -466,20 +468,13 @@ a {
   padding: 20px;
 }
 
-.p-button {
-  margin-top: auto !important;
-}
-
 .p-cards-grid-item {
   display: flex;
   flex-direction: column;
   text-align: left;
-  border: 2px solid #EEEEEE;
-
+  border: solid 0.2px #0000001a;
   border-radius: 8px;
-  padding: 32px 28px;
-  width: 355px;
-  /* height: 524px; */
+  padding: 28px 28px;
 }
 
 .p-cards-grid {
@@ -500,16 +495,6 @@ a {
   line-height: 32.4px;
   letter-spacing: -0.01em;
   text-align: left;
-}
-
-.g-head-margin {
-  margin-bottom: 32px;
-}
-
-.under-free {
-  margin-top: -15px;
-  color: #000000B3;
-  margin-bottom: 32px;
 }
 
 .g-p {
@@ -542,7 +527,6 @@ a {
   line-height: 21px;
   letter-spacing: -0.01em;
   text-align: center;
-  color: #00000080;
 }
 
 .price {
@@ -554,13 +538,13 @@ a {
   column-gap: 10px;
   align-items: center;
   justify-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .benefits-text {
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 135%;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 24px;
   letter-spacing: -0.01em;
   text-align: left;
 }
@@ -569,17 +553,18 @@ a {
   width: 250px;
 }
 
+
+
 .p-button {
   font-size: 1.2rem;
   background: #864af9;
   padding: 12px 32px;
-  max-width: 100%;
+  width: 100%;
   border: solid 1px #864af9;
   border-radius: 8px;
   text-align: center;
   color: white;
   transition: 0.3s ease;
-  margin-top: 20px;
 }
 
 .p-button:hover {
@@ -590,7 +575,6 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 32px;
 }
 
 .hype {
@@ -659,7 +643,7 @@ a {
 .cta-content-wrapper {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
+  align-items: center;
   justify-content: center;
   text-align: center;
   height: fit-content;
@@ -673,18 +657,6 @@ a {
   box-shadow: 0px 4px 4px -4px #0c0c0d0d;
   box-shadow: 0px 16px 32px -4px #0c0c0d1a;
   z-index: 99;
-}
-
-.cta-content-wrapper p {
-  color: #000000af;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 135%;
-}
-
-.an-span {
-  display: none;
-  color: #000000;
 }
 
 .cta-content {
@@ -732,44 +704,18 @@ a {
 }
 
 .cc1 {
-  top: -3vh;
-  left: -2vw;
+  top: -10vh;
+  left: -8vw;
 }
 
 .cc2 {
-  top: -25vh;
-  left: 7vw;
-  width: 816px;
+  top: -20vh;
+  left: 40vw;
 }
 
 .cc3 {
-  top: 23vh;
+  top: 40vh;
   right: 0;
-}
-
-.cc4 {
-  top: -2vh;
-  right: 265px;
-}
-
-.cc5 {
-  top: 23vh;
-  right: 471px;
-}
-
-.cc6 {
-  top: -4vh;
-  right: -11px;
-}
-
-.cc7 {
-  top: 22vh;
-  left: -39px;
-}
-
-.cc8 {
-  top: 100vh;
-  right: 471px;
 }
 
 .contact-us {
@@ -937,6 +883,7 @@ a {
   text-align: center;
   color: #667085;
   margin-bottom: 64px;
+
 }
 
 .contact-form {
@@ -944,6 +891,7 @@ a {
   margin-left: 20px;
   flex-direction: column;
   gap: 24px;
+
 }
 
 .form-row {
@@ -972,7 +920,7 @@ a {
 .form-group input,
 .form-group textarea {
   font-family: 'Montserrat', sans-serif;
-  padding: 16px 12px;
+  padding: 10px;
   font-size: 1rem;
   border: 1px solid #d0d5dd;
   border-radius: 8px;
@@ -997,6 +945,7 @@ button {
   font-weight: 500;
   line-height: 24px;
   text-align: center;
+
   padding: 15px;
   background-color: #864af9;
   margin-top: 12px;
@@ -1156,7 +1105,6 @@ button:hover {
 }
 
 .hiw-heading-text {
-  margin-top: 20px;
   color: black;
   font-size: 2.25rem;
   font-weight: 700;
@@ -1165,7 +1113,7 @@ button:hover {
 }
 
 .hiw-heading-text span:nth-child(1) {
-  /* display: none; */
+  display: none;
 }
 
 .hiw-container {
@@ -1190,7 +1138,7 @@ button:hover {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 14px;
+  gap: 24px;
   display: inline-flex;
 }
 
@@ -1287,7 +1235,7 @@ button:hover {
 }
 
 .howitworks img:nth-child(1) {
-  width: 399px;
+  width: 350px;
   height: auto;
   position: absolute;
   top: 1%;
@@ -1337,47 +1285,6 @@ button:hover {
   filter: blur(80px);
   opacity: 80%;
 }
-
-
-@media (max-width: 600px) {
-
-  /* Stack the .hiw-element-placeholder before .hiw-element-text-container */
-  .hiw-element {
-    display: flex;
-    flex-direction: column-reverse;
-    /* This reverses the order: placeholder first, then text container */
-  }
-
-  /* Ensuring correct alignment and spacing */
-  .hiw-element-placeholder {
-    order: 1;
-    /* .hiw-element-placeholder comes first */
-  }
-
-  .hiw-element-text-container {
-    order: 2;
-    /* .hiw-element-text-container comes second */
-  }
-
-  /* Optional: Adjust the width of the elements for smaller screens */
-  .hiw-element {
-    width: 100%;
-  }
-
-  .howitworks img:nth-child(1) {
-    width: 200px;
-  }
-
-  .howitworks img:nth-child(5) {
-    width: 100px;
-  }
-
-  .hiw-element-text-container {
-    display: block;
-  }
-}
-
-
 
 @media screen and (max-width: 768px) {
   .header {
@@ -1519,7 +1426,7 @@ button:hover {
 
   .portfoliotext h2 {
     text-align: center;
-    font-size: 1.65rem;
+    font-size: 1.75rem;
     font-weight: 700;
     line-height: 34.13px;
     letter-spacing: -0.01em;
@@ -1556,12 +1463,7 @@ button:hover {
   }
 
   .hiw-heading-text span:nth-child(1) {
-    /* display: block; */
-  }
-
-  .an-span {
-    display: flex;
-    justify-content: center;
+    display: block;
   }
 
   .hiw-heading-text span:nth-child(2) {
@@ -1569,7 +1471,17 @@ button:hover {
   }
 
   .hiw-heading-text {
-    /* display: flex; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 34.13px;
+    letter-spacing: -0.01em;
+    text-align: center;
+    white-space: nowrap;
   }
 
   .howitworks {
@@ -1578,7 +1490,7 @@ button:hover {
   }
 
   .hiw-column {
-    /* flex-direction: column; */
+    flex-direction: column;
   }
 
   .hiw-container {
@@ -1635,7 +1547,6 @@ button:hover {
     line-height: 34.13px;
     letter-spacing: -0.01em;
     text-align: center;
-    margin-bottom: 24px;
   }
 
   .ptop-text span {
@@ -1664,12 +1575,12 @@ button:hover {
   }
 
   .ptop-p {
-    font-size: 20px;
+    width: 100%;
+    margin: 0px;
+    font-size: 1rem;
     font-weight: 400;
-    letter-spacing: -3%;
+    line-height: 21.6px;
     text-align: center;
-    margin: 0 auto;
-    color: #000000B3;
   }
 
   .ptop-p br {
@@ -1680,7 +1591,7 @@ button:hover {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    /* width: 100%; */
+    width: 100%;
     gap: 20px;
   }
 
@@ -1703,7 +1614,7 @@ button:hover {
   }
 
   .p-cards-grid-item {
-    border: 2px solid #EEEEEE;
+    border: 1px solid #c5c5c5;
   }
 
   .mid {
@@ -2090,6 +2001,7 @@ button:hover {
 
   .subtitle {
     font-size: 1.5rem;
+
     margin: 20px 0;
   }
 }
@@ -2099,12 +2011,7 @@ button:hover {
     height: 50vh;
     /* Adjust this height as necessary */
   }
-
-  .howitworks {
-    margin-top: 0px;
-  }
 }
-
 
 /* @media (max-height: 550px) {
       .top {
@@ -2112,12 +2019,7 @@ button:hover {
         top: -320px;
       }
     } */
-
 @media (max-width: 441px) {
-  .howitworks {
-    margin-top: 0px;
-  }
-
   .more-benefits-items {
     column-gap: 11px;
   }
@@ -2134,6 +2036,7 @@ button:hover {
 
   .subtitle {
     font-size: 1.2rem;
+
     margin: 20px 0;
   }
 
