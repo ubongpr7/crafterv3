@@ -30,6 +30,56 @@
       height: auto;
       margin: auto;
     }
+    /* General Styles for Video Containers */
+.video-js {
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+    position: relative;
+    padding: 0;
+    background-color: #000; /* Black background for better visibility */
+    font-size: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #fff;
+    outline: none; /* Remove focus outline */
+    width: 100%; /* Default full width for responsiveness */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Crop the video content nicely if needed */
+    max-width: 100%; /* Prevent overflow */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for better visuals */
+}
+
+/* Responsive Aspect Ratio Handling */
+.video-js.vjs-fluid:not(.vjs-audio-only-mode) {
+    padding-top: 56.25%; /* Maintain 16:9 aspect ratio */
+}
+
+/* TikTok-Specific Video Styling */
+.tiktok-video {
+    width: 100%; /* Ensure full-width responsiveness */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Ensure the video looks sharp and clean */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Consistent styling */
+}
+
+/* Media Queries for Small Screens */
+@media (max-width: 768px) {
+    .tiktok-video {
+        max-height: 350px; /* Constrain height on tablets */
+    }
+}
+
+@media (max-width: 441px) {
+    .tiktok-video {
+        max-height: 300px; /* Further constrain height on smaller screens */
+    }
+}
+
+/* Remove Focus Outline on Video Elements */
+.video-js[tabindex="-1"] {
+    outline: none;
+}
+
   </style>
 </head>
 
