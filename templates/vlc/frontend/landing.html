@@ -157,7 +157,14 @@
       <div class="grid-container">
         <div class="grid-item">
 
-          <video src="/static/videos/tiktok/tiktok1.mp4" class="tiktok-video" controls></video>
+          <!-- <video src="{% static 'videos/tiktok/tiktok1.mp4' %}" class="tiktok-video" controls></video> -->
+          <div class="video-container">
+            <video class="tiktok-video" controls preload="auto" poster="https://images.unsplash.com/photo-1595859156926-36335e413920?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHRodW1ibmFpbHxlbnwwfHwwfHx8MA%3D%3D">
+                <source src="{% static 'videos/tiktok/tiktok1.mp4' %}" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        
         </div>
         <div class="grid-item">
 
@@ -241,7 +248,7 @@
           <div class="slides">
             <div class="slide">
               <div class="Placeholder">
-                <video src="/static/videos/tiktok/tiktok1.mp4" class="tiktok-video" controls></video>
+                <video src="{% static 'videos/tiktok/tiktok1.mp4' %}" class="tiktok-video" controls></video>
               </div>
             </div>
             <div class="slide">
@@ -334,7 +341,7 @@
 
               <video id="tiktok-video-1" class="video-js vjs-default-skin vjs-big-play-centered tiktok-video" controls
                 preload="auto" data-setup='{ "fluid" : true }' width="100%">
-                <source src="/static/videos/tiktok/tiktok1.mp4" type="video/mp4" />
+                <source src="{% static 'videos/tiktok/tiktok1.mp4' %}" type="video/mp4" />
               </video>
 
 
