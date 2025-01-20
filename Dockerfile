@@ -40,14 +40,15 @@ RUN pip3.10 install numpy
 RUN pip3.10 install --no-cache-dir -r requirements.txt
 
 COPY . .
+COPY .env /app/.env
 
 COPY ./policy.xml /etc/ImageMagick-6/policy.xml
 RUN sed -i 's/<policy domain="path" rights="none" pattern="@\*"/<!--<policy domain="path" rights="none" pattern="@\*"-->/' /etc/ImageMagick-6/policy.xml || true \
     && sed -i 's/<policy domain="path" rights="none" pattern="@\*"/<!--<policy domain="path" rights="none" pattern="@\*"-->/' /etc/ImageMagick-7/policy.xml || true
 
-COPY ./fonts /usr/share/fonts/custom
+    COPY ./fonts /usr/share/fonts/custom
 RUN fc-cache -f -v
 
 
 EXPOSE 7732
-CMD ["bash", "-c", "python3.10 manage.py migrate && python3.10 manage.py runserver 0.0.0.0:7732"]
+CMD ["bash", "-c", "export $(cat /app/.env | xargs) python3.10 manage.py migrate && python3.10 manage.py runserver 0.0.0.0:7732"]
