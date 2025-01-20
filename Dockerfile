@@ -23,15 +23,8 @@ RUN apt -y install \
   postgresql-contrib \
   libfreetype6 \
   libfontconfig1 \
-  fonts-liberation\
-  libavformat-dev\
-  libavcodec-dev\
-  libavutil-dev
+  fonts-liberation
 
-RUN git clone https://github.com/anthwlock/untrunc.git
-WORKDIR untrunc
-RUN make
-RUN cp untrunc /usr/local/bin
 RUN wget https://www.python.org/ftp/python/3.10.14/Python-3.10.14.tgz
 RUN tar -xzvf Python-3.10.14.tgz
 RUN cd Python-3.10.14
