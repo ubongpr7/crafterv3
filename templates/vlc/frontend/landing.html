@@ -16,6 +16,7 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <link rel="stylesheet" href="{% static 'landing/landing_style.css' %}" />
+  <link rel="stylesheet" href="{% static 'landing/landing.css' %}" />
 
   <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet" />
   <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
@@ -24,14 +25,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.16/mediaelementplayer.min.css">
   <!-- MediaElement.js JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.16/mediaelement-and-player.min.js"></script>
-  <style>
-    .mejs-container {
-      max-width: 100%;
-      height: auto;
-      margin: auto;
-    }
-    
-  </style>
 </head>
 
 <body>
@@ -157,7 +150,7 @@
       <div class="grid-container">
         <div class="grid-item">
 
-          <video src="/static/videos/tiktok/tiktok1.mp4" class="tiktok-video" controls></video>
+          <video src="{% static 'videos/tiktok/tiktok1.mp4' %}" class="tiktok-video" controls></video>
         </div>
         <div class="grid-item">
 
