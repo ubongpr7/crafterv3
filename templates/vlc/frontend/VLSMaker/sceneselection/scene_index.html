@@ -247,14 +247,6 @@
         .vid {
             color: #3700FF;
         }
-
-        /* Add padding to the body for better layout */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
     </style>
 </head>
 
@@ -359,107 +351,110 @@
             </div>
         </div>
         {% include 'upload.html' %}
-
-
-    </div>
-
-
-    </div>
-
-    <div class="grid-container2">
-        <!-- First Section -->
-        <div class="section">
-            <div class="section-header" onclick="toggleContent('instructions', this)">
-                Instructions
-                <span>&#x25B6;</span>
-            </div>
-            <div class="section-content" id="instructions">
-                <div class="bor" style="border: 1px solid #cccccc;"></div>
-                <h3>Step 1: Upload Your Script</h3>
-                <p>Each line of your script represents a subtitle box in the video. For example:</p>
-                <div class="highlight">
-                    <p>If your script says, "Hello, my name is Steve," on the first line of your text file, the first
-                        subtitle box will display Hello, my name is Steve.</p>
+        <div class="grid-container2">
+            <!-- First Section -->
+            <div class="section">
+                <div class="section-header" onclick="toggleContent('instructions', this)">
+                    Instructions
+                    <span>&#x25B6;</span>
                 </div>
-                <h3>Step 2: Highlight And Assign Clips</h3>
-                <p style="font-weight: bolder; color: rgba(17, 17, 17, 0.7); font-size: 16px;">Highlight words:</p>
-                <p>Simply highlight the words in your script that you want to match with a video clip and assign a video
-                    clip.</p>
-                <a href="#" style="display: flex; justify-content: center;">Watch Video Tutorial</a>
+                <div class="section-content" id="instructions">
+                    <div class="bor" style="border: 1px solid #cccccc;"></div>
+                    <h3>Step 1: Upload Your Script</h3>
+                    <p>Each line of your script represents a subtitle box in the video. For example:</p>
+                    <div class="highlight">
+                        <p>If your script says, "Hello, my name is Steve," on the first line of your text file, the
+                            first
+                            subtitle box will display Hello, my name is Steve.</p>
+                    </div>
+                    <h3>Step 2: Highlight And Assign Clips</h3>
+                    <p style="font-weight: bolder; color: rgba(17, 17, 17, 0.7); font-size: 16px;">Highlight words:</p>
+                    <p>Simply highlight the words in your script that you want to match with a video clip and assign a
+                        video
+                        clip.</p>
+                    <a href="#" style="display: flex; justify-content: center;">Watch Video Tutorial</a>
+                </div>
+            </div>
+
+            <!-- Second Section -->
+            <div class="section">
+                <div class="section-header" onclick="toggleContent('tips', this)">
+                    Tip - How To Upload Files To The Asset Folder
+                    <span>&#x25B6;</span>
+                </div>
+                <div class="section-content" id="tips">
+                    <div class="bor" style="border: 1px solid #cccccc; margin-bottom: 1rem;"></div>
+                    <div class="tips-background"
+                        style="background-color: #f0eeee; padding: 4px 20px 20px 20px; line-height: 162%;">
+                        <h3>Step 1</h3>
+                        <p><strong>Create a main folder:</strong></p>
+                        <p>On your computer, create one main folder (e.g., MyVideoAssets). This folder will contain all
+                            your
+                            subfolders and video clips.</p>
+
+                        <h4>Add Subfolders Inside The Main Folder:</h4>
+                        <p>Within the main folder, create subfolders to categorize your videos. For example:</p>
+                        <ul>
+                            <li>Back Pain Clips</li>
+                            <li>Fitness Clips</li>
+                            <li>Testimonials</li>
+                        </ul>
+
+                        <h4>Add Video Files To Each Subfolder:</h4>
+                        <p>Inside each subfolder, add the relevant video clips. For example:</p>
+                        <ul class="ul-cl">
+                            <li>Back Pain Clips <span style="color: #333;">></span> <span class="vid">Clip1.mp4,
+                                    Clip2.mp4</span></li>
+                            <li>Fitness Clips <span style="color: #333;">></span> <span class="vid">Workout1.mp4,
+                                    Workout2.mp4</span></li>
+                        </ul>
+
+                        <h3>Step 2</h3>
+                        <p><strong>Upload to VideoCrafter.io:</strong></p>
+                        <ul>
+                            <li>Go to the "Upload To Your Asset Folder" section.</li>
+                            <li>Click "Choose File" and select the main folder (not individual subfolders).</li>
+                            <li>Click "Upload And Process" to start the upload.</li>
+                        </ul>
+
+                    </div>
+                    <a href="#" style="display: flex; justify-content: center;">Watch Video Tutorial</a>
+                </div>
             </div>
         </div>
 
-        <!-- Second Section -->
-        <div class="section">
-            <div class="section-header" onclick="toggleContent('tips', this)">
-                Tip - How To Upload Files To The Asset Folder
-                <span>&#x25B6;</span>
-            </div>
-            <div class="section-content" id="tips">
-                <div class="bor" style="border: 1px solid #cccccc; margin-bottom: 1rem;"></div>
-                <div class="tips-background"
-                    style="background-color: #f0eeee; padding: 4px 20px 20px 20px; line-height: 162%;">
-                    <h3>Step 1</h3>
-                    <p><strong>Create a main folder:</strong></p>
-                    <p>On your computer, create one main folder (e.g., MyVideoAssets). This folder will contain all your
-                        subfolders and video clips.</p>
+        <script>
+            function toggleContent(id, headerElement) {
+                const content = document.getElementById(id);
+                const span = headerElement.querySelector('span');
+                const otherSections = document.querySelectorAll('.section');
 
-                    <h4>Add Subfolders Inside The Main Folder:</h4>
-                    <p>Within the main folder, create subfolders to categorize your videos. For example:</p>
-                    <ul>
-                        <li>Back Pain Clips</li>
-                        <li>Fitness Clips</li>
-                        <li>Testimonials</li>
-                    </ul>
+                // First, reset all section backgrounds to default
+                otherSections.forEach(function (section) {
+                    const header = section.querySelector('.section-header');
+                    header.style.backgroundColor = '#fff'; // Reset background color
+                    header.style.color = '#6c25be'; // Reset text color
+                });
 
-                    <h4>Add Video Files To Each Subfolder:</h4>
-                    <p>Inside each subfolder, add the relevant video clips. For example:</p>
-                    <ul class="ul-cl">
-                        <li>Back Pain Clips <span style="color: #333;">></span> <span class="vid">Clip1.mp4,
-                                Clip2.mp4</span></li>
-                        <li>Fitness Clips <span style="color: #333;">></span> <span class="vid">Workout1.mp4,
-                                Workout2.mp4</span></li>
-                    </ul>
-
-                    <h3>Step 2</h3>
-                    <p><strong>Upload to VideoCrafter.io:</strong></p>
-                    <ul>
-                        <li>Go to the "Upload To Your Asset Folder" section.</li>
-                        <li>Click "Choose File" and select the main folder (not individual subfolders).</li>
-                        <li>Click "Upload And Process" to start the upload.</li>
-                    </ul>
-
-                </div>
-                <a href="#" style="display: flex; justify-content: center;">Watch Video Tutorial</a>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function toggleContent(id, headerElement) {
-            const content = document.getElementById(id);
-            const span = headerElement.querySelector('span');
-            const otherSections = document.querySelectorAll('.section');
-
-            // First, reset all section backgrounds to default
-            otherSections.forEach(function (section) {
-                const header = section.querySelector('.section-header');
-                header.style.backgroundColor = '#fff'; // Reset background color
-                header.style.color = '#6c25be'; // Reset text color
-            });
-
-            // Toggle the clicked section's content
-            content.classList.toggle('open');
-            if (content.classList.contains('open')) {
-                span.classList.add('rotate');
-                // Set the background color for the active section
-                headerElement.style.backgroundColor = '#6c25be';
-                headerElement.style.color = '#fff';
-            } else {
-                span.classList.remove('rotate');
+                // Toggle the clicked section's content
+                content.classList.toggle('open');
+                if (content.classList.contains('open')) {
+                    span.classList.add('rotate');
+                    // Set the background color for the active section
+                    headerElement.style.backgroundColor = '#6c25be';
+                    headerElement.style.color = '#fff';
+                } else {
+                    span.classList.remove('rotate');
+                }
             }
-        }
-    </script>
+        </script>
+
+    </div>
+
+
+    </div>
+
+
     <!-- {% if text_file.text_file and not text_file.video_clips.all  %}
     {%include  'vlc/frontend/VLSMaker/sceneselection/new_form.html' %}
     
