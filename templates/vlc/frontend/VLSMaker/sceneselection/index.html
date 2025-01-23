@@ -15,144 +15,7 @@
 
     <link rel="stylesheet" href="{% static 'sceneselection/style.css'%}">
     <script src="{% static 'sceneselection/script.js'%}"></script>
-    <style>
-        /* Grid container for two sections per row */
-        .grid-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            /* Two columns */
-            gap: 20px;
-            /* Space between sections */
-            max-width: 98%;
-            margin: 0 auto;
-            margin-top: 30px;
-            padding: 20px;
-        }
-
-        /* General section styling */
-        .section {
-            border-radius: 5px;
-            position: relative;
-            overflow: hidden;
-            /* background-color: #fff; */
-            padding: 20px;
-        }
-
-        /* Header styling for each section */
-        .section-header {
-            background-color: #fff;
-            padding: 14px 20px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 16px;
-            color: #6c25be;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 2px solid #6c25be;
-            border-radius: 11px;
-            margin-bottom: 16px;
-            text-align: left;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        /* Hover effect for header */
-        .section-header:hover {
-            background-color: #6c25be;
-            color: #fff;
-        }
-
-        /* Section content (hidden by default) */
-        .section-content {
-            background-color: #fff;
-            /* border: 1px solid #cccccc; */
-            height: 720px;
-            border-radius: 6px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-            font-size: 14px;
-            color: #333;
-            text-align: left;
-        }
-
-        /* Content becomes visible when section is open */
-        .section-content.open {
-            max-height: 720px;
-            padding: 15px;
-            padding-bottom: 22px;
-            border-radius: 6px;
-        }
-
-        /* Highlight box styling */
-        .highlight {
-            background-color: #f0eeee;
-            padding: 24px;
-            border-radius: 10px;
-            text-transform: capitalize;
-            margin: 0px;
-            color: rgba(17, 17, 17, 0.7);
-            text-align: left;
-        }
-
-        /* General text styling for h3 and p */
-        h3,
-        h4 {
-            color: #000;
-            margin-bottom: 8px;
-            text-align: left;
-        }
-
-        p {
-            color: rgba(17, 17, 17, 0.7);
-            text-transform: capitalize;
-            margin-bottom: 16px;
-            text-align: left;
-        }
-
-        /* Links styling */
-        a {
-            color: #003CFF;
-            font-size: 16px;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 24px;
-            text-align: center;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .ul-cl {
-            color: #008A23;
-        }
-        /* Center the link with the class .centered-link */
-        
-
-        /* Rotate span on click */
-        .rotate {
-            transform: rotate(90deg);
-            transition: transform 0.3s ease;
-        }
-
-        /* Style for span inside section header */
-        .section-header span {
-            font-size: 18px;
-            transition: transform 0.3s ease;
-        }
-
-        .vid{
-            color: #3700FF;
-        }
-        /* Add padding to the body for better layout */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-    </style>
+    
     <style>
         p{
             text-transform: capitalize;
@@ -380,6 +243,144 @@
             margin-top: 15px;
         }
     </style>
+    <style>
+        /* Grid container for two sections per row */
+        .grid-container2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            /* Two columns */
+            gap: 20px;
+            /* Space between sections */
+            max-width: 98%;
+            margin: 0 auto;
+            margin-top: 30px;
+            padding: 20px;
+        }
+
+        /* General section styling */
+        .section {
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+            /* background-color: #fff; */
+            padding: 20px;
+        }
+
+        /* Header styling for each section */
+        .section-header {
+            background-color: #fff;
+            padding: 14px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            color: #6c25be;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 2px solid #6c25be;
+            border-radius: 11px;
+            margin-bottom: 16px;
+            text-align: left;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Hover effect for header */
+        .section-header:hover {
+            background-color: #6c25be;
+            color: #fff;
+        }
+
+        /* Section content (hidden by default) */
+        .section-content {
+            background-color: #fff;
+            /* border: 1px solid #cccccc; */
+            height: 720px;
+            border-radius: 6px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            font-size: 14px;
+            color: #333;
+            text-align: left;
+        }
+
+        /* Content becomes visible when section is open */
+        .section-content.open {
+            max-height: 720px;
+            padding: 15px;
+            padding-bottom: 22px;
+            border-radius: 6px;
+        }
+
+        /* Highlight box styling */
+        .highlight {
+            background-color: #f0eeee;
+            padding: 24px;
+            border-radius: 10px;
+            text-transform: capitalize;
+            margin: 0px;
+            color: rgba(17, 17, 17, 0.7);
+            text-align: left;
+        }
+
+        /* General text styling for h3 and p */
+        .section-content h3,.section-content
+        h4 {
+            color: #000;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        .section-content p,.highlight p {
+            color: rgba(17, 17, 17, 0.7);
+            text-transform: capitalize;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        /* Links styling */
+        .section-content a {
+            color: #003CFF;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 24px;
+            text-align: center;
+        }
+
+        .section-content a:hover {
+            text-decoration: underline;
+        }
+
+        .ul-cl {
+            color: #008A23;
+        }
+        /* Center the link with the class .centered-link */
+        
+
+        /* Rotate span on click */
+        .rotate {
+            transform: rotate(90deg);
+            transition: transform 0.3s ease;
+        }
+
+        /* Style for span inside section header */
+        .section-header span {
+            font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .vid{
+            color: #3700FF;
+        }
+        /* Add padding to the body for better layout */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+    </style>
 </head>
 
 <body style="position: relative; overflow-x: hidden;">
@@ -482,102 +483,102 @@
                 </form>
             </div>
         </div>
-        <div class="grid-container">
-            <!-- First Section -->
-            <div class="section">
-                <div class="section-header" onclick="toggleContent('instructions', this)">
-                    Instructions
-                    <span>&#x25B6;</span>
-                </div>
-                <div class="section-content" id="instructions">
-                    <div class="bor" style="border: 1px solid #cccccc;"></div>
-                    <h3>Step 1: Upload Your Script</h3>
-                    <p>Each line of your script represents a subtitle box in the video. For example:</p>
-                    <div class="highlight">
-                        <p>If your script says, "Hello, my name is Steve," on the first line of your text file, the first
-                            subtitle box will display Hello, my name is Steve.</p>
-                    </div>
-                    <h3>Step 2: Highlight And Assign Clips</h3>
-                    <p style="font-weight: bolder; color: rgba(17, 17, 17, 0.7); font-size: 16px;">Highlight words:</p>
-                    <p>Simply highlight the words in your script that you want to match with a video clip and assign a video
-                        clip.</p>
-                        <a href="#" style="display: flex; justify-content: center;" >Watch Video Tutorial</a>
-                </div>
-            </div>
-    
-            <!-- Second Section -->
-            <div class="section">
-                <div class="section-header" onclick="toggleContent('tips', this)">
-                    Tip - How To Upload Files To The Asset Folder
-                    <span>&#x25B6;</span>
-                </div>
-                <div class="section-content" id="tips" >
-                    <div class="bor" style="border: 1px solid #cccccc; margin-bottom: 1rem;"></div>
-                    <div class="tips-background" style="background-color: #f0eeee; padding: 4px 20px 20px 20px; line-height: 162%;">
-                        <h3>Step 1</h3>
-                        <p><strong>Create a main folder:</strong></p>
-                        <p>On your computer, create one main folder (e.g., MyVideoAssets). This folder will contain all your
-                            subfolders and video clips.</p>
-    
-                        <h4>Add Subfolders Inside The Main Folder:</h4>
-                        <p>Within the main folder, create subfolders to categorize your videos. For example:</p>
-                        <ul>
-                            <li>Back Pain Clips</li>
-                            <li>Fitness Clips</li>
-                            <li>Testimonials</li>
-                        </ul>
-    
-                        <h4>Add Video Files To Each Subfolder:</h4>
-                        <p>Inside each subfolder, add the relevant video clips. For example:</p>
-                        <ul class="ul-cl">
-                            <li>Back Pain Clips  <span style="color: #333;">></span> <span class="vid">Clip1.mp4, Clip2.mp4</span></li>
-                            <li>Fitness Clips <span style="color: #333;">></span> <span class="vid">Workout1.mp4, Workout2.mp4</span></li>
-                        </ul>
-    
-                        <h3>Step 2</h3>
-                        <p><strong>Upload to VideoCrafter.io:</strong></p>
-                        <ul >
-                            <li>Go to the "Upload To Your Asset Folder" section.</li>
-                            <li>Click "Choose File" and select the main folder (not individual subfolders).</li>
-                            <li>Click "Upload And Process" to start the upload.</li>
-                        </ul>
-    
-                    </div>
-                    <a href="#" style="display: flex; justify-content: center;" >Watch Video Tutorial</a>
-                </div>
-            </div>
-        </div>
-    
-        <script>
-            function toggleContent(id, headerElement) {
-                const content = document.getElementById(id);
-                const span = headerElement.querySelector('span');
-                const otherSections = document.querySelectorAll('.section');
-    
-                // First, reset all section backgrounds to default
-                otherSections.forEach(function (section) {
-                    const header = section.querySelector('.section-header');
-                    header.style.backgroundColor = '#fff'; // Reset background color
-                    header.style.color = '#6c25be'; // Reset text color
-                });
-    
-                // Toggle the clicked section's content
-                content.classList.toggle('open');
-                if (content.classList.contains('open')) {
-                    span.classList.add('rotate');
-                    // Set the background color for the active section
-                    headerElement.style.backgroundColor = '#6c25be';
-                    headerElement.style.color = '#fff';
-                } else {
-                    span.classList.remove('rotate');
-                }
-            }
-        </script>
         {% include 'upload.html' %}
 
 
     </div>
 
+    <div class="grid-container2">
+        <!-- First Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleContent('instructions', this)">
+                Instructions
+                <span>&#x25B6;</span>
+            </div>
+            <div class="section-content" id="instructions">
+                <div class="bor" style="border: 1px solid #cccccc;"></div>
+                <h3>Step 1: Upload Your Script</h3>
+                <p>Each line of your script represents a subtitle box in the video. For example:</p>
+                <div class="highlight">
+                    <p>If your script says, "Hello, my name is Steve," on the first line of your text file, the first
+                        subtitle box will display Hello, my name is Steve.</p>
+                </div>
+                <h3>Step 2: Highlight And Assign Clips</h3>
+                <p style="font-weight: bolder; color: rgba(17, 17, 17, 0.7); font-size: 16px;">Highlight words:</p>
+                <p>Simply highlight the words in your script that you want to match with a video clip and assign a video
+                    clip.</p>
+                    <a href="#" style="display: flex; justify-content: center;" >Watch Video Tutorial</a>
+            </div>
+        </div>
+
+        <!-- Second Section -->
+        <div class="section">
+            <div class="section-header" onclick="toggleContent('tips', this)">
+                Tip - How To Upload Files To The Asset Folder
+                <span>&#x25B6;</span>
+            </div>
+            <div class="section-content" id="tips" >
+                <div class="bor" style="border: 1px solid #cccccc; margin-bottom: 1rem;"></div>
+                <div class="tips-background" style="background-color: #f0eeee; padding: 4px 20px 20px 20px; line-height: 162%;">
+                    <h3>Step 1</h3>
+                    <p><strong>Create a main folder:</strong></p>
+                    <p>On your computer, create one main folder (e.g., MyVideoAssets). This folder will contain all your
+                        subfolders and video clips.</p>
+
+                    <h4>Add Subfolders Inside The Main Folder:</h4>
+                    <p>Within the main folder, create subfolders to categorize your videos. For example:</p>
+                    <ul>
+                        <li>Back Pain Clips</li>
+                        <li>Fitness Clips</li>
+                        <li>Testimonials</li>
+                    </ul>
+
+                    <h4>Add Video Files To Each Subfolder:</h4>
+                    <p>Inside each subfolder, add the relevant video clips. For example:</p>
+                    <ul class="ul-cl">
+                        <li>Back Pain Clips  <span style="color: #333;">></span> <span class="vid">Clip1.mp4, Clip2.mp4</span></li>
+                        <li>Fitness Clips <span style="color: #333;">></span> <span class="vid">Workout1.mp4, Workout2.mp4</span></li>
+                    </ul>
+
+                    <h3>Step 2</h3>
+                    <p><strong>Upload to VideoCrafter.io:</strong></p>
+                    <ul >
+                        <li>Go to the "Upload To Your Asset Folder" section.</li>
+                        <li>Click "Choose File" and select the main folder (not individual subfolders).</li>
+                        <li>Click "Upload And Process" to start the upload.</li>
+                    </ul>
+
+                </div>
+                <a href="#" style="display: flex; justify-content: center;" >Watch Video Tutorial</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleContent(id, headerElement) {
+            const content = document.getElementById(id);
+            const span = headerElement.querySelector('span');
+            const otherSections = document.querySelectorAll('.section');
+
+            // First, reset all section backgrounds to default
+            otherSections.forEach(function (section) {
+                const header = section.querySelector('.section-header');
+                header.style.backgroundColor = '#fff'; // Reset background color
+                header.style.color = '#6c25be'; // Reset text color
+            });
+
+            // Toggle the clicked section's content
+            content.classList.toggle('open');
+            if (content.classList.contains('open')) {
+                span.classList.add('rotate');
+                // Set the background color for the active section
+                headerElement.style.backgroundColor = '#6c25be';
+                headerElement.style.color = '#fff';
+            } else {
+                span.classList.remove('rotate');
+            }
+        }
+    </script>
 
     </div>
     {% if textfile.text_file %}
