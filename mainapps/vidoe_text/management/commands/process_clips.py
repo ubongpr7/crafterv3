@@ -1214,7 +1214,11 @@ class Command(BaseCommand):
     ) -> VideoFileClip:
         current_duration = segment.duration
         if current_duration < duration:
-            return loop(segment, duration=duration)
+            speed_factor = current_duration / duration
+            return segment.fx(vfx.speedx, speed_factor)
+    
+
+            # return loop(segment, duration=duration)
         elif current_duration > duration:
             return segment.subclip(0, duration)
         return segment
