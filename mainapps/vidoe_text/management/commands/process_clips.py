@@ -388,6 +388,7 @@ class Command(BaseCommand):
             for subclip in clip.subclips.all():
                 logging.debug(f"Processing subclip with ID: {subclip.id}")
                 mv_clip = self.load_video_from_file_field(subclip.to_dict().get('video_path'))
+                clip_with_duration = self.adjust_segment_duration(mv_clip,float(subclip.end - subclip.start))
                 clip_with_duration = mv_clip.set_duration(float(subclip.end - subclip.start))
                 logging.debug(f"Loaded video clip from path: {subclip.to_dict().get('video_path')}")
                 cropped_clip = self.crop_to_aspect_ratio_(clip_with_duration, MAINRESOLUTIONS[self.text_file_instance.resolution])
