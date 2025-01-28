@@ -1490,7 +1490,8 @@ class Command(BaseCommand):
             clips[i] = clips[i].set_start(clips[i-1].end)
     
         for clip in clips:
-            clip.set_duration(clip.duration)  
+            # clip.set_duration(clip.duration)  
+            clip = clip.subclip(0, clip.duration)
             clip.set_fps(30) 
     
         final_clip = concatenate_videoclips(clips, method="chain")
