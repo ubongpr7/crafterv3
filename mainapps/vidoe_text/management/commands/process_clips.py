@@ -1485,14 +1485,16 @@ class Command(BaseCommand):
         """
         return isinstance(clip, VideoFileClip)
     
-
     def concatenate_clips(self, clips, target_resolution=None, target_fps=None):
-        
-        clips = [clip.set_fps(30) for clip in clips]
-        
+        for  i in range(1, len(clips)):
+            clips[i] = clips[i].set_start(clips[i-1].end)
+    
+        for clip in clips:
+            clip.set_duration(clip.duration)  
+            clip.set_fps(30) 
+    
         final_clip = concatenate_videoclips(clips, method="chain")
-        
-        logging.info("Clips have been concatenated")
+        logging.info("Clip has been concatenated: ")
         return final_clip
 
     def resize_clips_to_max_size(self, clips):
