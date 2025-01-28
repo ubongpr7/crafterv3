@@ -334,7 +334,6 @@ class Command(BaseCommand):
 
 
         self.text_file_instance.track_progress(54)
-        # replacement_video_clips=self.resize_clips_to_max_size(replacement_video_clips)
         final_video_segments = self.replace_video_segments(
             output_video_segments, replacement_video_clips, subtitles, blank_vide_clip
         )
@@ -389,7 +388,6 @@ class Command(BaseCommand):
                 logging.debug(f"Processing subclip with ID: {subclip.id}")
                 mv_clip = self.load_video_from_file_field(subclip.to_dict().get('video_path'))
                 clip_with_duration = self.adjust_segment_duration(mv_clip,float(subclip.end - subclip.start))
-                # clip_with_duration = mv_clip.set_duration(float(subclip.end - subclip.start))
                 logging.debug(f"Loaded video clip from path: {subclip.to_dict().get('video_path')}")
                 cropped_clip = self.crop_to_aspect_ratio_(clip_with_duration, MAINRESOLUTIONS[self.text_file_instance.resolution])
                 logging.debug(f"Cropped clip to resolution: {MAINRESOLUTIONS[self.text_file_instance.resolution]}")
@@ -405,24 +403,6 @@ class Command(BaseCommand):
 
         return True 
              
-    def process_for_clip(self,clip):
-        logging.debug(f"Processing clip with ID: {clip.id}")
-        clip_subclips = []
-        for subclip in clip.subclips.all():
-            logging.debug(f"Processing subclip with ID: {subclip.id}")
-            mv_clip = self.load_video_from_file_field(subclip.to_dict().get('video_path'))
-            clip_with_duration = mv_clip.set_duration(float(subclip.end - subclip.start))
-            logging.debug(f"Loaded video clip from path: {subclip.to_dict().get('video_path')}")
-            cropped_clip = self.crop_to_aspect_ratio_(clip_with_duration, MAINRESOLUTIONS[self.text_file_instance.resolution])
-            logging.debug(f"Cropped clip to resolution: {MAINRESOLUTIONS[self.text_file_instance.resolution]}")
-            clip_subclips.append(cropped_clip)
-        if len(clip_subclips) == 1:
-            self.write_clip_file(clip_subclips[0], clip.video_file,clip)
-        else:
-
-            resized_subclips = self.resize_clips_to_max_size(clip_subclips)
-            concatenated_clip = self.concatenate_clips(resized_subclips)
-            self.write_clip_file(concatenated_clip, clip.video_file,clip)
 
 
     def extract_start_end(self,generated_srt):
@@ -452,37 +432,6 @@ class Command(BaseCommand):
         
         return time_data
 
-    def convert_clips_to_videos(self, clips,generated_srt):
-        """
-        Converts a list of ImageClips to VideoClips using durations from the processed SRT file.
-
-        Args:
-            clips (list): List of MoviePy ImageClip objects.
-
-        Returns:
-            list: List of converted VideoClips with specified durations.
-        """
-        extracted_times= self.extract_start_end(generated_srt)
-
-        if len(clips) != len(extracted_times):
-            raise ValueError("Mismatch between the number of clips and JSON fragments.")
-
-        video_clips = []
-        for i, clip in enumerate(clips):
-            if self.is_video_clip(clip):
-                video_clips.append(clip)
-            elif self.is_image_clip(clip):
-                try:
-                    begin,end= extracted_times[i]
-                    duration = float(self.srt_time_to_float(end)) - float(self.srt_time_to_float((begin))) +1.0
-
-                    video_clip = self.image_to_video(clip, duration)
-                    video_clips.append(video_clip)
-                except IndexError:
-                    raise ValueError(f"Mismatch between the number of clips and JSON fragments at index {i}.")
-        
-        return video_clips
-
     def write_clip_file(self, clip,file_to_write,main_clip):
         with tempfile.NamedTemporaryFile(
             suffix=".mp4", delete=False
@@ -494,9 +443,7 @@ class Command(BaseCommand):
                 preset="ultrafast",
                 audio_codec="aac",
                 fps=30,
-                # temp_audiofile='temp-audio.m4a', 
-                # remove_temp=True
-                # ffmpeg_params=["-movflags", "+faststart"],
+                
             )
 
             if file_to_write:
@@ -519,9 +466,6 @@ class Command(BaseCommand):
         characters = string.ascii_letters + string.digits
         return ''.join(random.choice(characters) for _ in range(length))
 
-    # Example usage
-    random_string = generate_random_string(12)  # Generate a string of length 12
-    print("Random String:", random_string)
 
     def save_final_video(self, clip):
         with tempfile.NamedTemporaryFile(
@@ -535,9 +479,7 @@ class Command(BaseCommand):
                 preset="ultrafast",
                 audio_codec="aac",
                 fps=30,
-                # temp_audiofile='temp-audio.m4a', 
-                # remove_temp=True
-                # ffmpeg_params=["-movflags", "+faststart"],
+                
             )
             self.text_file_instance.track_progress(70)
 
@@ -1543,10 +1485,14 @@ class Command(BaseCommand):
         """
         return isinstance(clip, VideoFileClip)
     
-    def concatenate_clips(self, clips, target_resolution=None, target_fps=None):
 
-        final_clip = concatenate_videoclips(clips, method="compose")
-        logging.info("Clip has been concatenated: ")
+    def concatenate_clips(self, clips, target_resolution=None, target_fps=None):
+        
+        clips = [clip.set_fps(30) for clip in clips]
+        
+        final_clip = concatenate_videoclips(clips, method="chain")
+        
+        logging.info("Clips have been concatenated")
         return final_clip
 
     def resize_clips_to_max_size(self, clips):
